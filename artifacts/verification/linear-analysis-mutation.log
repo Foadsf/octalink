@@ -1,0 +1,48 @@
+Failed to find real location of %USERPROFILE%\scoop\apps\miniconda3\current\python.exe
+test_bad_matrix_negative_control (__main__.LinearAnalysisTests.test_bad_matrix_negative_control) ... ok
+test_feedthrough_zero_static_gain_and_csv_sink (__main__.LinearAnalysisTests.test_feedthrough_zero_static_gain_and_csv_sink) ... ok
+test_invalid_operating_and_frequency_inputs (__main__.LinearAnalysisTests.test_invalid_operating_and_frequency_inputs) ... ok
+test_margin_crossovers_have_independent_formula (__main__.LinearAnalysisTests.test_margin_crossovers_have_independent_formula) ... ok
+test_matrix_exponential_defective_system_and_short_horizon (__main__.LinearAnalysisTests.test_matrix_exponential_defective_system_and_short_horizon) ... ok
+test_nondifferentiable_and_unstable_controls (__main__.LinearAnalysisTests.test_nondifferentiable_and_unstable_controls) ... ok
+test_nonlinear_constant_source_bias_and_second_source_selection (__main__.LinearAnalysisTests.test_nonlinear_constant_source_bias_and_second_source_selection) ... ok
+test_pade_algebraic_loop_is_rejected (__main__.LinearAnalysisTests.test_pade_algebraic_loop_is_rejected) ... ok
+test_pade_delay_formula_and_discrete_refusal (__main__.LinearAnalysisTests.test_pade_delay_formula_and_discrete_refusal) ... ok
+test_reference_channel_is_explicit (__main__.LinearAnalysisTests.test_reference_channel_is_explicit) ... ok
+test_second_order_filter_and_strictly_proper_zero (__main__.LinearAnalysisTests.test_second_order_filter_and_strictly_proper_zero) ... ok
+test_shipped_first_order_feedback (__main__.LinearAnalysisTests.test_shipped_first_order_feedback) ... FAIL
+test_shipped_hybrid_finite_and_labeled (__main__.LinearAnalysisTests.test_shipped_hybrid_finite_and_labeled) ... ok
+
+======================================================================
+FAIL: test_shipped_first_order_feedback (__main__.LinearAnalysisTests.test_shipped_first_order_feedback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_linear_analysis.py", line 44, in test_shipped_first_order_feedback
+    np.testing.assert_allclose(result["A"], [[-2]], atol=1e-9)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-07, atol=1e-09
+
+Mismatched elements: 1 / 1 (100%)
+Mismatch at index:
+ [0, 0]: -1.0 (ACTUAL), -2 (DESIRED)
+Max absolute difference among violations: 1.
+Max relative difference among violations: 0.5
+ ACTUAL: array([[-1.]])
+ DESIRED: array([[-2]])
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.880s
+
+FAILED (failures=1)
+NEGATIVE CONTROL: changed A=-3 is rejected by A=-2 and independent transfer checks.
+MEASUREMENT: shipped hybrid: 6 state poles, 4 transfer zeros, 1000 finite frequency samples, two labeled Pad� approximations.

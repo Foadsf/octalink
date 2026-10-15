@@ -1,0 +1,21 @@
+Failed to find real location of %USERPROFILE%\scoop\apps\miniconda3\current\python.exe
+test_background_run_returns_analytic_results_and_restores_editor (test_editor_mvp.EditorTests.test_background_run_returns_analytic_results_and_restores_editor) ... ok
+test_block_drag_is_undoable (test_editor_mvp.EditorTests.test_block_drag_is_undoable) ... ok
+test_cancel_is_responsive_and_does_not_publish_partial_results (test_editor_mvp.EditorTests.test_cancel_is_responsive_and_does_not_publish_partial_results) ... ok
+test_connection_toggle_redraws_and_undo_redo_preserve_topology (test_editor_mvp.EditorTests.test_connection_toggle_redraws_and_undo_redo_preserve_topology) ... ok
+test_copy_paste_subsystem_and_internal_connections (test_editor_mvp.EditorTests.test_copy_paste_subsystem_and_internal_connections) ... ok
+test_default_is_checked_analytic_example_and_light_editor (test_editor_mvp.EditorTests.test_default_is_checked_analytic_example_and_light_editor) ... ok
+test_diagram_styles_are_independent_and_round_trip_with_subsystems (test_editor_mvp.EditorTests.test_diagram_styles_are_independent_and_round_trip_with_subsystems) ... ok
+test_failed_atomic_replace_preserves_existing_file (test_editor_mvp.EditorTests.test_failed_atomic_replace_preserves_existing_file) ... ok
+test_invalid_dynamic_port_edit_preserves_document (test_editor_mvp.EditorTests.test_invalid_dynamic_port_edit_preserves_document) ... ok
+test_legacy_style_default_and_invalid_style_control (test_editor_mvp.EditorTests.test_legacy_style_default_and_invalid_style_control) ... ok
+test_library_search_double_click_insertion_undo_redo (test_editor_mvp.EditorTests.test_library_search_double_click_insertion_undo_redo) ... ok
+test_model_negative_controls_and_positive_round_trip (test_editor_mvp.EditorTests.test_model_negative_controls_and_positive_round_trip) ... ok
+test_property_apply_changes_parameter_and_undo_restores_it (test_editor_mvp.EditorTests.test_property_apply_changes_parameter_and_undo_restores_it) ... ok
+test_save_round_trip_and_invalid_open_preserves_live_model (test_editor_mvp.EditorTests.test_save_round_trip_and_invalid_open_preserves_live_model) ... ok
+test_wires_are_orthogonal_and_stay_attached_after_move (test_editor_mvp.EditorTests.test_wires_are_orthogonal_and_stay_attached_after_move) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 4.169s
+
+OK

@@ -1,0 +1,9 @@
+UI GEOMETRY OK: dc_motor; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+UI GEOMETRY OK: cruise_pi; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+UI GEOMETRY OK: van_der_pol; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+test_both_wire_styles_attach_before_after_actual_block_drag (test_internet_editor.InternetEditorTests.test_both_wire_styles_attach_before_after_actual_block_drag) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.970s
+
+OK

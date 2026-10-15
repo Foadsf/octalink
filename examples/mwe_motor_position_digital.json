@@ -1,0 +1,445 @@
+{
+  "version": "4.1",
+  "stop_time": "0.08",
+  "dt": "1e-4",
+  "backend": "python",
+  "solver": "sdirk4",
+  "variables": {
+    "J": "3.2284E-6",
+    "b": "3.5077E-6",
+    "K": "0.0274",
+    "R": "4",
+    "L": "2.75E-6",
+    "Ts": "0.001"
+  },
+  "description": "Digital position control of a stiff DC motor plant (CTMS).",
+  "provenance": "CTMS, DC Motor Position: Simulink Controller Design, https://ctms.engin.umich.edu/CTMS/?example=MotorPosition&section=SimulinkControl . Discrete Zero-Pole controller zeros [0.95 0.80 0.80], poles [-0.98 0.6 1], gain 800, Ts=0.001 s between two Zero-Order Holds; 0.08 s stop time; unit step disturbance at 0.03 s. The source uses ode15s; here the implicit SDIRK4 solver (L-stable) integrates the armature pole near -1.45e6 rad/s at dt=1e-4 s, ten steps per sample (explicit RK4 would need dt=1e-6 s). The controller pole at -0.98 cancels the sampled plant zero at -0.983, so the sampled position (third scope channel) matches the CTMS design (about 10 % overshoot) while the continuous shaft position shows the inter-sample ripple that sample-rate logging hides.",
+  "root": {
+    "blocks": [
+      {
+        "id": 116,
+        "type": "Step",
+        "name": "Reference",
+        "x": 30,
+        "y": 100,
+        "params": {
+          "step_time": "0",
+          "initial_val": "0",
+          "final_val": "1"
+        },
+        "flipped": false
+      },
+      {
+        "id": 117,
+        "type": "Sum",
+        "name": "Error",
+        "x": 170,
+        "y": 102,
+        "params": {
+          "signs": "|+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 118,
+        "type": "Discrete Zero-Pole",
+        "name": "Controller",
+        "x": 270,
+        "y": 100,
+        "params": {
+          "zeros": "[0.95 0.80 0.80]",
+          "poles": "[-0.98 0.6 1]",
+          "gain": "800",
+          "sample_time": "Ts"
+        },
+        "flipped": false
+      },
+      {
+        "id": 119,
+        "type": "Zero-Order Hold",
+        "name": "ZOH (actuator)",
+        "x": 430,
+        "y": 100,
+        "params": {
+          "sample_time": "Ts"
+        },
+        "flipped": false
+      },
+      {
+        "id": 120,
+        "type": "Step",
+        "name": "Disturbance",
+        "x": 430,
+        "y": 230,
+        "params": {
+          "step_time": "0.03",
+          "initial_val": "0",
+          "final_val": "1"
+        },
+        "flipped": false
+      },
+      {
+        "id": 121,
+        "type": "Sum",
+        "name": "Voltage + disturbance",
+        "x": 590,
+        "y": 102,
+        "params": {
+          "signs": "++"
+        },
+        "flipped": false
+      },
+      {
+        "id": 122,
+        "type": "Subsystem",
+        "name": "Motor_pos",
+        "x": 700,
+        "y": 93,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 103,
+              "type": "Inport",
+              "name": "Voltage",
+              "x": 20,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 104,
+              "type": "Sum",
+              "name": "V - R i - K w",
+              "x": 130,
+              "y": 132,
+              "params": {
+                "signs": "+--"
+              },
+              "flipped": false
+            },
+            {
+              "id": 105,
+              "type": "Gain",
+              "name": "1/L",
+              "x": 230,
+              "y": 130,
+              "params": {
+                "gain": "1/L"
+              },
+              "flipped": false
+            },
+            {
+              "id": 106,
+              "type": "Integrator",
+              "name": "Current i",
+              "x": 370,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 107,
+              "type": "Gain",
+              "name": "Torque K",
+              "x": 520,
+              "y": 130,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": false
+            },
+            {
+              "id": 108,
+              "type": "Sum",
+              "name": "Torque - b w",
+              "x": 660,
+              "y": 132,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 109,
+              "type": "Gain",
+              "name": "1/J",
+              "x": 760,
+              "y": 130,
+              "params": {
+                "gain": "1/J"
+              },
+              "flipped": false
+            },
+            {
+              "id": 110,
+              "type": "Integrator",
+              "name": "Speed w",
+              "x": 900,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 111,
+              "type": "Integrator",
+              "name": "Position",
+              "x": 1050,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 112,
+              "type": "Outport",
+              "name": "Position",
+              "x": 1200,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 113,
+              "type": "Gain",
+              "name": "Resistance R",
+              "x": 370,
+              "y": 260,
+              "params": {
+                "gain": "R"
+              },
+              "flipped": true
+            },
+            {
+              "id": 114,
+              "type": "Gain",
+              "name": "Back EMF K",
+              "x": 520,
+              "y": 360,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": true
+            },
+            {
+              "id": 115,
+              "type": "Gain",
+              "name": "Damping b",
+              "x": 760,
+              "y": 260,
+              "params": {
+                "gain": "b"
+              },
+              "flipped": true
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 103,
+              "from_port": 0,
+              "to_block": 104,
+              "to_port": 0
+            },
+            {
+              "from_block": 104,
+              "from_port": 0,
+              "to_block": 105,
+              "to_port": 0
+            },
+            {
+              "from_block": 105,
+              "from_port": 0,
+              "to_block": 106,
+              "to_port": 0
+            },
+            {
+              "from_block": 106,
+              "from_port": 0,
+              "to_block": 107,
+              "to_port": 0
+            },
+            {
+              "from_block": 107,
+              "from_port": 0,
+              "to_block": 108,
+              "to_port": 0
+            },
+            {
+              "from_block": 108,
+              "from_port": 0,
+              "to_block": 109,
+              "to_port": 0
+            },
+            {
+              "from_block": 109,
+              "from_port": 0,
+              "to_block": 110,
+              "to_port": 0
+            },
+            {
+              "from_block": 110,
+              "from_port": 0,
+              "to_block": 111,
+              "to_port": 0
+            },
+            {
+              "from_block": 111,
+              "from_port": 0,
+              "to_block": 112,
+              "to_port": 0
+            },
+            {
+              "from_block": 106,
+              "from_port": 0,
+              "to_block": 113,
+              "to_port": 0
+            },
+            {
+              "from_block": 113,
+              "from_port": 0,
+              "to_block": 104,
+              "to_port": 1
+            },
+            {
+              "from_block": 110,
+              "from_port": 0,
+              "to_block": 114,
+              "to_port": 0
+            },
+            {
+              "from_block": 114,
+              "from_port": 0,
+              "to_block": 104,
+              "to_port": 2
+            },
+            {
+              "from_block": 110,
+              "from_port": 0,
+              "to_block": 115,
+              "to_port": 0
+            },
+            {
+              "from_block": 115,
+              "from_port": 0,
+              "to_block": 108,
+              "to_port": 1
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 123,
+        "type": "Zero-Order Hold",
+        "name": "ZOH (sensor)",
+        "x": 700,
+        "y": 330,
+        "params": {
+          "sample_time": "Ts"
+        },
+        "flipped": true
+      },
+      {
+        "id": 124,
+        "type": "Mux",
+        "name": "Reference, position, sampled",
+        "x": 900,
+        "y": 90,
+        "params": {
+          "inputs": "3"
+        },
+        "flipped": false
+      },
+      {
+        "id": 125,
+        "type": "Scope",
+        "name": "Position",
+        "x": 980,
+        "y": 103,
+        "params": {
+          "title": "Motor position (rad): continuous, and sampled by the sensor ZOH; disturbance at 0.03 s"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 116,
+        "from_port": 0,
+        "to_block": 117,
+        "to_port": 0
+      },
+      {
+        "from_block": 117,
+        "from_port": 0,
+        "to_block": 118,
+        "to_port": 0
+      },
+      {
+        "from_block": 118,
+        "from_port": 0,
+        "to_block": 119,
+        "to_port": 0
+      },
+      {
+        "from_block": 119,
+        "from_port": 0,
+        "to_block": 121,
+        "to_port": 0
+      },
+      {
+        "from_block": 120,
+        "from_port": 0,
+        "to_block": 121,
+        "to_port": 1
+      },
+      {
+        "from_block": 121,
+        "from_port": 0,
+        "to_block": 122,
+        "to_port": 0
+      },
+      {
+        "from_block": 122,
+        "from_port": 0,
+        "to_block": 123,
+        "to_port": 0
+      },
+      {
+        "from_block": 123,
+        "from_port": 0,
+        "to_block": 117,
+        "to_port": 1
+      },
+      {
+        "from_block": 116,
+        "from_port": 0,
+        "to_block": 124,
+        "to_port": 0
+      },
+      {
+        "from_block": 122,
+        "from_port": 0,
+        "to_block": 124,
+        "to_port": 1
+      },
+      {
+        "from_block": 123,
+        "from_port": 0,
+        "to_block": 124,
+        "to_port": 2
+      },
+      {
+        "from_block": 124,
+        "from_port": 0,
+        "to_block": 125,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  }
+}

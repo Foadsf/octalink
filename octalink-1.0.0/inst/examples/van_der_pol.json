@@ -1,0 +1,105 @@
+{
+  "version": "4.0",
+  "stop_time": "10",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Integrator",
+        "name": "x",
+        "x": 180.0,
+        "y": 140.0,
+        "flipped": false,
+        "params": {
+          "initial_condition": "2"
+        }
+      },
+      {
+        "id": 2,
+        "type": "Integrator",
+        "name": "velocity",
+        "x": 180.0,
+        "y": 330.0,
+        "flipped": false,
+        "params": {
+          "initial_condition": "0"
+        }
+      },
+      {
+        "id": 3,
+        "type": "Mux",
+        "name": "State_vector",
+        "x": 400.0,
+        "y": 200.0,
+        "flipped": false,
+        "params": {
+          "inputs": "2"
+        }
+      },
+      {
+        "id": 4,
+        "type": "Octave Function",
+        "name": "Van_der_Pol",
+        "x": 550.0,
+        "y": 210.0,
+        "flipped": false,
+        "params": {
+          "expression": "(1-u_vec[0]^2)*u_vec[1]-u_vec[0]"
+        }
+      },
+      {
+        "id": 5,
+        "type": "Scope",
+        "name": "Phase_states",
+        "x": 550.0,
+        "y": 390.0,
+        "flipped": false,
+        "params": {
+          "title": "Van der Pol: displacement and velocity"
+        }
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 1,
+        "to_port": 0
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 1
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  },
+  "backend": "python",
+  "provenance": "Adapted from GNU Octave 11.3.0 ode45.m Van der Pol example, lines 81-86; mu=1, initial state [2,0]."
+}

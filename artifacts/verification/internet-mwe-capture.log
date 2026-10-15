@@ -1,0 +1,4 @@
+INTERNET CAPTURE OK: dc_motor; genuine Octave; samples=601; scopes=1; reference error=4.98e-10; images=3
+INTERNET CAPTURE OK: cruise_pi; genuine Octave; samples=1001; scopes=2; reference error=9.48e-08; images=5
+INTERNET CAPTURE OK: van_der_pol; genuine Octave; samples=1001; scopes=1; reference error=5.11e-08; images=3
+INTERNET CAPTURE ACCEPTANCE OK: 3 examples; native editor and scope captures; independent full traces

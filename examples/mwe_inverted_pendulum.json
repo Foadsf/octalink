@@ -1,0 +1,275 @@
+{
+  "version": "4.1",
+  "stop_time": "10",
+  "dt": "0.001",
+  "backend": "python",
+  "variables": {
+    "M": "0.5",
+    "m": "0.2",
+    "b": "0.1",
+    "l": "0.3",
+    "I": "0.006",
+    "g": "9.8"
+  },
+  "description": "Nonlinear cart-pendulum open-loop impulse response (CTMS).",
+  "provenance": "CTMS, Inverted Pendulum: Simulink Modeling, https://ctms.engin.umich.edu/CTMS/?example=InvertedPendulum&section=SimulinkModeling . Parameters M=0.5, m=0.2, b=0.1, l=0.3, I=0.006; theta from the downward vertical with theta(0)=pi; impulse approximated by a Pulse Generator (amplitude 1000, period 10, width 0.01%). The four Fcn blocks of the source form an algebraic loop; here the same Newton-Euler equations are solved explicitly for x'' and theta''.",
+  "root": {
+    "blocks": [
+      {
+        "id": 36,
+        "type": "Pulse Generator",
+        "name": "Impulse (1 N s)",
+        "x": 40,
+        "y": 160,
+        "params": {
+          "amplitude": "1000",
+          "period": "10",
+          "pulse_width": "0.01",
+          "phase_delay": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 47,
+        "type": "Subsystem",
+        "name": "Pendulum",
+        "x": 220,
+        "y": 153,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 37,
+              "type": "Inport",
+              "name": "Force",
+              "x": 20,
+              "y": 70,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 38,
+              "type": "Mux",
+              "name": "F, x', theta, theta'",
+              "x": 160,
+              "y": 40,
+              "params": {
+                "inputs": "4"
+              },
+              "flipped": false
+            },
+            {
+              "id": 39,
+              "type": "Octave Function",
+              "name": "x''",
+              "x": 260,
+              "y": 40,
+              "params": {
+                "expression": "((I+m*l^2)*(u_vec[0]-b*u_vec[1]+m*l*u_vec[3]^2*sin(u_vec[2]))+m*l*cos(u_vec[2])*m*g*l*sin(u_vec[2]))/((M+m)*(I+m*l^2)-(m*l*cos(u_vec[2]))^2)"
+              },
+              "flipped": false
+            },
+            {
+              "id": 40,
+              "type": "Octave Function",
+              "name": "theta''",
+              "x": 260,
+              "y": 250,
+              "params": {
+                "expression": "(-(M+m)*m*g*l*sin(u_vec[2])-m*l*cos(u_vec[2])*(u_vec[0]-b*u_vec[1]+m*l*u_vec[3]^2*sin(u_vec[2])))/((M+m)*(I+m*l^2)-(m*l*cos(u_vec[2]))^2)"
+              },
+              "flipped": false
+            },
+            {
+              "id": 41,
+              "type": "Integrator",
+              "name": "x'",
+              "x": 450,
+              "y": 40,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 42,
+              "type": "Integrator",
+              "name": "x",
+              "x": 600,
+              "y": 40,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 43,
+              "type": "Integrator",
+              "name": "theta'",
+              "x": 450,
+              "y": 250,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 44,
+              "type": "Integrator",
+              "name": "theta",
+              "x": 600,
+              "y": 250,
+              "params": {
+                "initial_condition": "pi"
+              },
+              "flipped": false
+            },
+            {
+              "id": 45,
+              "type": "Outport",
+              "name": "Position",
+              "x": 760,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 46,
+              "type": "Outport",
+              "name": "Angle",
+              "x": 760,
+              "y": 263,
+              "params": {
+                "port_number": "2"
+              },
+              "flipped": false
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 37,
+              "from_port": 0,
+              "to_block": 38,
+              "to_port": 0
+            },
+            {
+              "from_block": 41,
+              "from_port": 0,
+              "to_block": 38,
+              "to_port": 1
+            },
+            {
+              "from_block": 44,
+              "from_port": 0,
+              "to_block": 38,
+              "to_port": 2
+            },
+            {
+              "from_block": 43,
+              "from_port": 0,
+              "to_block": 38,
+              "to_port": 3
+            },
+            {
+              "from_block": 38,
+              "from_port": 0,
+              "to_block": 39,
+              "to_port": 0
+            },
+            {
+              "from_block": 38,
+              "from_port": 0,
+              "to_block": 40,
+              "to_port": 0
+            },
+            {
+              "from_block": 39,
+              "from_port": 0,
+              "to_block": 41,
+              "to_port": 0
+            },
+            {
+              "from_block": 41,
+              "from_port": 0,
+              "to_block": 42,
+              "to_port": 0
+            },
+            {
+              "from_block": 40,
+              "from_port": 0,
+              "to_block": 43,
+              "to_port": 0
+            },
+            {
+              "from_block": 43,
+              "from_port": 0,
+              "to_block": 44,
+              "to_port": 0
+            },
+            {
+              "from_block": 42,
+              "from_port": 0,
+              "to_block": 45,
+              "to_port": 0
+            },
+            {
+              "from_block": 44,
+              "from_port": 0,
+              "to_block": 46,
+              "to_port": 0
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 48,
+        "type": "Mux",
+        "name": "Angle, position",
+        "x": 440,
+        "y": 150,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 49,
+        "type": "Scope",
+        "name": "Open-loop response",
+        "x": 520,
+        "y": 158,
+        "params": {
+          "title": "Pendulum angle (rad) and cart position (m)"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 36,
+        "from_port": 0,
+        "to_block": 47,
+        "to_port": 0
+      },
+      {
+        "from_block": 47,
+        "from_port": 1,
+        "to_block": 48,
+        "to_port": 0
+      },
+      {
+        "from_block": 47,
+        "from_port": 0,
+        "to_block": 48,
+        "to_port": 1
+      },
+      {
+        "from_block": 48,
+        "from_port": 0,
+        "to_block": 49,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  }
+}

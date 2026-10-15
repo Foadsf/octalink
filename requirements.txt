@@ -1,0 +1,5 @@
+PyQt6>=6.4.0
+numpy>=1.20.0
+matplotlib>=3.5.0
+# Optional explicit Octave integrations may use oct2py. The MVP does not need it.
+# Verification only (tests/test_public_mwes_2.py independent references): scipy>=1.10

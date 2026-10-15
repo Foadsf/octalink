@@ -1,0 +1,46 @@
+Failed to find real location of %USERPROFILE%\scoop\apps\miniconda3\current\python.exe
+test_analytical_integrator_and_exact_step (test_c_export.CExportTests.test_analytical_integrator_and_exact_step) ... ok
+test_analytical_transfer_and_state_space (test_c_export.CExportTests.test_analytical_transfer_and_state_space) ... ok
+test_compiled_disabled_integration_control_really_fails (test_c_export.CExportTests.test_compiled_disabled_integration_control_really_fails) ... ok
+test_delay_continuous_hold_and_simultaneous_commit (test_c_export.CExportTests.test_delay_continuous_hold_and_simultaneous_commit) ... ok
+test_expression_precedence_math_modulo_and_static_transfer (test_c_export.CExportTests.test_expression_precedence_math_modulo_and_static_transfer) ... ok
+test_nested_mux_demux_vector_expr_and_arbitrary_names (test_c_export.CExportTests.test_nested_mux_demux_vector_expr_and_arbitrary_names) ... ok
+test_noncommensurate_sample_events_and_zoh_integration (test_c_export.CExportTests.test_noncommensurate_sample_events_and_zoh_integration) ... ok
+test_relay_switch_saturation_and_pid (test_c_export.CExportTests.test_relay_switch_saturation_and_pid) ... ok
+test_runtime_domain_division_and_bad_time_status (test_c_export.CExportTests.test_runtime_domain_division_and_bad_time_status) ... ok
+test_shipped_models_every_time_and_channel (test_c_export.CExportTests.test_shipped_models_every_time_and_channel) ... ok
+test_unsafe_expressions_and_vector_mismatches_rejected (test_c_export.CExportTests.test_unsafe_expressions_and_vector_mismatches_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 48.251s
+
+OK
+MEASUREMENT: C/Python 6 rows, 1 channels, max error=0, final time=0.37.
+MEASUREMENT: C/Python 2 rows, 1 channels, max error=0, final time=0.37.
+MEASUREMENT: C/Python 51 rows, 1 channels, max error=0, final time=1.
+MEASUREMENT: C/Python 101 rows, 1 channels, max error=0, final time=1.
+MEASUREMENT: C/Python 101 rows, 1 channels, max error=0, final time=1.
+NEGATIVE CONTROL: compiled disabled-integration mutant failed the same analytical sample comparator; healthy C passed.
+MEASUREMENT: C/Python 11 rows, 1 channels, max error=0, final time=0.5.
+MEASUREMENT: C/Python 13 rows, 1 channels, max error=0, final time=0.29999999999999999.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 1 rows, 1 channels, max error=0, final time=0.
+MEASUREMENT: C/Python 4 rows, 2 channels, max error=0, final time=0.29999999999999999.
+MEASUREMENT: C/Python 9 rows, 1 channels, max error=0, final time=0.53000000000000003.
+MEASUREMENT: C/Python 12 rows, 1 channels, max error=0, final time=0.59999999999999998.
+MEASUREMENT: C/Python 119 rows, 1 channels, max error=0, final time=2.
+RUNTIME CONTROL: domain errors, bad dt, sticky status and substep/counter bounds observed
+MEASUREMENT: C/Python 1001 rows, 2 channels, max error=0, final time=10.
+MEASUREMENT: first_order_feedback.json compiled C99 final channels=[1.0, 0.9999999847700196].
+MEASUREMENT: C/Python 1001 rows, 3 channels, max error=3.55e-14, final time=10.
+MEASUREMENT: hybrid_control_loop.json compiled C99 final channels=[1.0, 6.0, 0.8443338938132925].
+MEASUREMENT: C/Python 1001 rows, 1 channels, max error=0, final time=10.
+MEASUREMENT: nonlinear_statespace.json compiled C99 final channels=[2.91888215747405].
+MEASUREMENT: C/Python 1001 rows, 2 channels, max error=0, final time=10.
+MEASUREMENT: van_der_pol.json compiled C99 final channels=[-2.0083407836624567, 0.03290704242291824].
+NEGATIVE CONTROL: unsafe syntax, bad function arity, missing vector channel and Demux width rejected before writing C.

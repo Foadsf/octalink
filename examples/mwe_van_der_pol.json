@@ -1,0 +1,208 @@
+{
+  "version": "4.0",
+  "stop_time": "10",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Sum",
+        "name": "Nonlinear force minus x",
+        "x": 268,
+        "y": 118,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 2,
+        "type": "Integrator",
+        "name": "Velocity",
+        "x": 420,
+        "y": 118,
+        "params": {
+          "initial_condition": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 3,
+        "type": "Integrator",
+        "name": "Displacement",
+        "x": 580,
+        "y": 118,
+        "params": {
+          "initial_condition": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 4,
+        "type": "Product",
+        "name": "x squared",
+        "x": 580,
+        "y": 331,
+        "params": {
+          "ops": "**"
+        },
+        "flipped": true
+      },
+      {
+        "id": 5,
+        "type": "Constant",
+        "name": "One",
+        "x": 580,
+        "y": 458,
+        "params": {
+          "value": "1"
+        },
+        "flipped": true
+      },
+      {
+        "id": 6,
+        "type": "Sum",
+        "name": "1 minus x squared",
+        "x": 396,
+        "y": 331,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": true
+      },
+      {
+        "id": 7,
+        "type": "Gain",
+        "name": "Mu",
+        "x": 228,
+        "y": 331,
+        "params": {
+          "gain": "1"
+        },
+        "flipped": true
+      },
+      {
+        "id": 8,
+        "type": "Product",
+        "name": "Mu damping times velocity",
+        "x": 60,
+        "y": 212,
+        "params": {
+          "ops": "**"
+        },
+        "flipped": false
+      },
+      {
+        "id": 9,
+        "type": "Mux",
+        "name": "Displacement and velocity",
+        "x": 756,
+        "y": 110,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 10,
+        "type": "Scope",
+        "name": "Van der Pol states",
+        "x": 892,
+        "y": 110,
+        "params": {
+          "title": "Van der Pol: displacement, velocity; Mu=1"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 1
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 1
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 7,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 1
+      },
+      {
+        "from_block": 8,
+        "from_port": 0,
+        "to_block": 1,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 1,
+        "to_port": 1
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 1
+      },
+      {
+        "from_block": 9,
+        "from_port": 0,
+        "to_block": 10,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  },
+  "backend": "python",
+  "provenance": "Explicit block adaptation of MathWorks Van der Pol Oscillator: https://www.mathworks.com/help/simulink/slref/van-der-pol-oscillator.html . Mu=1 editable Gain; x0=[2,0] from installed GNU Octave ode45 example; local 10 s horizon and RK4 dt=.01."
+}

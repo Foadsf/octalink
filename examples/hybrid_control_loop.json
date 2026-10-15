@@ -1,0 +1,233 @@
+{
+  "version": "3.0",
+  "stop_time": "10.0",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Step",
+        "name": "Step_Ref",
+        "x": 60.0,
+        "y": 210.0,
+        "flipped": false,
+        "params": {
+          "step_time": "1.0",
+          "initial_val": "0.0",
+          "final_val": "1.0"
+        }
+      },
+      {
+        "id": 2,
+        "type": "Sum",
+        "name": "Error_Sum",
+        "x": 200.0,
+        "y": 212.0,
+        "flipped": false,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 5,
+        "type": "Zero-Order Hold",
+        "name": "DAC_ZOH",
+        "x": 580.0,
+        "y": 210.0,
+        "flipped": false,
+        "params": {
+          "sample_time": "0.15"
+        }
+      },
+      {
+        "id": 6,
+        "type": "Transfer Fcn",
+        "name": "Plant_G",
+        "x": 720.0,
+        "y": 210.0,
+        "flipped": false,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[1, 1.2, 1]"
+        }
+      },
+      {
+        "id": 7,
+        "type": "Unit Delay",
+        "name": "Sensor_1_z",
+        "x": 460.0,
+        "y": 350.0,
+        "flipped": true,
+        "params": {
+          "initial_condition": "0.0",
+          "sample_time": "0.15"
+        }
+      },
+      {
+        "id": 8,
+        "type": "Mux",
+        "name": "Signal_Mux",
+        "x": 900.0,
+        "y": 185.0,
+        "flipped": false,
+        "params": {
+          "inputs": "3"
+        }
+      },
+      {
+        "id": 9,
+        "type": "Scope",
+        "name": "Main_Scope",
+        "x": 965.0,
+        "y": 188.0,
+        "flipped": false,
+        "params": {
+          "title": "Step Reference vs. ZOH Actuator vs. Plant Output"
+        }
+      },
+      {
+        "id": 10,
+        "type": "Subsystem",
+        "name": "Controller_Sub",
+        "x": 380.0,
+        "y": 210.0,
+        "flipped": false,
+        "params": {},
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 4,
+              "type": "Saturation",
+              "name": "Actuator_Lim",
+              "x": 360.0,
+              "y": 180.0,
+              "flipped": false,
+              "params": {
+                "lower_limit": "-6.0",
+                "upper_limit": "6.0"
+              }
+            },
+            {
+              "id": 3,
+              "type": "PID Controller",
+              "name": "PID_Ctrl",
+              "x": 220.0,
+              "y": 180.0,
+              "flipped": false,
+              "params": {
+                "Kp": "4.5",
+                "Ki": "2.8",
+                "Kd": "1.2",
+                "N": "50.0"
+              }
+            },
+            {
+              "id": 11,
+              "type": "Inport",
+              "name": "In_1",
+              "x": 90.0,
+              "y": 180.0,
+              "flipped": false,
+              "params": {
+                "port_number": "1"
+              }
+            },
+            {
+              "id": 12,
+              "type": "Outport",
+              "name": "Out_1",
+              "x": 620.0,
+              "y": 180.0,
+              "flipped": false,
+              "params": {
+                "port_number": "1"
+              }
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 3,
+              "from_port": 0,
+              "to_block": 4,
+              "to_port": 0
+            },
+            {
+              "from_block": 11,
+              "from_port": 0,
+              "to_block": 3,
+              "to_port": 0
+            },
+            {
+              "from_block": 4,
+              "from_port": 0,
+              "to_block": 12,
+              "to_port": 0
+            }
+          ]
+        }
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 7,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 1
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 1
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 2
+      },
+      {
+        "from_block": 8,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 10,
+        "to_port": 0
+      },
+      {
+        "from_block": 10,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      }
+    ]
+  }
+}

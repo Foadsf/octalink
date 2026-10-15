@@ -1,0 +1,118 @@
+test_analytical_integrator_and_exact_step (__main__.CExportTests.test_analytical_integrator_and_exact_step) ... FAIL
+test_delay_continuous_hold_and_simultaneous_commit (__main__.CExportTests.test_delay_continuous_hold_and_simultaneous_commit) ... FAIL
+test_noncommensurate_sample_events_and_zoh_integration (__main__.CExportTests.test_noncommensurate_sample_events_and_zoh_integration) ... FAIL
+
+======================================================================
+FAIL: test_analytical_integrator_and_exact_step (__main__.CExportTests.test_analytical_integrator_and_exact_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_c_export.py", line 123, in test_analytical_integrator_and_exact_step
+    rows = self.compare_python(doc, .37, .1)
+  File "<repo>\tests\test_c_export.py", line 116, in compare_python
+    np.testing.assert_allclose(actual[:, 1:], truth[:, 1:], atol=tolerance, rtol=tolerance)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-10, atol=1e-10
+
+Mismatched elements: 3 / 6 (50%)
+Mismatch at indices:
+ [3, 0]: 0.0 (ACTUAL), 0.07 (DESIRED)
+ [4, 0]: 0.0 (ACTUAL), 0.17000000000000004 (DESIRED)
+ [5, 0]: 0.0 (ACTUAL), 0.24 (DESIRED)
+Max absolute difference among violations: 0.24
+Max relative difference among violations: 1.
+ ACTUAL: array([[0.],
+       [0.],
+       [0.],...
+ DESIRED: array([[0.  ],
+       [0.  ],
+       [0.  ],...
+
+======================================================================
+FAIL: test_delay_continuous_hold_and_simultaneous_commit (__main__.CExportTests.test_delay_continuous_hold_and_simultaneous_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_c_export.py", line 154, in test_delay_continuous_hold_and_simultaneous_commit
+    rows = self.compare_python(doc, .5, .05)
+  File "<repo>\tests\test_c_export.py", line 116, in compare_python
+    np.testing.assert_allclose(actual[:, 1:], truth[:, 1:], atol=tolerance, rtol=tolerance)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-10, atol=1e-10
+
+Mismatched elements: 8 / 11 (72.7%)
+First 5 mismatches are at indices:
+ [3, 0]: 0.0 (ACTUAL), 0.05000000000000002 (DESIRED)
+ [4, 0]: 0.0 (ACTUAL), 0.1 (DESIRED)
+ [5, 0]: 0.0 (ACTUAL), 0.15 (DESIRED)
+ [6, 0]: 0.0 (ACTUAL), 0.20000000000000004 (DESIRED)
+ [7, 0]: 0.0 (ACTUAL), 0.25 (DESIRED)
+Max absolute difference among violations: 0.4
+Max relative difference among violations: 1.
+ ACTUAL: array([[0.],
+       [0.],
+       [0.],...
+ DESIRED: array([[0.  ],
+       [0.  ],
+       [0.  ],...
+
+======================================================================
+FAIL: test_noncommensurate_sample_events_and_zoh_integration (__main__.CExportTests.test_noncommensurate_sample_events_and_zoh_integration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_c_export.py", line 164, in test_noncommensurate_sample_events_and_zoh_integration
+    rows = self.compare_python(doc, .53, .11)
+  File "<repo>\tests\test_c_export.py", line 116, in compare_python
+    np.testing.assert_allclose(actual[:, 1:], truth[:, 1:], atol=tolerance, rtol=tolerance)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-10, atol=1e-10
+
+Mismatched elements: 6 / 9 (66.7%)
+First 5 mismatches are at indices:
+ [3, 0]: 0.0 (ACTUAL), 0.0105 (DESIRED)
+ [4, 0]: 0.0 (ACTUAL), 0.0225 (DESIRED)
+ [5, 0]: 0.0 (ACTUAL), 0.03150000000000001 (DESIRED)
+ [6, 0]: 0.0 (ACTUAL), 0.0645 (DESIRED)
+ [7, 0]: 0.0 (ACTUAL), 0.06749999999999999 (DESIRED)
+Max absolute difference among violations: 0.1035
+Max relative difference among violations: 1.
+ ACTUAL: array([[0.],
+       [0.],
+       [0.],...
+ DESIRED: array([[0.    ],
+       [0.    ],
+       [0.    ],...
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.310s
+
+FAILED (failures=3)
+C MUTATION CONTROL: disabled integration; 3 failures, 0 errors.

@@ -1,0 +1,8 @@
+test_internet_models_both_styles_avoid_unrelated_block_bodies (test_routing_regressions.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) ... ok
+test_new_wire_avoids_existing_block_before_wire_has_scene (test_routing_regressions.RoutingRegressions.test_new_wire_avoids_existing_block_before_wire_has_scene) ... ok
+test_unconnected_obstacle_move_reroutes_existing_signal (test_routing_regressions.RoutingRegressions.test_unconnected_obstacle_move_reroutes_existing_signal) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.490s
+
+OK

@@ -1,0 +1,665 @@
+{
+  "version": "4.1",
+  "stop_time": "3",
+  "dt": "0.0002",
+  "backend": "python",
+  "variables": {
+    "J": "0.01",
+    "b": "0.1",
+    "K": "0.01",
+    "R": "1",
+    "L": "0.5"
+  },
+  "description": "Lag versus lead compensation of a DC motor speed loop (CTMS). Edit J, b, K, R, L in Modeling > Model Workspace.",
+  "provenance": "CTMS, DC Motor Speed: Simulink Controller Design, https://ctms.engin.umich.edu/CTMS/?example=MotorSpeed&section=SimulinkControl . Lag C(s)=(44s+44)/(s+0.01) and lead C(s)=(160000s+5.6e6)/(s+1035) in unity feedback with the first-principles motor subsystem; unit step at t=0, 3 s stop time from the open-loop section.",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Step",
+        "name": "Reference speed",
+        "x": 40,
+        "y": 250,
+        "params": {
+          "step_time": "0",
+          "initial_val": "0",
+          "final_val": "1"
+        },
+        "flipped": false
+      },
+      {
+        "id": 2,
+        "type": "Sum",
+        "name": "Error (lag)",
+        "x": 200,
+        "y": 102,
+        "params": {
+          "signs": "|+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 3,
+        "type": "Transfer Fcn",
+        "name": "Lag compensator",
+        "x": 300,
+        "y": 100,
+        "params": {
+          "numerator": "[44 44]",
+          "denominator": "[1 0.01]"
+        },
+        "flipped": false
+      },
+      {
+        "id": 16,
+        "type": "Subsystem",
+        "name": "DC Motor (lag)",
+        "x": 470,
+        "y": 93,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 4,
+              "type": "Inport",
+              "name": "Voltage",
+              "x": 20,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 5,
+              "type": "Sum",
+              "name": "V - R i - K w",
+              "x": 130,
+              "y": 132,
+              "params": {
+                "signs": "+--"
+              },
+              "flipped": false
+            },
+            {
+              "id": 6,
+              "type": "Gain",
+              "name": "1/L",
+              "x": 230,
+              "y": 130,
+              "params": {
+                "gain": "1/L"
+              },
+              "flipped": false
+            },
+            {
+              "id": 7,
+              "type": "Integrator",
+              "name": "Current i",
+              "x": 370,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 8,
+              "type": "Gain",
+              "name": "Torque K",
+              "x": 520,
+              "y": 130,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": false
+            },
+            {
+              "id": 9,
+              "type": "Sum",
+              "name": "Torque - b w",
+              "x": 660,
+              "y": 132,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 10,
+              "type": "Gain",
+              "name": "1/J",
+              "x": 760,
+              "y": 130,
+              "params": {
+                "gain": "1/J"
+              },
+              "flipped": false
+            },
+            {
+              "id": 11,
+              "type": "Integrator",
+              "name": "Speed w",
+              "x": 900,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 12,
+              "type": "Outport",
+              "name": "Speed",
+              "x": 1060,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 13,
+              "type": "Gain",
+              "name": "Resistance R",
+              "x": 370,
+              "y": 260,
+              "params": {
+                "gain": "R"
+              },
+              "flipped": true
+            },
+            {
+              "id": 14,
+              "type": "Gain",
+              "name": "Back EMF K",
+              "x": 520,
+              "y": 360,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": true
+            },
+            {
+              "id": 15,
+              "type": "Gain",
+              "name": "Damping b",
+              "x": 760,
+              "y": 260,
+              "params": {
+                "gain": "b"
+              },
+              "flipped": true
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 4,
+              "from_port": 0,
+              "to_block": 5,
+              "to_port": 0
+            },
+            {
+              "from_block": 5,
+              "from_port": 0,
+              "to_block": 6,
+              "to_port": 0
+            },
+            {
+              "from_block": 6,
+              "from_port": 0,
+              "to_block": 7,
+              "to_port": 0
+            },
+            {
+              "from_block": 7,
+              "from_port": 0,
+              "to_block": 8,
+              "to_port": 0
+            },
+            {
+              "from_block": 8,
+              "from_port": 0,
+              "to_block": 9,
+              "to_port": 0
+            },
+            {
+              "from_block": 9,
+              "from_port": 0,
+              "to_block": 10,
+              "to_port": 0
+            },
+            {
+              "from_block": 10,
+              "from_port": 0,
+              "to_block": 11,
+              "to_port": 0
+            },
+            {
+              "from_block": 11,
+              "from_port": 0,
+              "to_block": 12,
+              "to_port": 0
+            },
+            {
+              "from_block": 7,
+              "from_port": 0,
+              "to_block": 13,
+              "to_port": 0
+            },
+            {
+              "from_block": 13,
+              "from_port": 0,
+              "to_block": 5,
+              "to_port": 1
+            },
+            {
+              "from_block": 11,
+              "from_port": 0,
+              "to_block": 14,
+              "to_port": 0
+            },
+            {
+              "from_block": 14,
+              "from_port": 0,
+              "to_block": 5,
+              "to_port": 2
+            },
+            {
+              "from_block": 11,
+              "from_port": 0,
+              "to_block": 15,
+              "to_port": 0
+            },
+            {
+              "from_block": 15,
+              "from_port": 0,
+              "to_block": 9,
+              "to_port": 1
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 17,
+        "type": "Sum",
+        "name": "Error (lead)",
+        "x": 200,
+        "y": 402,
+        "params": {
+          "signs": "|+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 18,
+        "type": "Transfer Fcn",
+        "name": "Lead compensator",
+        "x": 300,
+        "y": 400,
+        "params": {
+          "numerator": "[160000 5.6e6]",
+          "denominator": "[1 1035]"
+        },
+        "flipped": false
+      },
+      {
+        "id": 31,
+        "type": "Subsystem",
+        "name": "DC Motor (lead)",
+        "x": 470,
+        "y": 393,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 19,
+              "type": "Inport",
+              "name": "Voltage",
+              "x": 20,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 20,
+              "type": "Sum",
+              "name": "V - R i - K w",
+              "x": 130,
+              "y": 132,
+              "params": {
+                "signs": "+--"
+              },
+              "flipped": false
+            },
+            {
+              "id": 21,
+              "type": "Gain",
+              "name": "1/L",
+              "x": 230,
+              "y": 130,
+              "params": {
+                "gain": "1/L"
+              },
+              "flipped": false
+            },
+            {
+              "id": 22,
+              "type": "Integrator",
+              "name": "Current i",
+              "x": 370,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 23,
+              "type": "Gain",
+              "name": "Torque K",
+              "x": 520,
+              "y": 130,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": false
+            },
+            {
+              "id": 24,
+              "type": "Sum",
+              "name": "Torque - b w",
+              "x": 660,
+              "y": 132,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 25,
+              "type": "Gain",
+              "name": "1/J",
+              "x": 760,
+              "y": 130,
+              "params": {
+                "gain": "1/J"
+              },
+              "flipped": false
+            },
+            {
+              "id": 26,
+              "type": "Integrator",
+              "name": "Speed w",
+              "x": 900,
+              "y": 130,
+              "params": {},
+              "flipped": false
+            },
+            {
+              "id": 27,
+              "type": "Outport",
+              "name": "Speed",
+              "x": 1060,
+              "y": 143,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 28,
+              "type": "Gain",
+              "name": "Resistance R",
+              "x": 370,
+              "y": 260,
+              "params": {
+                "gain": "R"
+              },
+              "flipped": true
+            },
+            {
+              "id": 29,
+              "type": "Gain",
+              "name": "Back EMF K",
+              "x": 520,
+              "y": 360,
+              "params": {
+                "gain": "K"
+              },
+              "flipped": true
+            },
+            {
+              "id": 30,
+              "type": "Gain",
+              "name": "Damping b",
+              "x": 760,
+              "y": 260,
+              "params": {
+                "gain": "b"
+              },
+              "flipped": true
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 19,
+              "from_port": 0,
+              "to_block": 20,
+              "to_port": 0
+            },
+            {
+              "from_block": 20,
+              "from_port": 0,
+              "to_block": 21,
+              "to_port": 0
+            },
+            {
+              "from_block": 21,
+              "from_port": 0,
+              "to_block": 22,
+              "to_port": 0
+            },
+            {
+              "from_block": 22,
+              "from_port": 0,
+              "to_block": 23,
+              "to_port": 0
+            },
+            {
+              "from_block": 23,
+              "from_port": 0,
+              "to_block": 24,
+              "to_port": 0
+            },
+            {
+              "from_block": 24,
+              "from_port": 0,
+              "to_block": 25,
+              "to_port": 0
+            },
+            {
+              "from_block": 25,
+              "from_port": 0,
+              "to_block": 26,
+              "to_port": 0
+            },
+            {
+              "from_block": 26,
+              "from_port": 0,
+              "to_block": 27,
+              "to_port": 0
+            },
+            {
+              "from_block": 22,
+              "from_port": 0,
+              "to_block": 28,
+              "to_port": 0
+            },
+            {
+              "from_block": 28,
+              "from_port": 0,
+              "to_block": 20,
+              "to_port": 1
+            },
+            {
+              "from_block": 26,
+              "from_port": 0,
+              "to_block": 29,
+              "to_port": 0
+            },
+            {
+              "from_block": 29,
+              "from_port": 0,
+              "to_block": 20,
+              "to_port": 2
+            },
+            {
+              "from_block": 26,
+              "from_port": 0,
+              "to_block": 30,
+              "to_port": 0
+            },
+            {
+              "from_block": 30,
+              "from_port": 0,
+              "to_block": 24,
+              "to_port": 1
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 32,
+        "type": "Mux",
+        "name": "Speeds",
+        "x": 700,
+        "y": 230,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 33,
+        "type": "Scope",
+        "name": "Speed: lag vs lead",
+        "x": 780,
+        "y": 238,
+        "params": {
+          "title": "Motor speed (rad/s): lag (yellow) vs lead compensator"
+        },
+        "flipped": false
+      },
+      {
+        "id": 34,
+        "type": "Mux",
+        "name": "Voltages",
+        "x": 700,
+        "y": 560,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 35,
+        "type": "Scope",
+        "name": "Control effort",
+        "x": 780,
+        "y": 568,
+        "params": {
+          "title": "Motor voltage (V): lag vs lead control effort"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 16,
+        "to_port": 0
+      },
+      {
+        "from_block": 16,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 1
+      },
+      {
+        "from_block": 16,
+        "from_port": 0,
+        "to_block": 32,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 34,
+        "to_port": 0
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 17,
+        "to_port": 0
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 18,
+        "to_port": 0
+      },
+      {
+        "from_block": 18,
+        "from_port": 0,
+        "to_block": 31,
+        "to_port": 0
+      },
+      {
+        "from_block": 31,
+        "from_port": 0,
+        "to_block": 17,
+        "to_port": 1
+      },
+      {
+        "from_block": 31,
+        "from_port": 0,
+        "to_block": 32,
+        "to_port": 1
+      },
+      {
+        "from_block": 18,
+        "from_port": 0,
+        "to_block": 34,
+        "to_port": 1
+      },
+      {
+        "from_block": 32,
+        "from_port": 0,
+        "to_block": 33,
+        "to_port": 0
+      },
+      {
+        "from_block": 34,
+        "from_port": 0,
+        "to_block": 35,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  }
+}

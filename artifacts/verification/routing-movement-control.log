@@ -1,0 +1,19 @@
+test_unconnected_obstacle_move_reroutes_existing_signal (__main__.RoutingRegressions.test_unconnected_obstacle_move_reroutes_existing_signal) ... FAIL
+
+======================================================================
+FAIL: test_unconnected_obstacle_move_reroutes_existing_signal (__main__.RoutingRegressions.test_unconnected_obstacle_move_reroutes_existing_signal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 59, in test_unconnected_obstacle_move_reroutes_existing_signal
+    self.assert_avoids(wire, obstacle)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "<repo>\tests\test_routing_regressions.py", line 44, in assert_avoids
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect), "Signal route crosses an unrelated block")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : Signal route crosses an unrelated block
+
+ROUTING MUTATION: 1 crossing failures; 0 errors.
+----------------------------------------------------------------------
+Ran 1 test in 0.198s
+
+FAILED (failures=1)

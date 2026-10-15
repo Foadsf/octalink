@@ -1,0 +1,91 @@
+{
+  "tools": {
+    "octave": "%USERPROFILE%\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "cc": "C:\\msys64\\ucrt64\\bin\\gcc.EXE"
+  },
+  "models": {
+    "motor_speed_lag_lead": {
+      "samples": 15001,
+      "python_reference_max_error": 1.280784224628845e-06,
+      "tolerance": 2e-06,
+      "octave_python_max_error": 3.552713678800501e-11,
+      "standalone_m_python_max_error": 3.552713678800501e-11,
+      "c99_python_max_error": 0.0,
+      "rk4_refinement": [
+        1.280784224628845e-06,
+        7.65467975725187e-08
+      ]
+    },
+    "inverted_pendulum": {
+      "samples": 10001,
+      "python_reference_max_error": 2.8441731926396534e-07,
+      "tolerance": 1e-06,
+      "octave_python_max_error": 2.0747847884194925e-12,
+      "standalone_m_python_max_error": 2.0747847884194925e-12,
+      "c99_python_max_error": 0.0,
+      "rk4_refinement": [
+        2.8441731926396534e-07,
+        1.777129753590831e-08
+      ]
+    },
+    "aircraft_pitch_lqr": {
+      "samples": 1001,
+      "python_reference_max_error": 3.043945746593777e-09,
+      "tolerance": 1e-08,
+      "octave_python_max_error": 2.220446049250313e-16,
+      "standalone_m_python_max_error": 2.220446049250313e-16,
+      "c99_python_max_error": 4.440892098500626e-16,
+      "rk4_refinement": [
+        3.043945746593777e-09,
+        1.8796276306798178e-10
+      ]
+    },
+    "motor_position_digital": {
+      "samples": 801,
+      "python_reference_max_error": 4.387438731553809e-11,
+      "tolerance": 2e-06,
+      "octave_python_max_error": 5.773159728050814e-14,
+      "standalone_m_python_max_error": 5.773159728050814e-14,
+      "c99_rk4_1us_reference_max_error": 5.310801300658625e-13
+    },
+    "inverted_pendulum_loop": {
+      "samples": 10001,
+      "python_reference_max_error": 2.844172482167127e-07,
+      "tolerance": 1e-06,
+      "octave_python_max_error": 7.16227077646181e-12,
+      "standalone_m_python_max_error": 7.16227077646181e-12,
+      "loop_vs_explicit_max_error": 8.030492858746355e-14
+    },
+    "published": {
+      "lag_lead_rise": [
+        0.26080000000000003,
+        0.0056
+      ],
+      "pitch_rise": 0.73,
+      "pitch_peak": 0.20982559160156608,
+      "position_peak_sampled": 1.0996030125629963,
+      "position_settling": 0.020900000000000002,
+      "position_intersample_ripple": 0.6744125397182716,
+      "house_cost": 30.346990317369812,
+      "indoor_band": [
+        64.9783745970825,
+        75.04468558826467
+      ]
+    },
+    "house_heating": {
+      "energy_imbalance": 4.5503076162859566e-08,
+      "octave_python_max_error": 1.4210854715202004e-14,
+      "standalone_m_python_max_error": 1.4210854715202004e-14,
+      "c99_python_max_error": 0.0
+    },
+    "analysis": {
+      "pendulum_poles": [
+        -5.60409412432298,
+        -0.14283163571399893,
+        0.0,
+        5.565107578218799
+      ],
+      "pitch_dc": 1.0
+    }
+  }
+}

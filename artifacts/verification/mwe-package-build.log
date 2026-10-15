@@ -1,0 +1,13 @@
+Synchronized octalink_gui.py
+Synchronized mvp_editor.py
+Synchronized mvp_model.py
+Synchronized octalink_engine_support.py
+Synchronized simulation_service.py
+Synchronized octave_backend.py
+Synchronized c_export.py
+Synchronized linear_analysis.py
+Packaging <repo>\octalink-1.0.0 -> <repo>\octalink-0.1.0.tar.gz...
+Successfully generated <repo>\octalink-0.1.0.tar.gz (75.8 KB)
+
+To install in GNU Octave, run:
+  octave --eval "pkg install octalink-0.1.0.tar.gz; pkg load octalink; octalink"

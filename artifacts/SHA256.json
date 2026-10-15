@@ -1,0 +1,12 @@
+{
+  "octalink-0.1.0.tar.gz": "70720d7ffbff533da9c5b93a70257afc43d51f14fcaf8c99f39d471a9968b1c3",
+  "octalink-0.1.0-py3-none-any.whl": "7c6c1212032b6be3aa1776bfea9b184c5ded3178d685c0de628b00ab6932b1e2",
+  "octalink_gui.py": "d68e466e4e17b834e868afab90a8aaf30d2acb3b38ebfa120f30352866bcdab4",
+  "mvp_editor.py": "05a925c8c6bceab0848abc455e21315a1e05f8117bdb1bc891efef9c11115326",
+  "mvp_model.py": "1506672d1d92ba74d6b8e6094441bda255864bcbbea1d717f682415cec871ce1",
+  "octalink_engine_support.py": "aa7c3aa8094fe2fa02c07bdd402d07640b955ea6aa764371251014be0e1d31e6",
+  "simulation_service.py": "b54c2ecd38627f65c0ef878aa1297c5d706ade35467c5ea22284b4c489e1dbe3",
+  "octave_backend.py": "cb2c6106cf4387643ffc3e41a0570305e424859b612237e34121d7c4e911076c",
+  "c_export.py": "bba2dd2f582d4854f1c5eff135fe98dbceacd94572f976e130ed36caf2b68115",
+  "linear_analysis.py": "7939215329c8f2aea4e53ec77553a7d943ed65bd88e51d182469f24c59fb52cd"
+}

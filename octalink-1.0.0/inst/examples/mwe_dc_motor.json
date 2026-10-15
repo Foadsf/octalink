@@ -1,0 +1,272 @@
+{
+  "version": "4.0",
+  "stop_time": "3",
+  "dt": "0.005",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Step",
+        "name": "Voltage 1 V",
+        "x": 60,
+        "y": 110,
+        "params": {
+          "step_time": "0",
+          "initial_val": "0",
+          "final_val": "1"
+        },
+        "flipped": false
+      },
+      {
+        "id": 2,
+        "type": "Sum",
+        "name": "V minus R i",
+        "x": 172,
+        "y": 110,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 3,
+        "type": "Sum",
+        "name": "minus back EMF",
+        "x": 283,
+        "y": 110,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 4,
+        "type": "Gain",
+        "name": "1 L",
+        "x": 382,
+        "y": 110,
+        "params": {
+          "gain": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 5,
+        "type": "Integrator",
+        "name": "Current A",
+        "x": 482,
+        "y": 110,
+        "params": {
+          "initial_condition": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 6,
+        "type": "Gain",
+        "name": "Resistance R",
+        "x": 271,
+        "y": 238,
+        "params": {
+          "gain": "1"
+        },
+        "flipped": true
+      },
+      {
+        "id": 7,
+        "type": "Gain",
+        "name": "Torque Kt",
+        "x": 482,
+        "y": 350,
+        "params": {
+          "gain": "0.01"
+        },
+        "flipped": false
+      },
+      {
+        "id": 8,
+        "type": "Sum",
+        "name": "Torque minus drag",
+        "x": 599,
+        "y": 350,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 9,
+        "type": "Gain",
+        "name": "1 J",
+        "x": 705,
+        "y": 350,
+        "params": {
+          "gain": "100"
+        },
+        "flipped": false
+      },
+      {
+        "id": 10,
+        "type": "Integrator",
+        "name": "Speed rad s",
+        "x": 804,
+        "y": 350,
+        "params": {
+          "initial_condition": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 11,
+        "type": "Gain",
+        "name": "Viscous b",
+        "x": 699,
+        "y": 485,
+        "params": {
+          "gain": "0.1"
+        },
+        "flipped": true
+      },
+      {
+        "id": 12,
+        "type": "Gain",
+        "name": "Back EMF Ke",
+        "x": 283,
+        "y": 485,
+        "params": {
+          "gain": "0.01"
+        },
+        "flipped": true
+      },
+      {
+        "id": 13,
+        "type": "Mux",
+        "name": "Speed and current",
+        "x": 922,
+        "y": 148,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 14,
+        "type": "Scope",
+        "name": "Motor response",
+        "x": 1015,
+        "y": 148,
+        "params": {
+          "title": "DC motor: speed (rad/s), current (A)"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 1
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 10,
+        "from_port": 0,
+        "to_block": 12,
+        "to_port": 0
+      },
+      {
+        "from_block": 12,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 1
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 7,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 0
+      },
+      {
+        "from_block": 10,
+        "from_port": 0,
+        "to_block": 11,
+        "to_port": 0
+      },
+      {
+        "from_block": 11,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 1
+      },
+      {
+        "from_block": 8,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 0
+      },
+      {
+        "from_block": 9,
+        "from_port": 0,
+        "to_block": 10,
+        "to_port": 0
+      },
+      {
+        "from_block": 10,
+        "from_port": 0,
+        "to_block": 13,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 13,
+        "to_port": 1
+      },
+      {
+        "from_block": 13,
+        "from_port": 0,
+        "to_block": 14,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  },
+  "backend": "python",
+  "provenance": "Equations/parameters adapted from CTMS Motor Speed Simulink Modeling: https://ctms.engin.umich.edu/CTMS/?example=MotorSpeed&section=SimulinkModeling . Local 1 V step at t=0, 3 s horizon, zero initial current/speed."
+}

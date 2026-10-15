@@ -1,0 +1,184 @@
+======================================================================
+OctaLink Canonical Self-Test Runner (6 Stages)
+======================================================================
+[1/6] Initializing OctaLink, Vector SVG Icons & testing Undo/Redo + Block Flipping...
+[2/6] Verifying Pad� Delay Linearization (linmod), Poles, Bode/Nyquist & Stability Margins...
+      -> 6-State Pad� Poles: [np.float64(-40.734), np.float64(-40.734), np.float64(-8.087), np.float64(-0.494), np.float64(-0.494), np.float64(-0.658)]
+      -> Gain Margin: 22.46 dB | Phase Margin: 23.28 deg
+      -> Step Metrics: Tr=1.350s, Ts=8.960s, OS=60.02%, ess=0.1557
+[3/6] Verifying Embedded ANSI C99 Code Generation (.h / .c) & GCC Compilation...
+      -> Compiled & Executed Native C99 Binary: C99_FINAL_PLANT=-0.8957
+[4/6] Verifying Nonlinear Math, State-Space, Safe Regex Octave Function & Demux...
+      -> Nonlinear + State-Space + Demux Channel[2] Output: 2.9189 (Target: 2.9203)
+[5/6] Verifying Switch, Relay & To CSV Sink Blocks...
+      -> Switch + Relay + To CSV verified (755 bytes written)
+[6/6] Verifying Octave .m Export with Plotting Commands Restored...
+ALL 6 CANONICAL SELF-TESTS PASSED SUCCESSFULLY.
+======================================================================
+Legacy prototype stages completed. Export execution is not numerical parity proof.
+======================================================================
+MEASUREMENT: C/Python 6 rows, 1 channels, max error=0, final time=0.37.
+MEASUREMENT: C/Python 2 rows, 1 channels, max error=0, final time=0.37.
+MEASUREMENT: C/Python 51 rows, 1 channels, max error=0, final time=1.
+MEASUREMENT: C/Python 101 rows, 1 channels, max error=0, final time=1.
+MEASUREMENT: C/Python 101 rows, 1 channels, max error=0, final time=1.
+NEGATIVE CONTROL: compiled disabled-integration mutant failed the same analytical sample comparator; healthy C passed.
+MEASUREMENT: C/Python 11 rows, 1 channels, max error=0, final time=0.5.
+MEASUREMENT: C/Python 13 rows, 1 channels, max error=0, final time=0.29999999999999999.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 3 rows, 1 channels, max error=0, final time=0.20000000000000001.
+MEASUREMENT: C/Python 1 rows, 1 channels, max error=0, final time=0.
+MEASUREMENT: C/Python 4 rows, 2 channels, max error=0, final time=0.29999999999999999.
+MEASUREMENT: C/Python 9 rows, 1 channels, max error=0, final time=0.53000000000000003.
+MEASUREMENT: C/Python 12 rows, 1 channels, max error=0, final time=0.59999999999999998.
+MEASUREMENT: C/Python 119 rows, 1 channels, max error=0, final time=2.
+RUNTIME CONTROL: domain errors, bad dt, sticky status and substep/counter bounds observed
+MEASUREMENT: C/Python 1001 rows, 2 channels, max error=0, final time=10.
+MEASUREMENT: first_order_feedback.json compiled C99 final channels=[1.0, 0.9999999847700196].
+MEASUREMENT: C/Python 1001 rows, 3 channels, max error=3.55e-14, final time=10.
+MEASUREMENT: hybrid_control_loop.json compiled C99 final channels=[1.0, 6.0, 0.8443338938132925].
+MEASUREMENT: C/Python 1001 rows, 1 channels, max error=0, final time=10.
+MEASUREMENT: nonlinear_statespace.json compiled C99 final channels=[2.91888215747405].
+MEASUREMENT: C/Python 1001 rows, 2 channels, max error=0, final time=10.
+MEASUREMENT: van_der_pol.json compiled C99 final channels=[-2.0083407836624567, 0.03290704242291824].
+NEGATIVE CONTROL: unsafe syntax, bad function arity, missing vector channel and Demux width rejected before writing C.
+test_analytical_integrator_and_exact_step (test_c_export.CExportTests.test_analytical_integrator_and_exact_step) ... ok
+test_analytical_transfer_and_state_space (test_c_export.CExportTests.test_analytical_transfer_and_state_space) ... ok
+test_compiled_disabled_integration_control_really_fails (test_c_export.CExportTests.test_compiled_disabled_integration_control_really_fails) ... ok
+test_delay_continuous_hold_and_simultaneous_commit (test_c_export.CExportTests.test_delay_continuous_hold_and_simultaneous_commit) ... ok
+test_expression_precedence_math_modulo_and_static_transfer (test_c_export.CExportTests.test_expression_precedence_math_modulo_and_static_transfer) ... ok
+test_nested_mux_demux_vector_expr_and_arbitrary_names (test_c_export.CExportTests.test_nested_mux_demux_vector_expr_and_arbitrary_names) ... ok
+test_noncommensurate_sample_events_and_zoh_integration (test_c_export.CExportTests.test_noncommensurate_sample_events_and_zoh_integration) ... ok
+test_relay_switch_saturation_and_pid (test_c_export.CExportTests.test_relay_switch_saturation_and_pid) ... ok
+test_runtime_domain_division_and_bad_time_status (test_c_export.CExportTests.test_runtime_domain_division_and_bad_time_status) ... ok
+test_shipped_models_every_time_and_channel (test_c_export.CExportTests.test_shipped_models_every_time_and_channel) ... ok
+test_unsafe_expressions_and_vector_mismatches_rejected (test_c_export.CExportTests.test_unsafe_expressions_and_vector_mismatches_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 69.215s
+
+OK
+test_backend_preference_persists_and_missing_octave_preserves_model (test_editor_mvp.EditorTests.test_backend_preference_persists_and_missing_octave_preserves_model) ... ok
+test_background_run_returns_analytic_results_and_restores_editor (test_editor_mvp.EditorTests.test_background_run_returns_analytic_results_and_restores_editor) ... ok
+test_block_drag_is_undoable (test_editor_mvp.EditorTests.test_block_drag_is_undoable) ... ok
+test_build_and_wire_new_model_using_canvas_gestures (test_editor_mvp.EditorTests.test_build_and_wire_new_model_using_canvas_gestures) ... ok
+test_cancel_is_responsive_and_does_not_publish_partial_results (test_editor_mvp.EditorTests.test_cancel_is_responsive_and_does_not_publish_partial_results) ... ok
+test_connection_toggle_redraws_and_undo_redo_preserve_topology (test_editor_mvp.EditorTests.test_connection_toggle_redraws_and_undo_redo_preserve_topology) ... ok
+test_copy_paste_subsystem_and_internal_connections (test_editor_mvp.EditorTests.test_copy_paste_subsystem_and_internal_connections) ... ok
+test_default_is_checked_analytic_example_and_light_editor (test_editor_mvp.EditorTests.test_default_is_checked_analytic_example_and_light_editor) ... ok
+test_diagram_styles_are_independent_and_round_trip_with_subsystems (test_editor_mvp.EditorTests.test_diagram_styles_are_independent_and_round_trip_with_subsystems) ... ok
+test_failed_atomic_replace_preserves_existing_file (test_editor_mvp.EditorTests.test_failed_atomic_replace_preserves_existing_file) ... ok
+test_invalid_dynamic_port_edit_preserves_document (test_editor_mvp.EditorTests.test_invalid_dynamic_port_edit_preserves_document) ... ok
+test_legacy_style_default_and_invalid_style_control (test_editor_mvp.EditorTests.test_legacy_style_default_and_invalid_style_control) ... ok
+test_library_search_double_click_insertion_undo_redo (test_editor_mvp.EditorTests.test_library_search_double_click_insertion_undo_redo) ... ok
+test_model_negative_controls_and_positive_round_trip (test_editor_mvp.EditorTests.test_model_negative_controls_and_positive_round_trip) ... ok
+test_property_apply_changes_parameter_and_undo_restores_it (test_editor_mvp.EditorTests.test_property_apply_changes_parameter_and_undo_restores_it) ... ok
+test_save_round_trip_and_invalid_open_preserves_live_model (test_editor_mvp.EditorTests.test_save_round_trip_and_invalid_open_preserves_live_model) ... ok
+test_wires_are_orthogonal_and_stay_attached_after_move (test_editor_mvp.EditorTests.test_wires_are_orthogonal_and_stay_attached_after_move) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.587s
+
+OK
+MEASUREMENT: closed-loop RK4 max absolute error = 3.33e-07.
+NEGATIVE CONTROL: direct-feedthrough cycle rejected; delay feedback accepted.
+NEGATIVE CONTROL: 13 unsafe/non-finite expressions and missing vector channel rejected.
+NEGATIVE CONTROL: cancellation raised SimulationCancelled and preserved prior results.
+MEASUREMENT: first_order_feedback.json/Scope: 101 finite samples.
+MEASUREMENT: hybrid_control_loop.json/Main_Scope: 108 finite samples.
+MEASUREMENT: nonlinear_statespace.json/Demux_Scope: 101 finite samples.
+MEASUREMENT: van_der_pol.json/Phase_states: 101 finite samples.
+MEASUREMENT: delayed constant integration max absolute error = 5.55e-17.
+test_bad_time_bounds_and_parameters_rejected (test_engine_mvp.EngineMVPTests.test_bad_time_bounds_and_parameters_rejected) ... ok
+test_closed_loop_first_order_analytical_response (test_engine_mvp.EngineMVPTests.test_closed_loop_first_order_analytical_response) ... ok
+test_constructor_does_not_launch_octave (test_engine_mvp.EngineMVPTests.test_constructor_does_not_launch_octave) ... ok
+test_csv_sink_and_write_opt_out (test_engine_mvp.EngineMVPTests.test_csv_sink_and_write_opt_out) ... ok
+test_delay_feedback_breaks_loop_and_direct_loop_rejected (test_engine_mvp.EngineMVPTests.test_delay_feedback_breaks_loop_and_direct_loop_rejected) ... ok
+test_division_by_zero_and_dimension_mismatch_rejected (test_engine_mvp.EngineMVPTests.test_division_by_zero_and_dimension_mismatch_rejected) ... ok
+test_exact_stop_and_step_discontinuity (test_engine_mvp.EngineMVPTests.test_exact_stop_and_step_discontinuity) ... ok
+test_expression_security_negative_controls (test_engine_mvp.EngineMVPTests.test_expression_security_negative_controls) ... ok
+test_inconsistent_state_space_rejected (test_engine_mvp.EngineMVPTests.test_inconsistent_state_space_rejected) ... ok
+test_missing_input_and_multiple_drivers_rejected (test_engine_mvp.EngineMVPTests.test_missing_input_and_multiple_drivers_rejected) ... ok
+test_nested_mux_preserves_channels_and_labels (test_engine_mvp.EngineMVPTests.test_nested_mux_preserves_channels_and_labels) ... ok
+test_noncommensurate_multirate_sample_times (test_engine_mvp.EngineMVPTests.test_noncommensurate_multirate_sample_times) ... ok
+test_progress_cancellation_and_no_partial_publication (test_engine_mvp.EngineMVPTests.test_progress_cancellation_and_no_partial_publication) ... ok
+test_runtime_nonfinite_and_function_domain_errors_rejected (test_engine_mvp.EngineMVPTests.test_runtime_nonfinite_and_function_domain_errors_rejected) ... ok
+test_safe_arithmetic_and_arrays (test_engine_mvp.EngineMVPTests.test_safe_arithmetic_and_arrays) ... ok
+test_shipped_examples_hierarchy_and_finite_outputs (test_engine_mvp.EngineMVPTests.test_shipped_examples_hierarchy_and_finite_outputs) ... ok
+test_simultaneous_delay_updates (test_engine_mvp.EngineMVPTests.test_simultaneous_delay_updates) ... ok
+test_state_space_initial_state_and_direct_term (test_engine_mvp.EngineMVPTests.test_state_space_initial_state_and_direct_term) ... ok
+test_static_transfer_and_zero_stop (test_engine_mvp.EngineMVPTests.test_static_transfer_and_zero_stop) ... ok
+test_transfer_function_analytical_response (test_engine_mvp.EngineMVPTests.test_transfer_function_analytical_response) ... ok
+test_unit_delay_continuous_integration_holds_old_state (test_engine_mvp.EngineMVPTests.test_unit_delay_continuous_integration_holds_old_state) ... ok
+test_zoh_integral_uses_exact_sample_times (test_engine_mvp.EngineMVPTests.test_zoh_integral_uses_exact_sample_times) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.471s
+
+OK
+NEGATIVE CONTROL: changed A=-3 is rejected by A=-2 and independent transfer checks.
+MEASUREMENT: first-order A=[[-2.0]], B=[[2.0]], DC=1, rise=1.0986s.
+MEASUREMENT: shipped hybrid: 6 state poles, 4 transfer zeros, 1000 finite frequency samples, two labeled Pad� approximations.
+test_bad_matrix_negative_control (test_linear_analysis.LinearAnalysisTests.test_bad_matrix_negative_control) ... ok
+test_feedthrough_zero_static_gain_and_csv_sink (test_linear_analysis.LinearAnalysisTests.test_feedthrough_zero_static_gain_and_csv_sink) ... ok
+test_invalid_operating_and_frequency_inputs (test_linear_analysis.LinearAnalysisTests.test_invalid_operating_and_frequency_inputs) ... ok
+test_margin_crossovers_have_independent_formula (test_linear_analysis.LinearAnalysisTests.test_margin_crossovers_have_independent_formula) ... ok
+test_matrix_exponential_defective_system_and_short_horizon (test_linear_analysis.LinearAnalysisTests.test_matrix_exponential_defective_system_and_short_horizon) ... ok
+test_nondifferentiable_and_unstable_controls (test_linear_analysis.LinearAnalysisTests.test_nondifferentiable_and_unstable_controls) ... ok
+test_nonlinear_constant_source_bias_and_second_source_selection (test_linear_analysis.LinearAnalysisTests.test_nonlinear_constant_source_bias_and_second_source_selection) ... ok
+test_pade_algebraic_loop_is_rejected (test_linear_analysis.LinearAnalysisTests.test_pade_algebraic_loop_is_rejected) ... ok
+test_pade_delay_formula_and_discrete_refusal (test_linear_analysis.LinearAnalysisTests.test_pade_delay_formula_and_discrete_refusal) ... ok
+test_reference_channel_is_explicit (test_linear_analysis.LinearAnalysisTests.test_reference_channel_is_explicit) ... ok
+test_second_order_filter_and_strictly_proper_zero (test_linear_analysis.LinearAnalysisTests.test_second_order_filter_and_strictly_proper_zero) ... ok
+test_shipped_first_order_feedback (test_linear_analysis.LinearAnalysisTests.test_shipped_first_order_feedback) ... ok
+test_shipped_hybrid_finite_and_labeled (test_linear_analysis.LinearAnalysisTests.test_shipped_hybrid_finite_and_labeled) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.026s
+
+OK
+MEASUREMENT: Octave/Python first_order_feedback.json: 1 matching sinks
+MEASUREMENT: Octave/Python hybrid_control_loop.json: 1 matching sinks
+MEASUREMENT: Octave/Python nonlinear_statespace.json: 1 matching sinks
+MEASUREMENT: Octave/Python van_der_pol.json: 1 matching sinks
+MEASUREMENT: Octave Step/integral maximum absolute error=0; samples=6
+MEASUREMENT: installed Van der Pol RK4 versus independent ode45 maximum endpoint error=1.2413958749846188e-10
+test_all_arithmetic_routing_and_relay (test_octave_backend.BackendLiveTests.test_all_arithmetic_routing_and_relay) ... ok
+test_all_shipped_examples (test_octave_backend.BackendLiveTests.test_all_shipped_examples) ... ok
+test_analytical_integration_and_step_endpoint (test_octave_backend.BackendLiveTests.test_analytical_integration_and_step_endpoint) ... ok
+test_export_executes_without_python_and_matches_backend (test_octave_backend.BackendLiveTests.test_export_executes_without_python_and_matches_backend) ... ok
+test_expression_vector_math (test_octave_backend.BackendLiveTests.test_expression_vector_math) ... ok
+test_installed_van_der_pol_against_independent_ode45 (test_octave_backend.BackendLiveTests.test_installed_van_der_pol_against_independent_ode45) ... ok
+test_progress_and_real_cancellation (test_octave_backend.BackendLiveTests.test_progress_and_real_cancellation) ... ok
+test_real_timeout_terminates_child (test_octave_backend.BackendLiveTests.test_real_timeout_terminates_child) ... ok
+test_runtime_errors_are_not_partial_success (test_octave_backend.BackendLiveTests.test_runtime_errors_are_not_partial_success) ... ok
+test_simultaneous_delays_and_multirate_hold (test_octave_backend.BackendLiveTests.test_simultaneous_delays_and_multirate_hold) ... ok
+test_transfer_direct_feedthrough_and_pid (test_octave_backend.BackendLiveTests.test_transfer_direct_feedthrough_and_pid) ... ok
+test_bounds_and_algebraic_loop (test_octave_backend.BackendOfflineTests.test_bounds_and_algebraic_loop) ... ok
+test_cancel_and_timeout_child_cleanup_contract (test_octave_backend.BackendOfflineTests.test_cancel_and_timeout_child_cleanup_contract) ... ok
+test_cancel_before_launch (test_octave_backend.BackendOfflineTests.test_cancel_before_launch) ... ok
+test_explicit_missing_executable_never_falls_back (test_octave_backend.BackendOfflineTests.test_explicit_missing_executable_never_falls_back) ... ok
+test_explicit_override (test_octave_backend.BackendOfflineTests.test_explicit_override) ... ok
+test_export_is_standalone_and_labels_cannot_inject (test_octave_backend.BackendOfflineTests.test_export_is_standalone_and_labels_cannot_inject) ... ok
+test_injection_negative_controls (test_octave_backend.BackendOfflineTests.test_injection_negative_controls) ... ok
+test_invalid_timeout (test_octave_backend.BackendOfflineTests.test_invalid_timeout) ... ok
+test_schedule_has_exact_stop_and_events (test_octave_backend.BackendOfflineTests.test_schedule_has_exact_stop_and_events) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 50.993s
+
+OK
+test_explicit_backend_overrides_saved_choice (test_simulation_service.SimulationServiceTests.test_explicit_backend_overrides_saved_choice) ... ok
+test_invalid_backend_is_rejected (test_simulation_service.SimulationServiceTests.test_invalid_backend_is_rejected) ... ok
+test_octave_failure_never_silently_falls_back (test_simulation_service.SimulationServiceTests.test_octave_failure_never_silently_falls_back) ... ok
+test_original_version_three_examples_load_and_simulate (test_simulation_service.SimulationServiceTests.test_original_version_three_examples_load_and_simulate) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.114s
+
+OK
+MVP ACCEPTANCE OK: 87 tests passed; 6 legacy stages completed; integrator mutation rejected (exit 1).

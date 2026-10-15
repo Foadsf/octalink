@@ -1,0 +1,37 @@
+{
+  "dc_motor": {
+    "backend": "octave",
+    "scopes": 1,
+    "samples": 601,
+    "reference_max_error": 4.976055669944635e-10,
+    "images": [
+      "dc_motor-scope.png",
+      "dc_motor-editor-orthogonal.png",
+      "dc_motor-editor-curved.png"
+    ]
+  },
+  "cruise_pi": {
+    "backend": "octave",
+    "scopes": 2,
+    "samples": 1001,
+    "reference_max_error": 9.480982043896802e-08,
+    "images": [
+      "cruise_pi-scope.png",
+      "cruise_pi-scope-2.png",
+      "cruise_pi-editor-orthogonal.png",
+      "cruise_pi-editor-curved.png",
+      "cruise_pi-subsystem.png"
+    ]
+  },
+  "van_der_pol": {
+    "backend": "octave",
+    "scopes": 1,
+    "samples": 1001,
+    "reference_max_error": 5.114178813769854e-08,
+    "images": [
+      "van_der_pol-scope.png",
+      "van_der_pol-editor-orthogonal.png",
+      "van_der_pol-editor-curved.png"
+    ]
+  }
+}

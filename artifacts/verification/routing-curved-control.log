@@ -1,0 +1,87 @@
+test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) ... 
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_cruise_pi.json', curved=True, obstacle='Control effort', source='Vehicle') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Torque Kt', source='Current A') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Back EMF Ke', source='Current A') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Back EMF Ke', source='Resistance R') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='One', source='1 minus x squared') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='One', source='Mu') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='x squared', source='Displacement') ... FAIL
+  test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='Mu', source='Displacement') ... FAIL
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_cruise_pi.json', curved=True, obstacle='Control effort', source='Vehicle')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Torque Kt', source='Current A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Back EMF Ke', source='Current A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_dc_motor.json', curved=True, obstacle='Back EMF Ke', source='Resistance R')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='One', source='1 minus x squared')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='One', source='Mu')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='x squared', source='Displacement')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_internet_models_both_styles_avoid_unrelated_block_bodies (__main__.RoutingRegressions.test_internet_models_both_styles_avoid_unrelated_block_bodies) (model='mwe_van_der_pol.json', curved=True, obstacle='Mu', source='Displacement')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_routing_regressions.py", line 80, in test_internet_models_both_styles_avoid_unrelated_block_bodies
+    self.assertFalse(stroke.createStroke(wire.path()).intersects(rect))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.365s
+
+FAILED (failures=8)
+ROUTING MUTATION: 8 crossing failures; 0 errors.

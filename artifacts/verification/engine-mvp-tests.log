@@ -1,0 +1,35 @@
+Failed to find real location of %USERPROFILE%\scoop\apps\miniconda3\current\python.exe
+test_bad_time_bounds_and_parameters_rejected (test_engine_mvp.EngineMVPTests.test_bad_time_bounds_and_parameters_rejected) ... ok
+test_closed_loop_first_order_analytical_response (test_engine_mvp.EngineMVPTests.test_closed_loop_first_order_analytical_response) ... ok
+test_constructor_does_not_launch_octave (test_engine_mvp.EngineMVPTests.test_constructor_does_not_launch_octave) ... ok
+test_csv_sink_and_write_opt_out (test_engine_mvp.EngineMVPTests.test_csv_sink_and_write_opt_out) ... ok
+test_delay_feedback_breaks_loop_and_direct_loop_rejected (test_engine_mvp.EngineMVPTests.test_delay_feedback_breaks_loop_and_direct_loop_rejected) ... ok
+test_division_by_zero_and_dimension_mismatch_rejected (test_engine_mvp.EngineMVPTests.test_division_by_zero_and_dimension_mismatch_rejected) ... ok
+test_exact_stop_and_step_discontinuity (test_engine_mvp.EngineMVPTests.test_exact_stop_and_step_discontinuity) ... ok
+test_expression_security_negative_controls (test_engine_mvp.EngineMVPTests.test_expression_security_negative_controls) ... ok
+test_inconsistent_state_space_rejected (test_engine_mvp.EngineMVPTests.test_inconsistent_state_space_rejected) ... ok
+test_missing_input_and_multiple_drivers_rejected (test_engine_mvp.EngineMVPTests.test_missing_input_and_multiple_drivers_rejected) ... ok
+test_nested_mux_preserves_channels_and_labels (test_engine_mvp.EngineMVPTests.test_nested_mux_preserves_channels_and_labels) ... ok
+test_noncommensurate_multirate_sample_times (test_engine_mvp.EngineMVPTests.test_noncommensurate_multirate_sample_times) ... ok
+test_progress_cancellation_and_no_partial_publication (test_engine_mvp.EngineMVPTests.test_progress_cancellation_and_no_partial_publication) ... ok
+test_runtime_nonfinite_and_function_domain_errors_rejected (test_engine_mvp.EngineMVPTests.test_runtime_nonfinite_and_function_domain_errors_rejected) ... ok
+test_safe_arithmetic_and_arrays (test_engine_mvp.EngineMVPTests.test_safe_arithmetic_and_arrays) ... ok
+test_shipped_examples_hierarchy_and_finite_outputs (test_engine_mvp.EngineMVPTests.test_shipped_examples_hierarchy_and_finite_outputs) ... ok
+test_simultaneous_delay_updates (test_engine_mvp.EngineMVPTests.test_simultaneous_delay_updates) ... ok
+test_state_space_initial_state_and_direct_term (test_engine_mvp.EngineMVPTests.test_state_space_initial_state_and_direct_term) ... ok
+test_static_transfer_and_zero_stop (test_engine_mvp.EngineMVPTests.test_static_transfer_and_zero_stop) ... ok
+test_transfer_function_analytical_response (test_engine_mvp.EngineMVPTests.test_transfer_function_analytical_response) ... ok
+test_unit_delay_continuous_integration_holds_old_state (test_engine_mvp.EngineMVPTests.test_unit_delay_continuous_integration_holds_old_state) ... ok
+test_zoh_integral_uses_exact_sample_times (test_engine_mvp.EngineMVPTests.test_zoh_integral_uses_exact_sample_times) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.822s
+
+OK
+MEASUREMENT: closed-loop RK4 max absolute error = 3.33e-07.
+NEGATIVE CONTROL: direct-feedthrough cycle rejected; delay feedback accepted.
+NEGATIVE CONTROL: 13 unsafe/non-finite expressions and missing vector channel rejected.
+NEGATIVE CONTROL: cancellation raised SimulationCancelled and preserved prior results.
+MEASUREMENT: hybrid_control_loop.json/Main_Scope: 108 finite samples.
+MEASUREMENT: nonlinear_statespace.json/Demux_Scope: 101 finite samples.
+MEASUREMENT: delayed constant integration max absolute error = 5.55e-17.

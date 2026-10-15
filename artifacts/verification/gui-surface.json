@@ -1,0 +1,854 @@
+{
+  "mwe_aircraft_pitch_lqr": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_aircraft_pitch_lqr.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "RK4 (explicit)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 1001 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "1/1: ['OctaLink Multi-Channel Scope \u2014 Pitch response']"
+    },
+    {
+      "check": "Model Browser selects 'Nbar'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Nbar"
+    },
+    {
+      "check": "set Gain = 1 via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_aircraft_pitch_lqr.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "6/6 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 1001 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "rk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_aircraft_pitch_lqr.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "mwe_inverted_pendulum": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_inverted_pendulum.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "RK4 (explicit)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 10001 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "1/1: ['OctaLink Multi-Channel Scope \u2014 Open-loop response']"
+    },
+    {
+      "check": "Model Browser reaches a block inside a subsystem",
+      "passed": true,
+      "detail": "inspector=\"F, x', theta, theta'\" breadcrumb=['Root > Pendulum']"
+    },
+    {
+      "check": "Model Browser selects 'Impulse (1 N s)'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Impulse (1 N s)"
+    },
+    {
+      "check": "set Amplitude = 500 via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_inverted_pendulum.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "6/6 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 10001 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "rk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_inverted_pendulum.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "mwe_motor_speed_lag_lead": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_motor_speed_lag_lead.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "RK4 (explicit)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 3 s; 15001 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "2/2: ['OctaLink Multi-Channel Scope \u2014 Control effort', 'OctaLink Multi-Channel Scope \u2014 Speed: lag vs lead']"
+    },
+    {
+      "check": "Model Browser reaches a block inside a subsystem",
+      "passed": true,
+      "detail": "inspector='V - R i - K w' breadcrumb=['Root > DC Motor (lag)']"
+    },
+    {
+      "check": "Model Browser selects 'Lag compensator'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Lag compensator"
+    },
+    {
+      "check": "set Numerator = [40 40] via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_motor_speed_lag_lead.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "5/5 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 3 s; 15001 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "rk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_motor_speed_lag_lead.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "mwe_motor_position_digital": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_motor_position_digital.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "SDIRK4 (implicit, stiff)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 0.08 s; 801 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "1/1: ['OctaLink Multi-Channel Scope \u2014 Position']"
+    },
+    {
+      "check": "Model Browser reaches a block inside a subsystem",
+      "passed": true,
+      "detail": "inspector='V - R i - K w' breadcrumb=['Root > Motor_pos']"
+    },
+    {
+      "check": "Model Browser selects 'Controller'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Controller"
+    },
+    {
+      "check": "set Gain = 700 via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_motor_position_digital.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "6/6 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 0.08 s; 801 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "sdirk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_motor_position_digital.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "mwe_house_heating": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_house_heating.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "RK4 (explicit)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 172800 s; 86401 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "2/2: ['OctaLink Multi-Channel Scope \u2014 PlotResults', 'OctaLink Multi-Channel Scope \u2014 Heat Cost ($)']"
+    },
+    {
+      "check": "Model Browser reaches a block inside a subsystem",
+      "passed": true,
+      "detail": "inspector='Relay' breadcrumb=['Root > Thermostat']"
+    },
+    {
+      "check": "Model Browser selects 'Set Point (F)'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Set Point (F)"
+    },
+    {
+      "check": "set Value = 68 via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_house_heating.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "20/24 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 172800 s; 86401 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "rk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_house_heating.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "mwe_inverted_pendulum_loop": [
+    {
+      "check": "launched on hidden desktop without focus",
+      "passed": true,
+      "detail": "title='mwe_inverted_pendulum_loop.json \u2014 OctaLink MVP'"
+    },
+    {
+      "check": "title names the model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Browser reaches every root block",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Check Model passes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Check Model reports the algebraic loop and its Newton variables",
+      "passed": true,
+      "detail": "Algebraic loop of 8 blocks: solved by Newton on x'', theta''."
+    },
+    {
+      "check": "Solver control shows the model's solver",
+      "passed": true,
+      "detail": "RK4 (explicit)"
+    },
+    {
+      "check": "Run completes on Local Python",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 10001 logged samples."
+    },
+    {
+      "check": "every Scope opens a result window",
+      "passed": true,
+      "detail": "1/1: ['OctaLink Multi-Channel Scope \u2014 Open-loop response']"
+    },
+    {
+      "check": "Model Browser reaches a block inside a subsystem",
+      "passed": true,
+      "detail": "inspector=\"F, N, x'\" breadcrumb=['Root > Pendulum']"
+    },
+    {
+      "check": "Model Browser selects 'Impulse (1 N s)'",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Property Inspector shows the selected block",
+      "passed": true,
+      "detail": "Impulse (1 N s)"
+    },
+    {
+      "check": "set Amplitude = 500 via ValuePattern",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apply commits the edit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "title marks the model modified",
+      "passed": true,
+      "detail": "*mwe_inverted_pendulum_loop.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "Model Workspace dialog opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Model Workspace table shows the variables",
+      "passed": true,
+      "detail": "6/6 rows exposed"
+    },
+    {
+      "check": "Model Workspace evaluates every variable",
+      "passed": true,
+      "detail": "missing=[]"
+    },
+    {
+      "check": "Cancel closes the Model Workspace dialog",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "engine switched to GNU Octave via the Simulation menu",
+      "passed": true,
+      "detail": "GNU Octave"
+    },
+    {
+      "check": "Run completes on GNU Octave",
+      "passed": true,
+      "detail": "Simulation complete. Stop time 10 s; 10001 logged samples."
+    },
+    {
+      "check": "Save writes the file",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file holds the edited parameter",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps provenance and variables",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "saved file keeps the solver",
+      "passed": true,
+      "detail": "rk4"
+    },
+    {
+      "check": "title clean after save",
+      "passed": true,
+      "detail": "mwe_inverted_pendulum_loop.json \u2014 OctaLink MVP"
+    },
+    {
+      "check": "close with unsaved changes asks to save",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard closes the editor",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Discard leaves the saved file untouched",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "editor closes cleanly",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+test_01_python_full_traces_against_independent_physics (test_internet_mwes.InternetMWEAcceptance.test_01_python_full_traces_against_independent_physics) ... ok
+test_02_native_octave_full_traces (test_internet_mwes.InternetMWEAcceptance.test_02_native_octave_full_traces) ... ok
+test_03_standalone_octave_exports_full_traces (test_internet_mwes.InternetMWEAcceptance.test_03_standalone_octave_exports_full_traces) ... ok
+test_04_strict_c99_exports_full_traces (test_internet_mwes.InternetMWEAcceptance.test_04_strict_c99_exports_full_traces) ... ok
+test_05_selected_linear_models_matrices_poles_and_dc (test_internet_mwes.InternetMWEAcceptance.test_05_selected_linear_models_matrices_poles_and_dc) ... ok
+test_06_mu_zero_harmonic_and_rk4_step_refinement (test_internet_mwes.InternetMWEAcceptance.test_06_mu_zero_harmonic_and_rk4_step_refinement) ... ok
+test_07_corrupted_source_gain_and_feedback_sign_are_rejected (test_internet_mwes.InternetMWEAcceptance.test_07_corrupted_source_gain_and_feedback_sign_are_rejected) ... ok
+test_08_missing_input_invalid_port_and_wrong_scope_signal (test_internet_mwes.InternetMWEAcceptance.test_08_missing_input_invalid_port_and_wrong_scope_signal) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 48.302s
+
+OK
+MEASUREMENT: dc_motor Python/reference 601 rows, max error=4.9760556612710172e-10
+MEASUREMENT: cruise_pi Python/reference 1001 rows, max error=9.4809820438968018e-08
+MEASUREMENT: van_der_pol Python/reference 1001 rows, max error=5.1141788137698541e-08
+MEASUREMENT: dc_motor native Octave/reference max error=4.9760556699446346e-10; Python error=1.1102230246251565e-16
+MEASUREMENT: cruise_pi native Octave/reference max error=9.4809820438968018e-08; Python error=2.2204460492503131e-16
+MEASUREMENT: van_der_pol native Octave/reference max error=5.1141788137698541e-08; Python error=5.5511151231257827e-17
+MEASUREMENT: dc_motor standalone .m/reference max error=4.9760556699446346e-10
+MEASUREMENT: cruise_pi standalone .m/reference max error=9.4809820438968018e-08
+MEASUREMENT: van_der_pol standalone .m/reference max error=5.1141788137698541e-08
+MEASUREMENT: dc_motor strict C99/reference max error=4.9760556612710172e-10; Python error=0
+MEASUREMENT: cruise_pi strict C99/reference max error=9.4809820438968018e-08; Python error=0
+MEASUREMENT: van_der_pol strict C99/reference max error=5.1141788137698541e-08; Python error=0
+MEASUREMENT: dc_motor selected linearization poles=[(-9.997499218261337+0j), (-2.0025007817386626+0j)], dc=0.09990009990009989
+MEASUREMENT: cruise_pi selected linearization poles=[(-0.7999999999999999+0j), (-0.04999999999999993+0j)], dc=1
+MEASUREMENT: Mu=0 harmonic error=1.5809238640418499e-09; nonlinear refinement=5.1141788137698541e-08->4.3199119836856426e-09
+MEASUREMENT: dc_motor RK4 refinement=4.9760556612710172e-10->3.0456940788847753e-11
+MEASUREMENT: cruise_pi RK4 refinement=9.4809820438968018e-08->5.9044396039098501e-09
+NEGATIVE CONTROL: dc_motor source Torque Kt.gain=.02 rejected; error=0.099398339089039958
+NEGATIVE CONTROL: cruise_pi source Speed error.signs=++ rejected; error=25337140.367011972
+NEGATIVE CONTROL: van_der_pol source Mu.gain=0 rejected; error=2.2735825684673028
+NEGATIVE CONTROL: missing integrator input, nonexistent source port, swapped motor scope signals rejected

@@ -1,0 +1,9 @@
+Name: octalink
+Version: 0.1.0
+Date: 2026-10-14
+Author: OctaLink Contributors
+Maintainer: OctaLink Contributors
+Title: OctaLink First MVP - Visual Modeling for GNU Octave
+Description: Native Qt visual block editor with local RK4 simulation and an Octave launch and model-check bridge. Requires Python 3.10+, PyQt6, numpy and matplotlib. Experimental exporters are retained from the prototype.
+Depends: octave (>= 6.0.0)
+License: GPLv3+

@@ -1,0 +1,114 @@
+MUTATION CONTROL: disabled state integration; 3 analytical failures, 0 errors.
+test_closed_loop_first_order_analytical_response (__main__.EngineMVPTests.test_closed_loop_first_order_analytical_response) ... FAIL
+test_unit_delay_continuous_integration_holds_old_state (__main__.EngineMVPTests.test_unit_delay_continuous_integration_holds_old_state) ... FAIL
+test_zoh_integral_uses_exact_sample_times (__main__.EngineMVPTests.test_zoh_integral_uses_exact_sample_times) ... FAIL
+
+======================================================================
+FAIL: test_closed_loop_first_order_analytical_response (__main__.EngineMVPTests.test_closed_loop_first_order_analytical_response)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_engine_mvp.py", line 144, in test_closed_loop_first_order_analytical_response
+    error_max = self.assertSignal(scope, lambda t: 1 - math.exp(-t), atol=4e-7)
+  File "<repo>\tests\test_engine_mvp.py", line 101, in assertSignal
+    np.testing.assert_allclose(actual, truth, atol=atol, rtol=0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=0, atol=4e-07
+
+Mismatched elements: 20 / 21 (95.2%)
+First 5 mismatches are at indices:
+ [1]: 0.0 (ACTUAL), 0.09516258196404048 (DESIRED)
+ [2]: 0.0 (ACTUAL), 0.18126924692201818 (DESIRED)
+ [3]: 0.0 (ACTUAL), 0.2591817793182821 (DESIRED)
+ [4]: 0.0 (ACTUAL), 0.3296799539643607 (DESIRED)
+ [5]: 0.0 (ACTUAL), 0.3934693402873666 (DESIRED)
+Max absolute difference among violations: 0.86466472
+Max relative difference among violations: 1.
+ ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0.])
+ DESIRED: array([0.      , 0.095163, 0.181269, 0.259182, 0.32968 , 0.393469,
+       0.451188, 0.503415, 0.550671, 0.59343 , 0.632121, 0.667129,
+       0.698806, 0.727468, 0.753403, 0.77687 , 0.798103, 0.817316,
+       0.834701, 0.850431, 0.864665])
+
+======================================================================
+FAIL: test_unit_delay_continuous_integration_holds_old_state (__main__.EngineMVPTests.test_unit_delay_continuous_integration_holds_old_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_engine_mvp.py", line 188, in test_unit_delay_continuous_integration_holds_old_state
+    error_max = self.assertSignal(blocks[-1], lambda t: max(0, t - .1))
+  File "<repo>\tests\test_engine_mvp.py", line 101, in assertSignal
+    np.testing.assert_allclose(actual, truth, atol=atol, rtol=0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=0, atol=1e-11
+
+Mismatched elements: 8 / 11 (72.7%)
+First 5 mismatches are at indices:
+ [3]: 0.0 (ACTUAL), 0.05000000000000002 (DESIRED)
+ [4]: 0.0 (ACTUAL), 0.1 (DESIRED)
+ [5]: 0.0 (ACTUAL), 0.15 (DESIRED)
+ [6]: 0.0 (ACTUAL), 0.20000000000000004 (DESIRED)
+ [7]: 0.0 (ACTUAL), 0.25 (DESIRED)
+Max absolute difference among violations: 0.4
+Max relative difference among violations: 1.
+ ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+ DESIRED: array([0.  , 0.  , 0.  , 0.05, 0.1 , 0.15, 0.2 , 0.25, 0.3 , 0.35, 0.4 ])
+
+======================================================================
+FAIL: test_zoh_integral_uses_exact_sample_times (__main__.EngineMVPTests.test_zoh_integral_uses_exact_sample_times)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_engine_mvp.py", line 220, in test_zoh_integral_uses_exact_sample_times
+    self.assertSignal(blocks[-1], expected)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>\tests\test_engine_mvp.py", line 101, in assertSignal
+    np.testing.assert_allclose(actual, truth, atol=atol, rtol=0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=0, atol=1e-11
+
+Mismatched elements: 6 / 9 (66.7%)
+First 5 mismatches are at indices:
+ [3]: 0.0 (ACTUAL), 0.0105 (DESIRED)
+ [4]: 0.0 (ACTUAL), 0.0225 (DESIRED)
+ [5]: 0.0 (ACTUAL), 0.03150000000000001 (DESIRED)
+ [6]: 0.0 (ACTUAL), 0.0645 (DESIRED)
+ [7]: 0.0 (ACTUAL), 0.0675 (DESIRED)
+Max absolute difference among violations: 0.1035
+Max relative difference among violations: 1.
+ ACTUAL: array([0., 0., 0., 0., 0., 0., 0., 0., 0.])
+ DESIRED: array([0.    , 0.    , 0.    , 0.0105, 0.0225, 0.0315, 0.0645, 0.0675,
+       0.1035])
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.168s
+
+FAILED (failures=3)

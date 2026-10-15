@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C/C++ build artifacts
+*.o
+*.obj
+*.oct
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+var/
+sdist/
+.installed.cfg
+*.egg
+*.egg-info/
+
+# Testing & linting
+.pytest_cache/
+.coverage
+htmlcov/
+.tmp/
+.test-tmp/
+.venv/
+
+# Editor & OS files
+.vscode/
+.idea/
+repomix*
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

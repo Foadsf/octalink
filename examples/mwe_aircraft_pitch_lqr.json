@@ -1,0 +1,208 @@
+{
+  "version": "4.1",
+  "stop_time": "10",
+  "dt": "0.01",
+  "backend": "python",
+  "variables": {
+    "A": "[-0.313 56.7 0; -0.0139 -0.426 0; 0 56.7 0]",
+    "B": "[0.232; 0.0203; 0]",
+    "C": "[1 0 0; 0 1 0; 0 0 1]",
+    "D": "[0; 0; 0]",
+    "K": "[-0.6435 169.6950 7.0711]",
+    "Nbar": "7.0711"
+  },
+  "description": "LQR state feedback with precompensation and a step disturbance (CTMS).",
+  "provenance": "CTMS, Aircraft Pitch: Simulink Controller Design, https://ctms.engin.umich.edu/CTMS/?example=AircraftPitch&section=SimulinkControl , with A, B, K=[-0.6435 169.6950 7.0711] and Nbar=7.0711 from Aircraft Pitch: State-Space Methods for Controller Design. State-Space block outputs the full state (C=I); 0.2 rad reference at t=0; 0.2 rad elevator disturbance at t=3 s. The 10 s horizon is a local choice.",
+  "root": {
+    "blocks": [
+      {
+        "id": 93,
+        "type": "Step",
+        "name": "Reference (0.2 rad)",
+        "x": 30,
+        "y": 100,
+        "params": {
+          "step_time": "0",
+          "initial_val": "0",
+          "final_val": "0.2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 94,
+        "type": "Gain",
+        "name": "Nbar",
+        "x": 170,
+        "y": 100,
+        "params": {
+          "gain": "Nbar"
+        },
+        "flipped": false
+      },
+      {
+        "id": 95,
+        "type": "Sum",
+        "name": "Nbar r - K x",
+        "x": 310,
+        "y": 102,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 96,
+        "type": "Step",
+        "name": "Disturbance",
+        "x": 310,
+        "y": 230,
+        "params": {
+          "step_time": "3",
+          "initial_val": "0",
+          "final_val": "0.2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 97,
+        "type": "Sum",
+        "name": "Elevator + disturbance",
+        "x": 430,
+        "y": 102,
+        "params": {
+          "signs": "++"
+        },
+        "flipped": false
+      },
+      {
+        "id": 98,
+        "type": "State-Space",
+        "name": "Aircraft Pitch",
+        "x": 540,
+        "y": 100,
+        "params": {
+          "A": "A",
+          "B": "B",
+          "C": "C",
+          "D": "D",
+          "x0": "[0; 0; 0]"
+        },
+        "flipped": false
+      },
+      {
+        "id": 99,
+        "type": "Demux",
+        "name": "States",
+        "x": 720,
+        "y": 95,
+        "params": {
+          "outputs": "3"
+        },
+        "flipped": false
+      },
+      {
+        "id": 100,
+        "type": "Gain",
+        "name": "K",
+        "x": 540,
+        "y": 330,
+        "params": {
+          "gain": "K",
+          "multiplication": "Matrix(K*u)"
+        },
+        "flipped": true
+      },
+      {
+        "id": 101,
+        "type": "Mux",
+        "name": "theta, delta",
+        "x": 830,
+        "y": 160,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 102,
+        "type": "Scope",
+        "name": "Pitch response",
+        "x": 910,
+        "y": 168,
+        "params": {
+          "title": "Pitch angle theta (rad) and elevator delta (rad)"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 93,
+        "from_port": 0,
+        "to_block": 94,
+        "to_port": 0
+      },
+      {
+        "from_block": 94,
+        "from_port": 0,
+        "to_block": 95,
+        "to_port": 0
+      },
+      {
+        "from_block": 95,
+        "from_port": 0,
+        "to_block": 97,
+        "to_port": 0
+      },
+      {
+        "from_block": 96,
+        "from_port": 0,
+        "to_block": 97,
+        "to_port": 1
+      },
+      {
+        "from_block": 97,
+        "from_port": 0,
+        "to_block": 98,
+        "to_port": 0
+      },
+      {
+        "from_block": 98,
+        "from_port": 0,
+        "to_block": 99,
+        "to_port": 0
+      },
+      {
+        "from_block": 98,
+        "from_port": 0,
+        "to_block": 100,
+        "to_port": 0
+      },
+      {
+        "from_block": 100,
+        "from_port": 0,
+        "to_block": 95,
+        "to_port": 1
+      },
+      {
+        "from_block": 99,
+        "from_port": 2,
+        "to_block": 101,
+        "to_port": 0
+      },
+      {
+        "from_block": 95,
+        "from_port": 0,
+        "to_block": 101,
+        "to_port": 1
+      },
+      {
+        "from_block": 101,
+        "from_port": 0,
+        "to_block": 102,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  }
+}

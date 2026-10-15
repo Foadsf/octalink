@@ -1,0 +1,8 @@
+CROSS-ENGINE: first_order_feedback.json: 301 samples; max Python/Octave error 1.39e-17
+CROSS-ENGINE: hybrid_control_loop.json: 1001 samples; max Python/Octave error 2.71e-14
+CROSS-ENGINE: nonlinear_statespace.json: 1001 samples; max Python/Octave error 2.17e-19
+CROSS-ENGINE: van_der_pol.json: 1001 samples; max Python/Octave error 5.55e-17
+INDEPENDENT ODE45: Van der Pol max error 5.11e-08
+NEGATIVE CONTROL: reversed velocity rejected; reference error 5.36
+STEP REFINEMENT: dt .01 -> .005; error 5.11e-08 -> 4.32e-09
+MVP DELIVERY REFERENCE ACCEPTANCE OK

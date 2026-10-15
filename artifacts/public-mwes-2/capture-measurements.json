@@ -1,0 +1,63 @@
+{
+  "motor_speed_lag_lead": {
+    "samples": 15001,
+    "scopes": 2,
+    "images": [
+      "motor_speed_lag_lead-scope-1.png",
+      "motor_speed_lag_lead-scope-2.png",
+      "motor_speed_lag_lead-editor-orthogonal.png",
+      "motor_speed_lag_lead-editor-curved.png",
+      "motor_speed_lag_lead-subsystem-DC_Motor_(lag).png",
+      "motor_speed_lag_lead-subsystem-DC_Motor_(lead).png",
+      "motor_speed_lag_lead-model-workspace.png"
+    ]
+  },
+  "inverted_pendulum": {
+    "samples": 10001,
+    "scopes": 1,
+    "images": [
+      "inverted_pendulum-scope-1.png",
+      "inverted_pendulum-editor-orthogonal.png",
+      "inverted_pendulum-editor-curved.png",
+      "inverted_pendulum-subsystem-Pendulum.png",
+      "inverted_pendulum-model-workspace.png"
+    ]
+  },
+  "house_heating": {
+    "samples": 86401,
+    "scopes": 2,
+    "images": [
+      "house_heating-scope-1.png",
+      "house_heating-scope-2.png",
+      "house_heating-editor-orthogonal.png",
+      "house_heating-editor-curved.png",
+      "house_heating-subsystem-Thermostat.png",
+      "house_heating-subsystem-Heater.png",
+      "house_heating-subsystem-House.png",
+      "house_heating-subsystem-C2F_(indoor).png",
+      "house_heating-subsystem-F2C_(outdoor).png",
+      "house_heating-model-workspace.png"
+    ]
+  },
+  "aircraft_pitch_lqr": {
+    "samples": 1001,
+    "scopes": 1,
+    "images": [
+      "aircraft_pitch_lqr-scope-1.png",
+      "aircraft_pitch_lqr-editor-orthogonal.png",
+      "aircraft_pitch_lqr-editor-curved.png",
+      "aircraft_pitch_lqr-model-workspace.png"
+    ]
+  },
+  "motor_position_digital": {
+    "samples": 80001,
+    "scopes": 1,
+    "images": [
+      "motor_position_digital-scope-1.png",
+      "motor_position_digital-editor-orthogonal.png",
+      "motor_position_digital-editor-curved.png",
+      "motor_position_digital-subsystem-Motor_pos.png",
+      "motor_position_digital-model-workspace.png"
+    ]
+  }
+}

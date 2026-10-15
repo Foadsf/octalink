@@ -1,0 +1,305 @@
+{
+  "version": "4.0",
+  "stop_time": "10",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Step",
+        "name": "Reference 10 m s",
+        "x": 60,
+        "y": 195,
+        "params": {
+          "step_time": "0",
+          "initial_val": "0",
+          "final_val": "10"
+        },
+        "flipped": false
+      },
+      {
+        "id": 2,
+        "type": "Sum",
+        "name": "Speed error",
+        "x": 190,
+        "y": 195,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 3,
+        "type": "Gain",
+        "name": "Kp 800",
+        "x": 326,
+        "y": 110,
+        "params": {
+          "gain": "800"
+        },
+        "flipped": false
+      },
+      {
+        "id": 4,
+        "type": "Gain",
+        "name": "Ki 40",
+        "x": 326,
+        "y": 297,
+        "params": {
+          "gain": "40"
+        },
+        "flipped": false
+      },
+      {
+        "id": 5,
+        "type": "Integrator",
+        "name": "Integral force",
+        "x": 450,
+        "y": 297,
+        "params": {
+          "initial_condition": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 6,
+        "type": "Sum",
+        "name": "PI force N",
+        "x": 574,
+        "y": 195,
+        "params": {
+          "signs": "++"
+        },
+        "flipped": false
+      },
+      {
+        "id": 7,
+        "type": "Subsystem",
+        "name": "Vehicle",
+        "x": 710,
+        "y": 195,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 101,
+              "type": "Inport",
+              "name": "Force N",
+              "x": 60,
+              "y": 160,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 102,
+              "type": "Sum",
+              "name": "Force minus drag",
+              "x": 260,
+              "y": 160,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 103,
+              "type": "Gain",
+              "name": "1 mass",
+              "x": 450,
+              "y": 160,
+              "params": {
+                "gain": "0.001"
+              },
+              "flipped": false
+            },
+            {
+              "id": 104,
+              "type": "Integrator",
+              "name": "Speed m s",
+              "x": 650,
+              "y": 160,
+              "params": {
+                "initial_condition": "0"
+              },
+              "flipped": false
+            },
+            {
+              "id": 105,
+              "type": "Outport",
+              "name": "Speed m s",
+              "x": 860,
+              "y": 160,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 106,
+              "type": "Gain",
+              "name": "Drag b 50",
+              "x": 450,
+              "y": 360,
+              "params": {
+                "gain": "50"
+              },
+              "flipped": true
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 101,
+              "from_port": 0,
+              "to_block": 102,
+              "to_port": 0
+            },
+            {
+              "from_block": 102,
+              "from_port": 0,
+              "to_block": 103,
+              "to_port": 0
+            },
+            {
+              "from_block": 103,
+              "from_port": 0,
+              "to_block": 104,
+              "to_port": 0
+            },
+            {
+              "from_block": 104,
+              "from_port": 0,
+              "to_block": 105,
+              "to_port": 0
+            },
+            {
+              "from_block": 104,
+              "from_port": 0,
+              "to_block": 106,
+              "to_port": 0
+            },
+            {
+              "from_block": 106,
+              "from_port": 0,
+              "to_block": 102,
+              "to_port": 1
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 8,
+        "type": "Mux",
+        "name": "Reference and speed",
+        "x": 860,
+        "y": 178,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 9,
+        "type": "Scope",
+        "name": "Cruise speed",
+        "x": 970,
+        "y": 178,
+        "params": {
+          "title": "Cruise PI: reference and speed (m/s)"
+        },
+        "flipped": false
+      },
+      {
+        "id": 10,
+        "type": "Scope",
+        "name": "Control effort",
+        "x": 710,
+        "y": 450,
+        "params": {
+          "title": "PI commanded force (N), unsaturated"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 1
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 7,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 1
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 1
+      },
+      {
+        "from_block": 8,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 0
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 10,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  },
+  "backend": "python",
+  "provenance": "CTMS Cruise Control Simulink/Simscape force-balance adaptation: https://ctms.engin.umich.edu/CTMS/?example=CruiseControl&section=SimulinkSimscape . m=1000 kg, b=50 N s/m, Kp=800, Ki=40; continuous unsaturated PI signal-flow implementation. Local 10 m/s step at t=0, 10 s horizon, zero states; no Simscape parity claim."
+}

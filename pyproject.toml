@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "octalink"
+version = "0.1.0"
+description = "A native Simulink-inspired visual modeling MVP for GNU Octave"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "GPL-3.0-or-later"}
+dependencies = ["PyQt6>=6.4", "numpy>=1.20", "matplotlib>=3.5"]
+
+[project.scripts]
+octalink-gui = "octalink_gui:main"
+
+[tool.setuptools]
+py-modules = ["octalink_gui", "mvp_editor", "mvp_model", "octalink_engine_support", "simulation_service", "octave_backend", "c_export", "linear_analysis"]
+
+[tool.setuptools.data-files]
+"share/octalink/examples" = ["examples/*.json"]

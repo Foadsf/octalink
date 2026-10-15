@@ -1,0 +1,8 @@
+warning: mkdir: directory exists
+OCTAVE PACKAGE INSTALLED AND LOADED: <repo>\.tmp\octave-pkg\octalink-0.1.0\octalink.m
+MODEL CHECK OK: 6 root blocks; 301 samples; stop time 3 s; backend=octave
+OCTAVE -> PYTHON MODEL CHECK: exit 0
+MODEL CHECK FAILED: Unsupported model version.
+NEGATIVE CONTROL - INVALID MODEL: child exit 1 (required nonzero)
+OCTAVE ODE45 ANALYTICAL REFERENCE: max error 1.14e-10
+OCTAVE BRIDGE ACCEPTANCE OK

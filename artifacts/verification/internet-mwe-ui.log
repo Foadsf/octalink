@@ -1,0 +1,23 @@
+UI TRACE OK: dc_motor; python+octave; samples=601; scopes=1; corrupt trace rejected
+UI TRACE OK: cruise_pi; python+octave; samples=1001; scopes=2; corrupt trace rejected
+UI TRACE OK: van_der_pol; python+octave; samples=1001; scopes=1; corrupt trace rejected
+test_all_examples_run_in_both_engines_and_plots_match_full_traces (test_internet_editor.InternetEditorTests.test_all_examples_run_in_both_engines_and_plots_match_full_traces) ... ok
+UI GEOMETRY OK: dc_motor; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+UI GEOMETRY OK: cruise_pi; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+UI GEOMETRY OK: van_der_pol; 2 styles; attached paths; actual drag/undo; zero overlapping bodies
+test_both_wire_styles_attach_before_after_actual_block_drag (test_internet_editor.InternetEditorTests.test_both_wire_styles_attach_before_after_actual_block_drag) ... ok
+UI CRUISE OK: canvas child edit changed simulation; independent styles saved; copy topology and IDs
+test_cruise_native_subsystem_edit_style_save_reopen_copy (test_internet_editor.InternetEditorTests.test_cruise_native_subsystem_edit_style_save_reopen_copy) ... ok
+UI CANCEL OK: genuine Octave terminated; GUI heartbeat; complete results preserved; rerun
+test_genuine_octave_cancel_keeps_complete_results_and_recovers (test_internet_editor.InternetEditorTests.test_genuine_octave_cancel_keeps_complete_results_and_recovers) ... ok
+UI MOTOR OK: create subsystem and undo/redo preserve every sample
+test_motor_create_subsystem_undo_redo_preserves_response (test_internet_editor.InternetEditorTests.test_motor_create_subsystem_undo_redo_preserves_response) ... ok
+UI MU OK: full harmonic trace; undo/redo numerics; invalid Apply rejected; Octave recovery
+test_mu_property_apply_undo_redo_invalid_control_and_recovery (test_internet_editor.InternetEditorTests.test_mu_property_apply_undo_redo_invalid_control_and_recovery) ... ok
+UI EXPORT OK: both scope CSV all rows exact; real .m/.c/.h; malformed open preserved model and rerun
+test_real_csv_m_c_export_handlers_and_invalid_open_recovery (test_internet_editor.InternetEditorTests.test_real_csv_m_c_export_handlers_and_invalid_open_recovery) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 91.489s
+
+OK

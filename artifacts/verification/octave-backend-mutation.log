@@ -1,0 +1,36 @@
+MEASUREMENT: Octave Step/integral maximum absolute error=0.23999999999999999; samples=6
+test_analytical_integration_and_step_endpoint (__main__.BackendLiveTests.test_analytical_integration_and_step_endpoint) ... FAIL
+
+======================================================================
+FAIL: test_analytical_integration_and_step_endpoint (__main__.BackendLiveTests.test_analytical_integration_and_step_endpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>\tests\test_octave_backend.py", line 166, in test_analytical_integration_and_step_endpoint
+    np.testing.assert_allclose(np.asarray(values)[:, 0], truth, atol=1e-14, rtol=0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 1768, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "%USERPROFILE%\scoop\apps\miniconda3\current\Lib\site-packages\numpy\testing\_private\utils.py", line 983, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=0, atol=1e-14
+
+Mismatched elements: 3 / 6 (50%)
+Mismatch at indices:
+ [3]: 0.0 (ACTUAL), 0.07 (DESIRED)
+ [4]: 0.0 (ACTUAL), 0.17000000000000004 (DESIRED)
+ [5]: 0.0 (ACTUAL), 0.24 (DESIRED)
+Max absolute difference among violations: 0.24
+Max relative difference among violations: 1.
+ ACTUAL: array([0., 0., 0., 0., 0., 0.])
+ DESIRED: array([0.  , 0.  , 0.  , 0.07, 0.17, 0.24])
+
+----------------------------------------------------------------------
+Ran 1 test in 1.516s
+
+FAILED (failures=1)

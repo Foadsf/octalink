@@ -1,0 +1,168 @@
+{
+  "version": "3.0",
+  "stop_time": "10.0",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 13,
+        "type": "Constant",
+        "name": "Const_A",
+        "x": 0.0,
+        "y": 0.0,
+        "flipped": false,
+        "params": {
+          "value": "2.0"
+        }
+      },
+      {
+        "id": 14,
+        "type": "Constant",
+        "name": "Const_B",
+        "x": 0.0,
+        "y": 80.0,
+        "flipped": false,
+        "params": {
+          "value": "3.0"
+        }
+      },
+      {
+        "id": 15,
+        "type": "Product",
+        "name": "Multiplier",
+        "x": 120.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 16,
+        "type": "Trig",
+        "name": "Cosine_Wave",
+        "x": 240.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "operator": "cos"
+        }
+      },
+      {
+        "id": 17,
+        "type": "Octave Function",
+        "name": "Nonlin_Scaling",
+        "x": 360.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "expression": "2*u + 1.0"
+        }
+      },
+      {
+        "id": 18,
+        "type": "State-Space",
+        "name": "2nd_Order_SS",
+        "x": 500.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "A": "[-2.0, -1.0; 1.0, 0.0]",
+          "B": "[1.0; 0.0]",
+          "C": "[0.0, 1.0]",
+          "D": "0.0",
+          "x0": "[0.0; 0.0]"
+        }
+      },
+      {
+        "id": 19,
+        "type": "Mux",
+        "name": "Vector_Mux",
+        "x": 640.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "inputs": "2"
+        }
+      },
+      {
+        "id": 20,
+        "type": "Demux",
+        "name": "Channel_Demux",
+        "x": 700.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "outputs": "2"
+        }
+      },
+      {
+        "id": 21,
+        "type": "Scope",
+        "name": "Demux_Scope",
+        "x": 820.0,
+        "y": 40.0,
+        "flipped": false,
+        "params": {
+          "title": "Demux Channel 2 Output"
+        }
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 13,
+        "from_port": 0,
+        "to_block": 15,
+        "to_port": 0
+      },
+      {
+        "from_block": 14,
+        "from_port": 0,
+        "to_block": 15,
+        "to_port": 1
+      },
+      {
+        "from_block": 15,
+        "from_port": 0,
+        "to_block": 16,
+        "to_port": 0
+      },
+      {
+        "from_block": 16,
+        "from_port": 0,
+        "to_block": 17,
+        "to_port": 0
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 18,
+        "to_port": 0
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 19,
+        "to_port": 0
+      },
+      {
+        "from_block": 18,
+        "from_port": 0,
+        "to_block": 19,
+        "to_port": 1
+      },
+      {
+        "from_block": 19,
+        "from_port": 0,
+        "to_block": 20,
+        "to_port": 0
+      },
+      {
+        "from_block": 20,
+        "from_port": 1,
+        "to_block": 21,
+        "to_port": 0
+      }
+    ]
+  }
+}

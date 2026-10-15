@@ -1,0 +1,788 @@
+{
+  "version": "4.1",
+  "stop_time": "172800",
+  "dt": "2",
+  "backend": "python",
+  "variables": {
+    "r2d": "180/pi",
+    "lenHouse": "30",
+    "widHouse": "10",
+    "htHouse": "4",
+    "pitRoof": "40/r2d",
+    "numWindows": "6",
+    "htWindows": "1",
+    "widWindows": "1",
+    "windowArea": "numWindows*htWindows*widWindows",
+    "wallArea": "2*lenHouse*htHouse + 2*widHouse*htHouse + 2*(1/cos(pitRoof/2))*widHouse*lenHouse + tan(pitRoof)*widHouse - windowArea",
+    "kWall": "0.038",
+    "LWall": "0.2",
+    "RWall": "LWall/(kWall*wallArea)",
+    "kWindow": "0.78",
+    "LWindow": "0.01",
+    "RWindow": "LWindow/(kWindow*windowArea)",
+    "Req": "RWall*RWindow/(RWall + RWindow)",
+    "c": "1005.4",
+    "THeater": "50",
+    "Mdot": "1",
+    "densAir": "1.2250",
+    "M": "(lenHouse*widHouse*htHouse + tan(pitRoof)*widHouse*lenHouse)*densAir",
+    "cost": "0.09/3.6e6",
+    "TinIC": "20"
+  },
+  "description": "House heating with a hysteretic thermostat over two days (MathWorks). Time is in seconds.",
+  "provenance": "MathWorks, Thermal Model of a House (sldemo_househeat), https://www.mathworks.com/help/simulink/slref/thermal-model-of-a-house.html . Equations, 70 F set point, +/-5 F thermostat band, THeater=50 C, Mdot=1 kg/s, TinIC=20 C and $0.09/kWh from that page; house geometry and thermal resistance from the published MathWorks thermdat.m data script. The page does not publish the outdoor constants: 50 F average and 15 F daily amplitude are local choices, checked against its reported two-day cost of about $30.",
+  "root": {
+    "blocks": [
+      {
+        "id": 68,
+        "type": "Constant",
+        "name": "Set Point (F)",
+        "x": 30,
+        "y": 60,
+        "params": {
+          "value": "70"
+        },
+        "flipped": false
+      },
+      {
+        "id": 69,
+        "type": "Sum",
+        "name": "Error (F)",
+        "x": 170,
+        "y": 62,
+        "params": {
+          "signs": "+-"
+        },
+        "flipped": false
+      },
+      {
+        "id": 70,
+        "type": "Subsystem",
+        "name": "Thermostat",
+        "x": 270,
+        "y": 53,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 50,
+              "type": "Inport",
+              "name": "Error (F)",
+              "x": 20,
+              "y": 40,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 51,
+              "type": "Relay",
+              "name": "Relay",
+              "x": 130,
+              "y": 27,
+              "params": {
+                "switch_on_point": "5",
+                "switch_off_point": "-5",
+                "on_val": "1",
+                "off_val": "0"
+              },
+              "flipped": false
+            },
+            {
+              "id": 52,
+              "type": "Outport",
+              "name": "Heater on",
+              "x": 280,
+              "y": 40,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 50,
+              "from_port": 0,
+              "to_block": 51,
+              "to_port": 0
+            },
+            {
+              "from_block": 51,
+              "from_port": 0,
+              "to_block": 52,
+              "to_port": 0
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 71,
+        "type": "Subsystem",
+        "name": "Heater",
+        "x": 450,
+        "y": 53,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 53,
+              "type": "Inport",
+              "name": "On/Off",
+              "x": 20,
+              "y": 40,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 54,
+              "type": "Inport",
+              "name": "Troom (C)",
+              "x": 20,
+              "y": 160,
+              "params": {
+                "port_number": "2"
+              },
+              "flipped": false
+            },
+            {
+              "id": 55,
+              "type": "Constant",
+              "name": "THeater",
+              "x": 20,
+              "y": 240,
+              "params": {
+                "value": "THeater"
+              },
+              "flipped": false
+            },
+            {
+              "id": 56,
+              "type": "Sum",
+              "name": "THeater - Troom",
+              "x": 170,
+              "y": 172,
+              "params": {
+                "signs": "-+"
+              },
+              "flipped": false
+            },
+            {
+              "id": 57,
+              "type": "Gain",
+              "name": "Mdot*c",
+              "x": 270,
+              "y": 170,
+              "params": {
+                "gain": "Mdot*c"
+              },
+              "flipped": false
+            },
+            {
+              "id": 58,
+              "type": "Product",
+              "name": "Switched heat",
+              "x": 420,
+              "y": 40,
+              "params": {
+                "ops": "**"
+              },
+              "flipped": false
+            },
+            {
+              "id": 59,
+              "type": "Outport",
+              "name": "Heat flow (W)",
+              "x": 570,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 54,
+              "from_port": 0,
+              "to_block": 56,
+              "to_port": 0
+            },
+            {
+              "from_block": 55,
+              "from_port": 0,
+              "to_block": 56,
+              "to_port": 1
+            },
+            {
+              "from_block": 56,
+              "from_port": 0,
+              "to_block": 57,
+              "to_port": 0
+            },
+            {
+              "from_block": 53,
+              "from_port": 0,
+              "to_block": 58,
+              "to_port": 0
+            },
+            {
+              "from_block": 57,
+              "from_port": 0,
+              "to_block": 58,
+              "to_port": 1
+            },
+            {
+              "from_block": 58,
+              "from_port": 0,
+              "to_block": 59,
+              "to_port": 0
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 72,
+        "type": "Subsystem",
+        "name": "House",
+        "x": 640,
+        "y": 153,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 60,
+              "type": "Inport",
+              "name": "Q heater",
+              "x": 20,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 61,
+              "type": "Inport",
+              "name": "Tout (C)",
+              "x": 20,
+              "y": 263,
+              "params": {
+                "port_number": "2"
+              },
+              "flipped": false
+            },
+            {
+              "id": 62,
+              "type": "Sum",
+              "name": "Net heat",
+              "x": 160,
+              "y": 42,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 63,
+              "type": "Gain",
+              "name": "1/(M*c)",
+              "x": 260,
+              "y": 40,
+              "params": {
+                "gain": "1/(M*c)"
+              },
+              "flipped": false
+            },
+            {
+              "id": 64,
+              "type": "Integrator",
+              "name": "Troom",
+              "x": 410,
+              "y": 40,
+              "params": {
+                "initial_condition": "TinIC"
+              },
+              "flipped": false
+            },
+            {
+              "id": 65,
+              "type": "Outport",
+              "name": "Troom (C)",
+              "x": 580,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 66,
+              "type": "Sum",
+              "name": "Troom - Tout",
+              "x": 410,
+              "y": 252,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": true
+            },
+            {
+              "id": 67,
+              "type": "Gain",
+              "name": "1/Req",
+              "x": 240,
+              "y": 250,
+              "params": {
+                "gain": "1/Req"
+              },
+              "flipped": true
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 60,
+              "from_port": 0,
+              "to_block": 62,
+              "to_port": 0
+            },
+            {
+              "from_block": 62,
+              "from_port": 0,
+              "to_block": 63,
+              "to_port": 0
+            },
+            {
+              "from_block": 63,
+              "from_port": 0,
+              "to_block": 64,
+              "to_port": 0
+            },
+            {
+              "from_block": 64,
+              "from_port": 0,
+              "to_block": 65,
+              "to_port": 0
+            },
+            {
+              "from_block": 64,
+              "from_port": 0,
+              "to_block": 66,
+              "to_port": 0
+            },
+            {
+              "from_block": 61,
+              "from_port": 0,
+              "to_block": 66,
+              "to_port": 1
+            },
+            {
+              "from_block": 66,
+              "from_port": 0,
+              "to_block": 67,
+              "to_port": 0
+            },
+            {
+              "from_block": 67,
+              "from_port": 0,
+              "to_block": 62,
+              "to_port": 1
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 78,
+        "type": "Subsystem",
+        "name": "C2F (indoor)",
+        "x": 830,
+        "y": 153,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 73,
+              "type": "Inport",
+              "name": "In",
+              "x": 20,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 74,
+              "type": "Constant",
+              "name": "32 F",
+              "x": 20,
+              "y": 140,
+              "params": {
+                "value": "32"
+              },
+              "flipped": false
+            },
+            {
+              "id": 75,
+              "type": "Gain",
+              "name": "9/5",
+              "x": 120,
+              "y": 40,
+              "params": {
+                "gain": "9/5"
+              },
+              "flipped": false
+            },
+            {
+              "id": 76,
+              "type": "Sum",
+              "name": "+32",
+              "x": 260,
+              "y": 42,
+              "params": {
+                "signs": "++"
+              },
+              "flipped": false
+            },
+            {
+              "id": 77,
+              "type": "Outport",
+              "name": "Out",
+              "x": 360,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 73,
+              "from_port": 0,
+              "to_block": 75,
+              "to_port": 0
+            },
+            {
+              "from_block": 75,
+              "from_port": 0,
+              "to_block": 76,
+              "to_port": 0
+            },
+            {
+              "from_block": 74,
+              "from_port": 0,
+              "to_block": 76,
+              "to_port": 1
+            },
+            {
+              "from_block": 76,
+              "from_port": 0,
+              "to_block": 77,
+              "to_port": 0
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 79,
+        "type": "Constant",
+        "name": "Avg Outdoor Temp (F)",
+        "x": 30,
+        "y": 330,
+        "params": {
+          "value": "50"
+        },
+        "flipped": false
+      },
+      {
+        "id": 80,
+        "type": "Sine Wave",
+        "name": "Daily Temp Variation",
+        "x": 30,
+        "y": 430,
+        "params": {
+          "amplitude": "15",
+          "frequency": "2*pi/(24*3600)",
+          "phase": "0"
+        },
+        "flipped": false
+      },
+      {
+        "id": 81,
+        "type": "Sum",
+        "name": "Outdoor (F)",
+        "x": 200,
+        "y": 382,
+        "params": {
+          "signs": "++"
+        },
+        "flipped": false
+      },
+      {
+        "id": 87,
+        "type": "Subsystem",
+        "name": "F2C (outdoor)",
+        "x": 330,
+        "y": 373,
+        "params": {},
+        "flipped": false,
+        "sub_scene": {
+          "blocks": [
+            {
+              "id": 82,
+              "type": "Inport",
+              "name": "In",
+              "x": 20,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            },
+            {
+              "id": 83,
+              "type": "Constant",
+              "name": "32 F",
+              "x": 20,
+              "y": 140,
+              "params": {
+                "value": "32"
+              },
+              "flipped": false
+            },
+            {
+              "id": 84,
+              "type": "Sum",
+              "name": "-32",
+              "x": 140,
+              "y": 42,
+              "params": {
+                "signs": "+-"
+              },
+              "flipped": false
+            },
+            {
+              "id": 85,
+              "type": "Gain",
+              "name": "5/9",
+              "x": 240,
+              "y": 40,
+              "params": {
+                "gain": "5/9"
+              },
+              "flipped": false
+            },
+            {
+              "id": 86,
+              "type": "Outport",
+              "name": "Out",
+              "x": 380,
+              "y": 53,
+              "params": {
+                "port_number": "1"
+              },
+              "flipped": false
+            }
+          ],
+          "wires": [
+            {
+              "from_block": 82,
+              "from_port": 0,
+              "to_block": 84,
+              "to_port": 0
+            },
+            {
+              "from_block": 83,
+              "from_port": 0,
+              "to_block": 84,
+              "to_port": 1
+            },
+            {
+              "from_block": 84,
+              "from_port": 0,
+              "to_block": 85,
+              "to_port": 0
+            },
+            {
+              "from_block": 85,
+              "from_port": 0,
+              "to_block": 86,
+              "to_port": 0
+            }
+          ],
+          "connection_style": "orthogonal"
+        }
+      },
+      {
+        "id": 88,
+        "type": "Integrator",
+        "name": "Heat energy (J)",
+        "x": 640,
+        "y": 40,
+        "params": {},
+        "flipped": false
+      },
+      {
+        "id": 89,
+        "type": "Gain",
+        "name": "Cost Calculator",
+        "x": 800,
+        "y": 40,
+        "params": {
+          "gain": "cost"
+        },
+        "flipped": false
+      },
+      {
+        "id": 90,
+        "type": "Scope",
+        "name": "Heat Cost ($)",
+        "x": 960,
+        "y": 40,
+        "params": {
+          "title": "Heat cost ($)"
+        },
+        "flipped": false
+      },
+      {
+        "id": 91,
+        "type": "Mux",
+        "name": "Indoor vs outdoor",
+        "x": 1010,
+        "y": 250,
+        "params": {
+          "inputs": "2"
+        },
+        "flipped": false
+      },
+      {
+        "id": 92,
+        "type": "Scope",
+        "name": "PlotResults",
+        "x": 1080,
+        "y": 258,
+        "params": {
+          "title": "Indoor vs outdoor temperature (F)"
+        },
+        "flipped": false
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 68,
+        "from_port": 0,
+        "to_block": 69,
+        "to_port": 0
+      },
+      {
+        "from_block": 78,
+        "from_port": 0,
+        "to_block": 69,
+        "to_port": 1
+      },
+      {
+        "from_block": 69,
+        "from_port": 0,
+        "to_block": 70,
+        "to_port": 0
+      },
+      {
+        "from_block": 70,
+        "from_port": 0,
+        "to_block": 71,
+        "to_port": 0
+      },
+      {
+        "from_block": 72,
+        "from_port": 0,
+        "to_block": 71,
+        "to_port": 1
+      },
+      {
+        "from_block": 71,
+        "from_port": 0,
+        "to_block": 72,
+        "to_port": 0
+      },
+      {
+        "from_block": 87,
+        "from_port": 0,
+        "to_block": 72,
+        "to_port": 1
+      },
+      {
+        "from_block": 72,
+        "from_port": 0,
+        "to_block": 78,
+        "to_port": 0
+      },
+      {
+        "from_block": 79,
+        "from_port": 0,
+        "to_block": 81,
+        "to_port": 0
+      },
+      {
+        "from_block": 80,
+        "from_port": 0,
+        "to_block": 81,
+        "to_port": 1
+      },
+      {
+        "from_block": 81,
+        "from_port": 0,
+        "to_block": 87,
+        "to_port": 0
+      },
+      {
+        "from_block": 71,
+        "from_port": 0,
+        "to_block": 88,
+        "to_port": 0
+      },
+      {
+        "from_block": 88,
+        "from_port": 0,
+        "to_block": 89,
+        "to_port": 0
+      },
+      {
+        "from_block": 89,
+        "from_port": 0,
+        "to_block": 90,
+        "to_port": 0
+      },
+      {
+        "from_block": 78,
+        "from_port": 0,
+        "to_block": 91,
+        "to_port": 0
+      },
+      {
+        "from_block": 81,
+        "from_port": 0,
+        "to_block": 91,
+        "to_port": 1
+      },
+      {
+        "from_block": 91,
+        "from_port": 0,
+        "to_block": 92,
+        "to_port": 0
+      }
+    ],
+    "connection_style": "orthogonal"
+  }
+}

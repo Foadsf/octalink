@@ -1,0 +1,21 @@
+{
+  "first_order_feedback.json": {
+    "samples": 301,
+    "python_octave_max_error": 1.3877787807814457e-17
+  },
+  "hybrid_control_loop.json": {
+    "samples": 1001,
+    "python_octave_max_error": 2.708944180085382e-14
+  },
+  "nonlinear_statespace.json": {
+    "samples": 1001,
+    "python_octave_max_error": 2.168404344971009e-19
+  },
+  "van_der_pol.json": {
+    "samples": 1001,
+    "python_octave_max_error": 5.551115123125783e-17
+  },
+  "van_der_pol_ode45_max_error": 5.114178813769854e-08,
+  "negative_control_error": 5.356870080627731,
+  "refined_error": 4.3199093191503835e-09
+}

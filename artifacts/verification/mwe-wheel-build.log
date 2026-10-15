@@ -1,0 +1,9 @@
+Processing <repo>
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: octalink
+  Building wheel for octalink (pyproject.toml): started
+  Building wheel for octalink (pyproject.toml): finished with status 'done'
+  Created wheel for octalink: filename=octalink-0.1.0-py3-none-any.whl size=88188 sha256=205f5948947e8ed80f948f31a8096ca12be89daa07032aa28d72066fcc1b8e8f
+  Stored in directory: <repo>\.tmp\pip-ephem-wheel-cache-z2v7ldhu\wheels\27\c7\6e\4dc2d76d8832498e0e80bb9a13c79e7555cd396a377e7bfcd2
+Successfully built octalink

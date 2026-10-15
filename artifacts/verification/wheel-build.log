@@ -1,0 +1,10 @@
+Failed to find real location of %USERPROFILE%\scoop\apps\miniconda3\current\python.exe
+Processing <repo>
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: octalink
+  Building wheel for octalink (pyproject.toml): started
+  Building wheel for octalink (pyproject.toml): finished with status 'done'
+  Created wheel for octalink: filename=octalink-0.1.0-py3-none-any.whl size=82581 sha256=da8b1338b71ec2d931efde39e58af597d28cc58bf5a91faca964b21c519bef09
+  Stored in directory: <repo>\.tmp\pip-ephem-wheel-cache-5ehiww0i\wheels\27\c7\6e\4dc2d76d8832498e0e80bb9a13c79e7555cd396a377e7bfcd2
+Successfully built octalink

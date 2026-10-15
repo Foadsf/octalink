@@ -1,0 +1,121 @@
+{
+  "version": "4.0",
+  "stop_time": "3",
+  "dt": "0.01",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Step",
+        "name": "Step",
+        "x": 80.0,
+        "y": 200.0,
+        "flipped": false,
+        "params": {
+          "step_time": "1",
+          "initial_val": "0.0",
+          "final_val": "1.0"
+        }
+      },
+      {
+        "id": 2,
+        "type": "Sum",
+        "name": "Sum",
+        "x": 250.0,
+        "y": 202.0,
+        "flipped": false,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 3,
+        "type": "Gain",
+        "name": "Gain",
+        "x": 390.0,
+        "y": 200.0,
+        "flipped": false,
+        "params": {
+          "gain": "2"
+        }
+      },
+      {
+        "id": 4,
+        "type": "Integrator",
+        "name": "Integrator",
+        "x": 550.0,
+        "y": 200.0,
+        "flipped": false,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 5,
+        "type": "Mux",
+        "name": "Signals",
+        "x": 750.0,
+        "y": 180.0,
+        "flipped": false,
+        "params": {
+          "inputs": "2"
+        }
+      },
+      {
+        "id": 6,
+        "type": "Scope",
+        "name": "Scope",
+        "x": 855.0,
+        "y": 185.0,
+        "flipped": false,
+        "params": {
+          "title": "Reference and output"
+        }
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 0
+      },
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 3,
+        "to_port": 0
+      },
+      {
+        "from_block": 3,
+        "from_port": 0,
+        "to_block": 4,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 2,
+        "to_port": 1
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      },
+      {
+        "from_block": 4,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 1
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      }
+    ]
+  }
+}
