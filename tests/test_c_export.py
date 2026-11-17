@@ -22,9 +22,17 @@ from c_export import export_c_model
 from mvp_model import detached_graph
 from octalink_gui import BLOCK_SPECS, SimulationEngine
 
-CC = os.environ.get("OCTALINK_CC") or shutil.which("gcc")
-if not CC and Path("C:/msys64/ucrt64/bin/gcc.exe").is_file():
-    CC = "C:/msys64/ucrt64/bin/gcc.exe"
+CC = os.environ.get("OCTALINK_CC")
+if not CC:
+    # Prefer the MSYS2 toolchain (real C99 gcc 15.x): shutil.which("gcc") can
+    # resolve to a non-C toolchain (e.g. Free Pascal) and MSYS2 system headers
+    # do not resolve outside an MSYS2 shell, so resolve explicitly + -I/-L.
+    from octalink_gui import _msys_gcc_toolchain
+    _MSYS_CMD, _MSYS_ENV, _MSYS_FLAGS = _msys_gcc_toolchain()
+    CC = _MSYS_CMD[0]
+    USE_MSYS_TOOLCHAIN = True
+else:
+    USE_MSYS_TOOLCHAIN = False
 MUTATE = False
 
 
@@ -70,11 +78,16 @@ class CExportTests(unittest.TestCase):
         runner.write_text('#include "model.h"\n#include <math.h>\n#include <stdio.h>\n' + main)
         executable = self.directory / ("run.exe" if os.name == "nt" else "run")
         env = dict(os.environ)
-        # gcc subprocesses and the built executable need the installed runtime DLLs.
-        env["PATH"] = str(Path(CC).resolve().parent) + os.pathsep + env.get("PATH", "")
-        result = subprocess.run([CC, "-std=c99", "-pedantic", "-Wall", "-Wextra", "-Werror",
-                                 "-O2", str(source), str(runner), "-lm", "-o", str(executable)],
-                                capture_output=True, text=True, env=env, timeout=40)
+        if USE_MSYS_TOOLCHAIN:
+            env.update(_MSYS_ENV)
+            gcc_cmd = list(_MSYS_CMD) + ["-std=c99", "-pedantic", "-Wall", "-Wextra",
+                                         "-Werror", "-O2"] + _MSYS_FLAGS
+        else:
+            # gcc subprocesses and the built executable need the runtime DLLs.
+            env["PATH"] = str(Path(CC).resolve().parent) + os.pathsep + env.get("PATH", "")
+            gcc_cmd = [CC, "-std=c99", "-pedantic", "-Wall", "-Wextra", "-Werror", "-O2"]
+        gcc_cmd += [str(source), str(runner), "-lm", "-o", str(executable)]
+        result = subprocess.run(gcc_cmd, capture_output=True, text=True, env=env, timeout=40)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return executable, env
 

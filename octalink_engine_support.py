@@ -200,6 +200,8 @@ FUNCTIONS.update(abs=abs, min=min, max=max)
 BINARY = {ast.Add: operator.add, ast.Sub: operator.sub,
           ast.Mult: operator.mul, ast.Div: operator.truediv,
           ast.Pow: operator.pow, ast.Mod: operator.mod}
+COMPARE = {ast.Lt: operator.lt, ast.LtE: operator.le, ast.Gt: operator.gt,
+           ast.GtE: operator.ge, ast.Eq: operator.eq, ast.NotEq: operator.ne}
 RESERVED_NAMES = {"pi", "e", "u", "t", "u_vec"} | set(FUNCTIONS)
 MAX_VARIABLES = 256
 
@@ -361,7 +363,7 @@ def parse_expression(expression, allow_signal=False, variable_names=frozenset())
         elif isinstance(node, ast.BinOp) and type(node.op) in BINARY:
             validate(node.left)
             validate(node.right)
-        elif isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+        elif isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub, ast.Not)):
             validate(node.operand)
         elif isinstance(node, ast.Call):
             if not isinstance(node.func, ast.Name) or node.func.id not in FUNCTIONS:
@@ -370,6 +372,13 @@ def parse_expression(expression, allow_signal=False, variable_names=frozenset())
                 raise ValueError("Mathematical functions require 1 to 8 positional arguments.")
             for argument in node.args:
                 validate(argument)
+        elif isinstance(node, ast.Compare) and len(node.comparators) == 1 \
+                and all(type(op) in COMPARE for op in node.ops):
+            validate(node.left)
+            validate(node.comparators[0])
+        elif isinstance(node, ast.BoolOp) and isinstance(node.op, (ast.And, ast.Or)):
+            for value in node.values:
+                validate(value)
         elif isinstance(node, ast.Subscript) and allow_signal:
             if not (isinstance(node.value, ast.Name) and node.value.id == "u_vec"
                     and isinstance(node.slice, ast.Constant)
@@ -402,11 +411,28 @@ def evaluate_expression(expression, signals=None, variables=None):
             result = evaluate(node.operand)
             if isinstance(node.op, ast.USub):
                 result = -result
+            elif isinstance(node.op, ast.Not):
+                result = 0.0 if result != 0.0 else 1.0
         elif isinstance(node, ast.BinOp):
             left, right = evaluate(node.left), evaluate(node.right)
             if isinstance(node.op, ast.Pow) and abs(right) > 1024:
                 raise ValueError("Exponent magnitude exceeds 1024.")
             result = BINARY[type(node.op)](left, right)
+        elif isinstance(node, ast.Compare):
+            left = evaluate(node.left)
+            result = 1.0
+            for op, comp in zip(node.ops, node.comparators):
+                right = evaluate(comp)
+                if not COMPARE[type(op)](left, right):
+                    result = 0.0
+                    break
+                left = right
+        elif isinstance(node, ast.BoolOp):
+            vals = [evaluate(v) for v in node.values]
+            if isinstance(node.op, ast.And):
+                result = 1.0 if all(v != 0.0 for v in vals) else 0.0
+            else:
+                result = 1.0 if any(v != 0.0 for v in vals) else 0.0
         else:
             result = FUNCTIONS[node.func.id](*(evaluate(arg) for arg in node.args))
         result = float(result)

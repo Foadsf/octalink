@@ -35,12 +35,31 @@ from matplotlib.backends.backend_qtagg import (
 )
 from matplotlib.figure import Figure
 
-# Auto-detect MSYS2 / MinGW GCC on Windows if not on system PATH
-if sys.platform == "win32" and not shutil.which("gcc"):
-    for gcc_candidate in [r"C:\msys64\ucrt64\bin", r"C:\msys64\mingw64\bin", r"C:\mingw64\bin"]:
-        if os.path.exists(os.path.join(gcc_candidate, "gcc.exe")):
-            os.environ["PATH"] = os.environ["PATH"] + os.pathsep + gcc_candidate
-            break
+# ---- MSYS2 / MinGW C99 toolchain resolution (headless codegen on Windows) ---
+# shutil.which("gcc") can resolve to a non-C toolchain (e.g. Free Pascal's gcc)
+# on this fleet, and MSYS2's system headers (/ucrt64/include) do not resolve
+# outside an MSYS2 shell, so resolve the real gcc explicitly and add -I/-L.
+def _msys_gcc_toolchain():
+    """Return (gcc_cmd, extra_env, extra_flags) for a working C99 compiler.
+
+    Windows: prefer MSYS2 ucrt64 then mingw64 gcc (15.x). Prepend its bin dir to
+    PATH so cc1 finds its runtime DLLs, and add -I include / -L lib flags because
+    the compiler's built-in system-header path does not resolve headlessly.
+    Non-Windows: use the PATH gcc with no extras.
+    """
+    if sys.platform != "win32":
+        return [shutil.which("gcc") or "gcc"], {}, []
+    for root in [r"C:\msys64\ucrt64", r"C:\msys64\mingw64", r"C:\mingw64"]:
+        gcc_exe = os.path.join(root, "bin", "gcc.exe")
+        if os.path.exists(gcc_exe):
+            extra_env = {"PATH": os.path.join(root, "bin") + os.pathsep + os.environ.get("PATH", "")}
+            extra_flags = ["-I" + os.path.join(root, "include"), "-L" + os.path.join(root, "lib")]
+            return [gcc_exe], extra_env, extra_flags
+    return [shutil.which("gcc") or "gcc"], {}, []
+
+_gcc_cmd, _gcc_env, _gcc_flags = _msys_gcc_toolchain()
+if _gcc_env.get("PATH"):
+    os.environ["PATH"] = _gcc_env["PATH"]
 
 # The MVP simulation engine is local and deterministic. Importing oct2py can
 # launch an Octave process as a side effect, so the GUI never imports it eagerly.
@@ -342,6 +361,22 @@ BLOCK_SPECS = {
         "params": {"zeros": "[1]", "poles": "[0, 0.5]", "gain": "1", "sample_time": "0.1"},
         "color": "#E0F2F1",
         "symbol": "ZPK(z)"
+    },
+    "Stateflow Chart": {
+        "category": "Logic & State Machines",
+        "inputs": 1,
+        "outputs": 1,
+        "direct_feedthrough": True,
+        "params": {
+            "sample_time": "0.1",
+            "initial_state": "S0",
+            # Moore output per state: JSON list of {"name": str, "output": <number expr>}.
+            "states": "[{\"name\":\"S0\",\"output\":0.0},{\"name\":\"S1\",\"output\":1.0}]",
+            # Transitions: JSON list of {"from": str, "to": str, "guard": <bool expr in u,t>}.
+            "transitions": "[{\"from\":\"S0\",\"to\":\"S1\",\"guard\":\"u>0.5\"}]",
+        },
+        "color": "#E3F2FD",
+        "symbol": "Chart"
     },
     "Switch": {
         "category": "Signal Routing",
@@ -1471,6 +1506,63 @@ class SimulationEngine:
         return evaluate_expression(expr_str, {"u": u_scalar, "u_vec": u_arr, "t": float(t_val)},
                                    variables=self.variables)
 
+    def _chart_state_names(self, p):
+        """Parse the states param into [(name, output_expr)] preserving order."""
+        import json
+        try:
+            states = json.loads(p.get("states", "[]"))
+        except (ValueError, TypeError):
+            raise ValueError(f"{getattr(self, 'name', 'chart')}: 'states' must be valid JSON.")
+        out = []
+        for i, s in enumerate(states):
+            if not isinstance(s, dict) or "name" not in s or "output" not in s:
+                raise ValueError(f"{getattr(self, 'name', 'chart')}: state {i} must have 'name' and 'output'.")
+            out.append((str(s["name"]), s["output"]))
+        if not out:
+            raise ValueError(f"{getattr(self, 'name', 'chart')}: at least one state is required.")
+        return out
+
+    def _chart_transitions(self, p):
+        """Parse the transitions param into [(from_name, to_name, guard_expr)]."""
+        import json
+        try:
+            trans = json.loads(p.get("transitions", "[]"))
+        except (ValueError, TypeError):
+            raise ValueError(f"{getattr(self, 'name', 'chart')}: 'transitions' must be valid JSON.")
+        out = []
+        for i, tr in enumerate(trans):
+            if not isinstance(tr, dict) or "from" not in tr or "to" not in tr or "guard" not in tr:
+                raise ValueError(f"{getattr(self, 'name', 'chart')}: transition {i} must have 'from','to','guard'.")
+            out.append((str(tr["from"]), str(tr["to"]), str(tr["guard"])))
+        return out
+
+    def _chart_output(self, p, chart_idx):
+        """Moore output of the state at chart_idx (guard-free, no u/t needed)."""
+        states = self._chart_state_names(p)
+        if not (0 <= chart_idx < len(states)):
+            raise ValueError(f"{getattr(self, 'name', 'chart')}: state index {chart_idx} out of range.")
+        _, out_expr = states[chart_idx]
+        return float(self.eval_user_expr(out_expr, 0.0, 0.0))
+
+    def _chart_next_state(self, p, chart_idx, u0, t):
+        """Return the index of the next state, or None if no transition fires."""
+        states = self._chart_state_names(p)
+        trans = self._chart_transitions(p)
+        name_to_idx = {name: i for i, (name, _) in enumerate(states)}
+        if not (0 <= chart_idx < len(states)):
+            raise ValueError(f"{getattr(self, 'name', 'chart')}: state index {chart_idx} out of range.")
+        cur_name = states[chart_idx][0]
+        for frm, to, guard in trans:
+            if frm != cur_name:
+                continue
+            fired = bool(self.eval_user_expr(guard, u0, t))
+            if fired:
+                if to not in name_to_idx:
+                    raise ValueError(
+                        f"{getattr(self, 'name', 'chart')}: transition targets unknown state {to!r}.")
+                return name_to_idx[to]
+        return None
+
     def flatten_hierarchy(self, root_scene: SimCanvasScene):
         prim_blocks = []
 
@@ -1563,6 +1655,8 @@ class SimulationEngine:
                 try:
                     if k in ("signs", "ops", "operator", "expression", "title", "filename", "multiplication"):
                         p[k] = str(v).strip()
+                    elif b.block_type == "Stateflow Chart" and k in ("initial_state", "states", "transitions"):
+                        p[k] = str(v).strip()
                     elif k in ("numerator", "denominator", "x0", "zeros", "poles"):
                         p[k] = self.eval_vector(v)
                     elif k in ("A", "B", "C", "D") or (k == "gain" and b.block_type == "Gain"):
@@ -1571,7 +1665,8 @@ class SimulationEngine:
                         p[k] = self.eval_scalar(v)
                 except ValueError as exc:
                     raise ValueError(f"{b.name}: invalid {k}: {exc}") from exc
-            discrete = ("Unit Delay", "Zero-Order Hold", "Discrete Transfer Fcn", "Discrete Zero-Pole")
+            discrete = ("Unit Delay", "Zero-Order Hold", "Discrete Transfer Fcn",
+                        "Discrete Zero-Pole", "Stateflow Chart")
             if b.block_type in discrete and p["sample_time"] <= 0:
                 raise ValueError(f"{b.name}: sample_time must be positive.")
             if b.block_type == "Saturation" and p["lower_limit"] > p["upper_limit"]:
@@ -1803,7 +1898,8 @@ class SimulationEngine:
         return order, loops
 
     VECTOR_INPUT_BLOCKS = ("Mux", "Demux", "Scope", "To CSV", "Octave Function", "Gain")
-    DISCRETE_BLOCKS = ("Unit Delay", "Zero-Order Hold", "Discrete Transfer Fcn", "Discrete Zero-Pole")
+    DISCRETE_BLOCKS = ("Unit Delay", "Zero-Order Hold", "Discrete Transfer Fcn",
+                       "Discrete Zero-Pole", "Stateflow Chart")
 
     def _infer_widths(self, blocks, source_map, parsed, ss_models, has_direct_ft, sorted_direct, loops=()):
         """Static output widths; Demux records its channel count (1 per port).
@@ -1974,8 +2070,9 @@ class SimulationEngine:
 
     def _build_evaluator(self, blocks, source_map, parsed, state_slices, ss_models,
                          has_direct_ft, sorted_direct, total_states, Z_delay, Z_zoh, Z_relay, dt=0.01,
-                         Z_dtf=None, algebraic_loops=()):
+                         Z_dtf=None, Z_chart=None, algebraic_loops=()):
         Z_dtf = {} if Z_dtf is None else Z_dtf
+        Z_chart = {} if Z_chart is None else Z_chart
         discrete_tf = ("Discrete Transfer Fcn", "Discrete Zero-Pole")
 
         def hit_now(b, update_discrete, step_idx, sample_hits):
@@ -2031,6 +2128,21 @@ class SimulationEngine:
                     elif u0 <= p["switch_off_point"]:
                         Z_relay[b] = p["off_val"]
                 return Z_relay[b]
+            elif b.block_type == "Stateflow Chart":
+                # Discrete Moore machine: output = f(current state). On a sample
+                # hit, read the current input, evaluate the outgoing transitions
+                # in order and take the first whose guard is true; the new state
+                # (and hence output) takes effect immediately at the hit.
+                chart_idx = Z_chart.get(b, 0)
+                hit = b in sample_hits if sample_hits is not None else self._is_sample_hit(
+                    step_idx, dt, parsed[b]["sample_time"])
+                if hit and update_discrete and raw_inputs:
+                    u0 = self._as_scalar(raw_inputs[0])
+                    nxt = self._chart_next_state(p, chart_idx, u0, t)
+                    if nxt is not None:
+                        Z_chart[b] = nxt
+                        chart_idx = nxt
+                return float(self._chart_output(p, chart_idx))
             elif b.block_type == "Switch":
                 u1 = self._as_scalar(raw_inputs[1]) if len(raw_inputs) > 1 else 0.0
                 u2 = self._as_scalar(raw_inputs[2]) if len(raw_inputs) > 2 else 0.0
@@ -2275,11 +2387,19 @@ class SimulationEngine:
         Z_relay = {b: parsed[b]["off_val"] for b in blocks if b.block_type == "Relay"}
         Z_dtf = {b: {"x": np.zeros(ss_models[b][0].shape[0]), "y": 0.0} for b in blocks
                  if b.block_type in ("Discrete Transfer Fcn", "Discrete Zero-Pole")}
+        Z_chart = {}
+        for b in blocks:
+            if b.block_type == "Stateflow Chart":
+                p = parsed[b]
+                states = self._chart_state_names(p)
+                names = [s[0] for s in states]
+                init_name = p.get("initial_state", names[0] if names else "S0")
+                Z_chart[b] = names.index(init_name) if init_name in names else 0
 
         evaluate_network = self._build_evaluator(
             blocks, source_map, parsed, state_slices, ss_models,
-            has_direct_ft, sorted_direct, total_states, Z_delay, Z_zoh, Z_relay, dt=dt, Z_dtf=Z_dtf,
-            algebraic_loops=self.algebraic_loops
+            has_direct_ft, sorted_direct, total_states, Z_delay, Z_zoh, Z_relay, dt=dt,
+            Z_dtf=Z_dtf, Z_chart=Z_chart, algebraic_loops=self.algebraic_loops
         )
 
         next_sample = {b: 0 for b in sample_periods}
@@ -3656,8 +3776,11 @@ def run_canonical_self_test():
                     '    return 0;\n}\n'
                 )
             bin_path = os.path.join(tmpdir, "test_sim")
-            subprocess.run(["gcc", "-std=c99", "-O2", "-Wall", test_main, c_path, "-lm", "-o", bin_path], check=True)
-            out = subprocess.check_output([bin_path], text=True).strip()
+            gcc_env = dict(os.environ); gcc_env.update(_gcc_env)
+            gcc_cmd = list(_gcc_cmd) + ["-std=c99", "-O2", "-Wall"] + _gcc_flags + \
+                      [test_main, c_path, "-lm", "-o", bin_path]
+            subprocess.run(gcc_cmd, check=True, env=gcc_env)
+            out = subprocess.check_output([bin_path], text=True, env=gcc_env).strip()
             print(f"      -> Compiled & Executed Native C99 Binary: {out}")
     finally:
         shutil.rmtree(tmpdir)
@@ -3735,6 +3858,7 @@ def main():
     parser.add_argument("model", nargs="?", help="OctaLink JSON model to open")
     parser.add_argument("--self-test", action="store_true", help="run the retained prototype harness")
     parser.add_argument("--check", action="store_true", help="validate and simulate a JSON model without opening the GUI")
+    parser.add_argument("--run", nargs=2, metavar=("MODEL_JSON","OUTDIR"), help="headless batch: simulate MODEL_JSON, write per-sink CSVs to OUTDIR, exit 0 on success / 1 on failure")
     parser.add_argument("--backend", choices=("python", "octave"), help="select the simulation engine")
     parser.add_argument("--octave", help="GNU Octave executable path")
     args = parser.parse_args()
@@ -3751,6 +3875,32 @@ def main():
             return 0
         except Exception as exc:
             print(f"MODEL CHECK FAILED: {exc}", file=sys.stderr)
+            return 1
+    if args.run:
+        import csv as _csv
+        from mvp_model import read_document
+        from simulation_service import simulate_document
+        model_path, outdir = args.run
+        os.makedirs(outdir, exist_ok=True)
+        try:
+            data = read_document(model_path, BLOCK_SPECS)
+            results = simulate_document(data, BLOCK_SPECS, backend=args.backend, executable=args.octave)
+            wrote = []
+            for block_id, record in results.items():
+                times, values, labels = record
+                values = [[float(v) for v in row] for row in (values if len(values) and hasattr(values[0], "__iter__") else [[v] for v in values])]
+                out_csv = os.path.join(outdir, f"{int(block_id):03d}_sink.csv")
+                with open(out_csv, "w", newline="", encoding="utf-8") as f:
+                    w = _csv.writer(f)
+                    w.writerow(["t"] + [str(lb) for lb in (labels or [])])
+                    for t_val, row in zip(times, values):
+                        w.writerow([f"{t_val:.17g}"] + [f"{float(v):.17g}" for v in row])
+                wrote.append(out_csv)
+            samples = max((len(r[0]) for r in results.values()), default=0)
+            print(f"HEADLESS RUN OK: {model_path} -> {len(results)} sink(s), {samples} samples, {len(wrote)} CSV(s) in {outdir}")
+            return 0
+        except Exception as exc:
+            print(f"HEADLESS RUN FAILED: {exc}", file=sys.stderr)
             return 1
     if args.self_test:
         run_canonical_self_test()

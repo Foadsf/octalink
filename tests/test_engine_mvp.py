@@ -204,6 +204,75 @@ class EngineMVPTests(unittest.TestCase):
             return .3
         self.assertSignal(scope, expected)
 
+    def test_stateflow_holds_initial_state_when_guard_never_fires(self):
+        scene = Scene()
+        source = scene.add("Constant", value=0.3)
+        chart = scene.add("Stateflow Chart", initial_state="S0", sample_time="0.1",
+                          states="[{\"name\":\"S0\",\"output\":0.0},{\"name\":\"S1\",\"output\":1.0}]",
+                          transitions="[{\"from\":\"S0\",\"to\":\"S1\",\"guard\":\"u>0.5\"}]")
+        scope = scene.add("Scope")
+        scene.connect(source, chart)
+        scene.connect(chart, scope)
+        self.engine.run_simulation(scene, 0.6, 0.05)
+        self.assertSignal(scope, lambda t: 0.0)
+
+    def test_stateflow_transitions_on_sample_hit(self):
+        scene = Scene()
+        source = scene.add("Step", step_time=0.25, final_val=1)
+        chart = scene.add("Stateflow Chart", initial_state="S0", sample_time="0.1",
+                          states="[{\"name\":\"S0\",\"output\":0.0},{\"name\":\"S1\",\"output\":1.0}]",
+                          transitions="[{\"from\":\"S0\",\"to\":\"S1\",\"guard\":\"u>0.5\"}]")
+        scope = scene.add("Scope")
+        scene.connect(source, chart)
+        scene.connect(chart, scope)
+        self.engine.run_simulation(scene, 0.6, 0.05)
+        def expected(t):
+            return 0.0 if t < 0.3 - 1e-9 else 1.0
+        self.assertSignal(scope, expected)
+
+    def test_stateflow_initial_state_need_not_be_first(self):
+        scene = Scene()
+        source = scene.add("Constant", value=0.0)
+        chart = scene.add("Stateflow Chart", initial_state="S1", sample_time="0.1",
+                          states="[{\"name\":\"S0\",\"output\":0.0},{\"name\":\"S1\",\"output\":5.0}]",
+                          transitions="[]")
+        scope = scene.add("Scope")
+        scene.connect(source, chart)
+        scene.connect(chart, scope)
+        self.engine.run_simulation(scene, 0.6, 0.05)
+        self.assertSignal(scope, lambda t: 5.0)
+
+    def test_stateflow_rejects_bad_states_and_unknown_target(self):
+        engine = self.engine
+        scene = Scene()
+        source = scene.add("Constant", value=0.0)
+    def test_stateflow_rejects_bad_states_and_unknown_target(self):
+        # Malformed state entry (missing "output") is rejected on the first
+        # sample hit regardless of the input value.
+        scene = Scene()
+        source = scene.add("Constant", value=0.0)
+        chart = scene.add("Stateflow Chart", initial_state="S0", sample_time="0.1",
+                          states="[{\"name\":\"S0\"}]",
+                          transitions="[]")
+        scope = scene.add("Scope")
+        scene.connect(source, chart)
+        scene.connect(chart, scope)
+        with self.assertRaises(ValueError):
+            self.engine.run_simulation(scene, 0.6, 0.05)
+        # An unknown transition target is rejected as soon as that transition
+        # fires, so drive the guard true with a constant input above threshold.
+        scene = Scene()
+        source = scene.add("Constant", value=0.8)
+        chart = scene.add("Stateflow Chart", initial_state="S0", sample_time="0.1",
+                          states="[{\"name\":\"S0\",\"output\":0.0},{\"name\":\"S1\",\"output\":1.0}]",
+                          transitions="[{\"from\":\"S0\",\"to\":\"S2\",\"guard\":\"u>0.5\"}]")
+        scope = scene.add("Scope")
+        scene.connect(source, chart)
+        scene.connect(chart, scope)
+        with self.assertRaises(ValueError):
+            self.engine.run_simulation(scene, 0.6, 0.05)
+        print("NEGATIVE CONTROL: malformed states and an unknown transition target are rejected.")
+
     def test_simultaneous_delay_updates(self):
         scene, blocks = chain(("Constant", {"value": 1}), ("Unit Delay", {"sample_time": .1}),
                               ("Unit Delay", {"sample_time": .1}), ("Scope", {}))
