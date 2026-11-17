@@ -1,0 +1,197 @@
+{
+  "version": "4.0",
+  "stop_time": "8",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Cascade PID: outer position loop commands velocity, inner loop commands motor torque through a 1st-order plant.",
+  "root": {
+    "blocks": [
+      {
+        "id": 11,
+        "type": "Constant",
+        "name": "position_ref",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "1.0"
+        }
+      },
+      {
+        "id": 12,
+        "type": "Sum",
+        "name": "position_error",
+        "x": 140.0,
+        "y": 0.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 13,
+        "type": "PID Controller",
+        "name": "outer position PI",
+        "x": 280.0,
+        "y": 0.0,
+        "params": {
+          "Kp": "1.0",
+          "Ki": "0.5",
+          "Kd": "0.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 14,
+        "type": "Sum",
+        "name": "velocity_error",
+        "x": 280.0,
+        "y": 120.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 15,
+        "type": "PID Controller",
+        "name": "inner velocity PID",
+        "x": 420.0,
+        "y": 120.0,
+        "params": {
+          "Kp": "10.0",
+          "Ki": "5.0",
+          "Kd": "1.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 16,
+        "type": "Saturation",
+        "name": "torque_limit",
+        "x": 560.0,
+        "y": 120.0,
+        "params": {
+          "lower_limit": "-5.0",
+          "upper_limit": "5.0"
+        }
+      },
+      {
+        "id": 17,
+        "type": "Transfer Fcn",
+        "name": "motor 1/(10s+1)",
+        "x": 700.0,
+        "y": 120.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[10, 1]"
+        }
+      },
+      {
+        "id": 18,
+        "type": "Integrator",
+        "name": "velocity->position",
+        "x": 840.0,
+        "y": 120.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 19,
+        "type": "Mux",
+        "name": "signals",
+        "x": 980.0,
+        "y": 40.0,
+        "params": {
+          "inputs": "3"
+        }
+      },
+      {
+        "id": 20,
+        "type": "Scope",
+        "name": "Cascade position tracking",
+        "x": 1120.0,
+        "y": 40.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 11,
+        "from_port": 0,
+        "to_block": 12,
+        "to_port": 0
+      },
+      {
+        "from_block": 18,
+        "from_port": 0,
+        "to_block": 12,
+        "to_port": 1
+      },
+      {
+        "from_block": 12,
+        "from_port": 0,
+        "to_block": 13,
+        "to_port": 0
+      },
+      {
+        "from_block": 13,
+        "from_port": 0,
+        "to_block": 14,
+        "to_port": 0
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 14,
+        "to_port": 1
+      },
+      {
+        "from_block": 14,
+        "from_port": 0,
+        "to_block": 15,
+        "to_port": 0
+      },
+      {
+        "from_block": 15,
+        "from_port": 0,
+        "to_block": 16,
+        "to_port": 0
+      },
+      {
+        "from_block": 16,
+        "from_port": 0,
+        "to_block": 17,
+        "to_port": 0
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 18,
+        "to_port": 0
+      },
+      {
+        "from_block": 11,
+        "from_port": 0,
+        "to_block": 19,
+        "to_port": 0
+      },
+      {
+        "from_block": 18,
+        "from_port": 0,
+        "to_block": 19,
+        "to_port": 1
+      },
+      {
+        "from_block": 17,
+        "from_port": 0,
+        "to_block": 19,
+        "to_port": 2
+      },
+      {
+        "from_block": 19,
+        "from_port": 0,
+        "to_block": 20,
+        "to_port": 0
+      }
+    ]
+  }
+}

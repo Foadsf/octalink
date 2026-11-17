@@ -1,0 +1,11 @@
+# Normalize all text files to LF for cross-platform consistency.
+* text=auto eol=lf
+
+# Scripts and data must never carry CRLF.
+*.sh text eol=lf
+*.py text eol=lf
+*.m text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.md text eol=lf

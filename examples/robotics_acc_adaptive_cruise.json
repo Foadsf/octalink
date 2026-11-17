@@ -1,0 +1,263 @@
+{
+  "version": "4.0",
+  "stop_time": "10",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Adaptive cruise control: regulate spacing to d0 + v*headway.",
+  "root": {
+    "blocks": [
+      {
+        "id": 21,
+        "type": "Constant",
+        "name": "lead_speed",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "20.0"
+        }
+      },
+      {
+        "id": 22,
+        "type": "Integrator",
+        "name": "lead position",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "initial_condition": "50.0"
+        }
+      },
+      {
+        "id": 23,
+        "type": "Constant",
+        "name": "headway_time",
+        "x": 0.0,
+        "y": 80.0,
+        "params": {
+          "value": "1.5"
+        }
+      },
+      {
+        "id": 24,
+        "type": "Constant",
+        "name": "standstill_gap",
+        "x": 0.0,
+        "y": 120.0,
+        "params": {
+          "value": "5.0"
+        }
+      },
+      {
+        "id": 25,
+        "type": "Product",
+        "name": "v*headway",
+        "x": 140.0,
+        "y": 80.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 26,
+        "type": "Sum",
+        "name": "desired_gap",
+        "x": 140.0,
+        "y": 140.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 27,
+        "type": "Integrator",
+        "name": "ego velocity",
+        "x": 0.0,
+        "y": 220.0,
+        "params": {
+          "initial_condition": "10.0"
+        }
+      },
+      {
+        "id": 28,
+        "type": "Integrator",
+        "name": "ego position",
+        "x": 0.0,
+        "y": 260.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 29,
+        "type": "Sum",
+        "name": "spacing",
+        "x": 140.0,
+        "y": 220.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 30,
+        "type": "Sum",
+        "name": "spacing_error",
+        "x": 140.0,
+        "y": 280.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 31,
+        "type": "PID Controller",
+        "name": "ACC PI",
+        "x": 280.0,
+        "y": 260.0,
+        "params": {
+          "Kp": "0.6",
+          "Ki": "0.2",
+          "Kd": "0.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 32,
+        "type": "Saturation",
+        "name": "accel_cmd",
+        "x": 420.0,
+        "y": 260.0,
+        "params": {
+          "lower_limit": "-3.0",
+          "upper_limit": "2.0"
+        }
+      },
+      {
+        "id": 33,
+        "type": "Mux",
+        "name": "signals",
+        "x": 560.0,
+        "y": 140.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 34,
+        "type": "Scope",
+        "name": "ACC speed and spacing",
+        "x": 700.0,
+        "y": 140.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 21,
+        "from_port": 0,
+        "to_block": 22,
+        "to_port": 0
+      },
+      {
+        "from_block": 27,
+        "from_port": 0,
+        "to_block": 25,
+        "to_port": 0
+      },
+      {
+        "from_block": 23,
+        "from_port": 0,
+        "to_block": 25,
+        "to_port": 1
+      },
+      {
+        "from_block": 24,
+        "from_port": 0,
+        "to_block": 26,
+        "to_port": 0
+      },
+      {
+        "from_block": 25,
+        "from_port": 0,
+        "to_block": 26,
+        "to_port": 1
+      },
+      {
+        "from_block": 22,
+        "from_port": 0,
+        "to_block": 29,
+        "to_port": 0
+      },
+      {
+        "from_block": 28,
+        "from_port": 0,
+        "to_block": 29,
+        "to_port": 1
+      },
+      {
+        "from_block": 29,
+        "from_port": 0,
+        "to_block": 30,
+        "to_port": 0
+      },
+      {
+        "from_block": 26,
+        "from_port": 0,
+        "to_block": 30,
+        "to_port": 1
+      },
+      {
+        "from_block": 30,
+        "from_port": 0,
+        "to_block": 31,
+        "to_port": 0
+      },
+      {
+        "from_block": 31,
+        "from_port": 0,
+        "to_block": 32,
+        "to_port": 0
+      },
+      {
+        "from_block": 32,
+        "from_port": 0,
+        "to_block": 27,
+        "to_port": 0
+      },
+      {
+        "from_block": 27,
+        "from_port": 0,
+        "to_block": 28,
+        "to_port": 0
+      },
+      {
+        "from_block": 27,
+        "from_port": 0,
+        "to_block": 33,
+        "to_port": 0
+      },
+      {
+        "from_block": 21,
+        "from_port": 0,
+        "to_block": 33,
+        "to_port": 1
+      },
+      {
+        "from_block": 29,
+        "from_port": 0,
+        "to_block": 33,
+        "to_port": 2
+      },
+      {
+        "from_block": 30,
+        "from_port": 0,
+        "to_block": 33,
+        "to_port": 3
+      },
+      {
+        "from_block": 33,
+        "from_port": 0,
+        "to_block": 34,
+        "to_port": 0
+      }
+    ]
+  }
+}

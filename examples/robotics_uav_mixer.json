@@ -1,0 +1,304 @@
+{
+  "version": "4.0",
+  "stop_time": "6",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Quadrotor mixer: [thrust,roll,pitch,yaw] -> 4 motors via mixing matrix, 1st-order motor lag, output saturation.",
+  "root": {
+    "blocks": [
+      {
+        "id": 35,
+        "type": "Constant",
+        "name": "thrust",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "10.0"
+        }
+      },
+      {
+        "id": 36,
+        "type": "Constant",
+        "name": "roll_cmd",
+        "x": 0.0,
+        "y": 40.0,
+        "params": {
+          "value": "0.5"
+        }
+      },
+      {
+        "id": 37,
+        "type": "Constant",
+        "name": "pitch_cmd",
+        "x": 0.0,
+        "y": 80.0,
+        "params": {
+          "value": "0.3"
+        }
+      },
+      {
+        "id": 38,
+        "type": "Constant",
+        "name": "yaw_cmd",
+        "x": 0.0,
+        "y": 120.0,
+        "params": {
+          "value": "0.1"
+        }
+      },
+      {
+        "id": 39,
+        "type": "Mux",
+        "name": "mix_inputs",
+        "x": 140.0,
+        "y": 60.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 40,
+        "type": "Gain",
+        "name": "mixing_matrix",
+        "x": 280.0,
+        "y": 60.0,
+        "params": {
+          "gain": "[1 -1 1 -1; 1 1 1 1; 1 1 -1 -1; 1 -1 -1 1]",
+          "multiplication": "Matrix(K*u)"
+        }
+      },
+      {
+        "id": 41,
+        "type": "Demux",
+        "name": "motor_commands",
+        "x": 420.0,
+        "y": 60.0,
+        "params": {
+          "outputs": "4"
+        }
+      },
+      {
+        "id": 42,
+        "type": "Transfer Fcn",
+        "name": "motor1_lag",
+        "x": 560.0,
+        "y": 20.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[0.05, 1]"
+        }
+      },
+      {
+        "id": 44,
+        "type": "Transfer Fcn",
+        "name": "motor2_lag",
+        "x": 560.0,
+        "y": 60.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[0.05, 1]"
+        }
+      },
+      {
+        "id": 46,
+        "type": "Transfer Fcn",
+        "name": "motor3_lag",
+        "x": 560.0,
+        "y": 100.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[0.05, 1]"
+        }
+      },
+      {
+        "id": 48,
+        "type": "Transfer Fcn",
+        "name": "motor4_lag",
+        "x": 560.0,
+        "y": 140.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[0.05, 1]"
+        }
+      },
+      {
+        "id": 43,
+        "type": "Saturation",
+        "name": "motor1_cmd",
+        "x": 700.0,
+        "y": 20.0,
+        "params": {
+          "lower_limit": "0.0",
+          "upper_limit": "20.0"
+        }
+      },
+      {
+        "id": 45,
+        "type": "Saturation",
+        "name": "motor2_cmd",
+        "x": 700.0,
+        "y": 60.0,
+        "params": {
+          "lower_limit": "0.0",
+          "upper_limit": "20.0"
+        }
+      },
+      {
+        "id": 47,
+        "type": "Saturation",
+        "name": "motor3_cmd",
+        "x": 700.0,
+        "y": 100.0,
+        "params": {
+          "lower_limit": "0.0",
+          "upper_limit": "20.0"
+        }
+      },
+      {
+        "id": 49,
+        "type": "Saturation",
+        "name": "motor4_cmd",
+        "x": 700.0,
+        "y": 140.0,
+        "params": {
+          "lower_limit": "0.0",
+          "upper_limit": "20.0"
+        }
+      },
+      {
+        "id": 50,
+        "type": "Mux",
+        "name": "motor_outputs",
+        "x": 840.0,
+        "y": 60.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 51,
+        "type": "Scope",
+        "name": "UAV mixer motor commands",
+        "x": 980.0,
+        "y": 60.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 35,
+        "from_port": 0,
+        "to_block": 39,
+        "to_port": 0
+      },
+      {
+        "from_block": 36,
+        "from_port": 0,
+        "to_block": 39,
+        "to_port": 1
+      },
+      {
+        "from_block": 37,
+        "from_port": 0,
+        "to_block": 39,
+        "to_port": 2
+      },
+      {
+        "from_block": 38,
+        "from_port": 0,
+        "to_block": 39,
+        "to_port": 3
+      },
+      {
+        "from_block": 39,
+        "from_port": 0,
+        "to_block": 40,
+        "to_port": 0
+      },
+      {
+        "from_block": 40,
+        "from_port": 0,
+        "to_block": 41,
+        "to_port": 0
+      },
+      {
+        "from_block": 41,
+        "from_port": 0,
+        "to_block": 42,
+        "to_port": 0
+      },
+      {
+        "from_block": 42,
+        "from_port": 0,
+        "to_block": 43,
+        "to_port": 0
+      },
+      {
+        "from_block": 43,
+        "from_port": 0,
+        "to_block": 50,
+        "to_port": 0
+      },
+      {
+        "from_block": 41,
+        "from_port": 1,
+        "to_block": 44,
+        "to_port": 0
+      },
+      {
+        "from_block": 44,
+        "from_port": 0,
+        "to_block": 45,
+        "to_port": 0
+      },
+      {
+        "from_block": 45,
+        "from_port": 0,
+        "to_block": 50,
+        "to_port": 1
+      },
+      {
+        "from_block": 41,
+        "from_port": 2,
+        "to_block": 46,
+        "to_port": 0
+      },
+      {
+        "from_block": 46,
+        "from_port": 0,
+        "to_block": 47,
+        "to_port": 0
+      },
+      {
+        "from_block": 47,
+        "from_port": 0,
+        "to_block": 50,
+        "to_port": 2
+      },
+      {
+        "from_block": 41,
+        "from_port": 3,
+        "to_block": 48,
+        "to_port": 0
+      },
+      {
+        "from_block": 48,
+        "from_port": 0,
+        "to_block": 49,
+        "to_port": 0
+      },
+      {
+        "from_block": 49,
+        "from_port": 0,
+        "to_block": 50,
+        "to_port": 3
+      },
+      {
+        "from_block": 50,
+        "from_port": 0,
+        "to_block": 51,
+        "to_port": 0
+      }
+    ]
+  }
+}

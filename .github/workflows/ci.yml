@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install -y -qq gcc octave
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade -q pip
+          python -m pip install -q numpy PyQt6 matplotlib
+
+      - name: Run headless engine + C-export unit tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          python tests/test_engine_mvp.py
+          python tests/test_c_export.py
+
+      - name: Verify all 10 robotics models (Python sim == C99 codegen)
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          python verify_models.py
+
+      - name: Octave PNG export from generated CSVs
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          octave --no-gui --quiet --eval "run('scripts/octave_plot_models.m');"
+          test "$(find output/figures -name '*.png' | wc -l)" -gt 0

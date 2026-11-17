@@ -1,0 +1,319 @@
+{
+  "version": "4.0",
+  "stop_time": "4",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "2-link planar forward kinematics: end-effector (x,y) from joint angles and link lengths.",
+  "root": {
+    "blocks": [
+      {
+        "id": 100,
+        "type": "Constant",
+        "name": "theta1",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "0.5"
+        }
+      },
+      {
+        "id": 101,
+        "type": "Constant",
+        "name": "theta2",
+        "x": 0.0,
+        "y": 50.0,
+        "params": {
+          "value": "0.7"
+        }
+      },
+      {
+        "id": 102,
+        "type": "Constant",
+        "name": "link1",
+        "x": 0.0,
+        "y": 100.0,
+        "params": {
+          "value": "1.0"
+        }
+      },
+      {
+        "id": 103,
+        "type": "Constant",
+        "name": "link2",
+        "x": 0.0,
+        "y": 150.0,
+        "params": {
+          "value": "0.8"
+        }
+      },
+      {
+        "id": 104,
+        "type": "Sum",
+        "name": "theta1+theta2",
+        "x": 140.0,
+        "y": 25.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 105,
+        "type": "Trig",
+        "name": "cos(t1)",
+        "x": 140.0,
+        "y": 0.0,
+        "params": {
+          "operator": "cos"
+        }
+      },
+      {
+        "id": 106,
+        "type": "Trig",
+        "name": "sin(t1)",
+        "x": 140.0,
+        "y": 50.0,
+        "params": {
+          "operator": "sin"
+        }
+      },
+      {
+        "id": 107,
+        "type": "Trig",
+        "name": "cos(t1+t2)",
+        "x": 140.0,
+        "y": 100.0,
+        "params": {
+          "operator": "cos"
+        }
+      },
+      {
+        "id": 108,
+        "type": "Trig",
+        "name": "sin(t1+t2)",
+        "x": 140.0,
+        "y": 150.0,
+        "params": {
+          "operator": "sin"
+        }
+      },
+      {
+        "id": 109,
+        "type": "Product",
+        "name": "L1*cos(t1)",
+        "x": 280.0,
+        "y": 0.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 110,
+        "type": "Product",
+        "name": "L1*sin(t1)",
+        "x": 280.0,
+        "y": 50.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 111,
+        "type": "Product",
+        "name": "L2*cos(t1+t2)",
+        "x": 280.0,
+        "y": 100.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 112,
+        "type": "Product",
+        "name": "L2*sin(t1+t2)",
+        "x": 280.0,
+        "y": 150.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 113,
+        "type": "Sum",
+        "name": "x_ee",
+        "x": 420.0,
+        "y": 25.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 114,
+        "type": "Sum",
+        "name": "y_ee",
+        "x": 420.0,
+        "y": 125.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 115,
+        "type": "Mux",
+        "name": "end_effector",
+        "x": 560.0,
+        "y": 75.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 116,
+        "type": "Scope",
+        "name": "2-link forward kinematics",
+        "x": 700.0,
+        "y": 75.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 100,
+        "from_port": 0,
+        "to_block": 104,
+        "to_port": 0
+      },
+      {
+        "from_block": 101,
+        "from_port": 0,
+        "to_block": 104,
+        "to_port": 1
+      },
+      {
+        "from_block": 100,
+        "from_port": 0,
+        "to_block": 105,
+        "to_port": 0
+      },
+      {
+        "from_block": 100,
+        "from_port": 0,
+        "to_block": 106,
+        "to_port": 0
+      },
+      {
+        "from_block": 104,
+        "from_port": 0,
+        "to_block": 107,
+        "to_port": 0
+      },
+      {
+        "from_block": 104,
+        "from_port": 0,
+        "to_block": 108,
+        "to_port": 0
+      },
+      {
+        "from_block": 102,
+        "from_port": 0,
+        "to_block": 109,
+        "to_port": 0
+      },
+      {
+        "from_block": 105,
+        "from_port": 0,
+        "to_block": 109,
+        "to_port": 1
+      },
+      {
+        "from_block": 102,
+        "from_port": 0,
+        "to_block": 110,
+        "to_port": 0
+      },
+      {
+        "from_block": 106,
+        "from_port": 0,
+        "to_block": 110,
+        "to_port": 1
+      },
+      {
+        "from_block": 103,
+        "from_port": 0,
+        "to_block": 111,
+        "to_port": 0
+      },
+      {
+        "from_block": 107,
+        "from_port": 0,
+        "to_block": 111,
+        "to_port": 1
+      },
+      {
+        "from_block": 103,
+        "from_port": 0,
+        "to_block": 112,
+        "to_port": 0
+      },
+      {
+        "from_block": 108,
+        "from_port": 0,
+        "to_block": 112,
+        "to_port": 1
+      },
+      {
+        "from_block": 109,
+        "from_port": 0,
+        "to_block": 113,
+        "to_port": 0
+      },
+      {
+        "from_block": 111,
+        "from_port": 0,
+        "to_block": 113,
+        "to_port": 1
+      },
+      {
+        "from_block": 110,
+        "from_port": 0,
+        "to_block": 114,
+        "to_port": 0
+      },
+      {
+        "from_block": 112,
+        "from_port": 0,
+        "to_block": 114,
+        "to_port": 1
+      },
+      {
+        "from_block": 100,
+        "from_port": 0,
+        "to_block": 115,
+        "to_port": 0
+      },
+      {
+        "from_block": 101,
+        "from_port": 0,
+        "to_block": 115,
+        "to_port": 1
+      },
+      {
+        "from_block": 113,
+        "from_port": 0,
+        "to_block": 115,
+        "to_port": 2
+      },
+      {
+        "from_block": 114,
+        "from_port": 0,
+        "to_block": 115,
+        "to_port": 3
+      },
+      {
+        "from_block": 115,
+        "from_port": 0,
+        "to_block": 116,
+        "to_port": 0
+      }
+    ]
+  }
+}

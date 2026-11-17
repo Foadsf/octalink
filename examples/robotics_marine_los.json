@@ -1,0 +1,248 @@
+{
+  "version": "4.0",
+  "stop_time": "10",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Marine line-of-sight guidance: los=atan(cte/L) drives a heading autopilot over a 1st-order vessel plant.",
+  "root": {
+    "blocks": [
+      {
+        "id": 52,
+        "type": "Constant",
+        "name": "cross_track_error",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "2.0"
+        }
+      },
+      {
+        "id": 53,
+        "type": "Gain",
+        "name": "cte/L (L=10)",
+        "x": 140.0,
+        "y": 25.0,
+        "params": {
+          "gain": "0.1"
+        }
+      },
+      {
+        "id": 54,
+        "type": "Trig",
+        "name": "los_angle",
+        "x": 280.0,
+        "y": 25.0,
+        "params": {
+          "operator": "atan"
+        }
+      },
+      {
+        "id": 55,
+        "type": "Sum",
+        "name": "heading_error",
+        "x": 280.0,
+        "y": 100.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 56,
+        "type": "PID Controller",
+        "name": "heading PID",
+        "x": 420.0,
+        "y": 100.0,
+        "params": {
+          "Kp": "2.0",
+          "Ki": "0.5",
+          "Kd": "0.3",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 57,
+        "type": "Saturation",
+        "name": "rudder",
+        "x": 560.0,
+        "y": 100.0,
+        "params": {
+          "lower_limit": "-0.4",
+          "upper_limit": "0.4"
+        }
+      },
+      {
+        "id": 58,
+        "type": "Transfer Fcn",
+        "name": "vessel heading 1/(2s+1)",
+        "x": 700.0,
+        "y": 100.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[2, 1]"
+        }
+      },
+      {
+        "id": 59,
+        "type": "Integrator",
+        "name": "heading",
+        "x": 840.0,
+        "y": 100.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 60,
+        "type": "Constant",
+        "name": "speed",
+        "x": 0.0,
+        "y": 180.0,
+        "params": {
+          "value": "3.0"
+        }
+      },
+      {
+        "id": 61,
+        "type": "Trig",
+        "name": "sin(heading)",
+        "x": 840.0,
+        "y": 180.0,
+        "params": {
+          "operator": "sin"
+        }
+      },
+      {
+        "id": 62,
+        "type": "Product",
+        "name": "speed*sin(hdg)",
+        "x": 980.0,
+        "y": 180.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 63,
+        "type": "Mux",
+        "name": "signals",
+        "x": 1120.0,
+        "y": 120.0,
+        "params": {
+          "inputs": "5"
+        }
+      },
+      {
+        "id": 64,
+        "type": "Scope",
+        "name": "Marine LOS heading + cross-track",
+        "x": 1260.0,
+        "y": 120.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 52,
+        "from_port": 0,
+        "to_block": 53,
+        "to_port": 0
+      },
+      {
+        "from_block": 53,
+        "from_port": 0,
+        "to_block": 54,
+        "to_port": 0
+      },
+      {
+        "from_block": 54,
+        "from_port": 0,
+        "to_block": 55,
+        "to_port": 0
+      },
+      {
+        "from_block": 59,
+        "from_port": 0,
+        "to_block": 55,
+        "to_port": 1
+      },
+      {
+        "from_block": 55,
+        "from_port": 0,
+        "to_block": 56,
+        "to_port": 0
+      },
+      {
+        "from_block": 56,
+        "from_port": 0,
+        "to_block": 57,
+        "to_port": 0
+      },
+      {
+        "from_block": 57,
+        "from_port": 0,
+        "to_block": 58,
+        "to_port": 0
+      },
+      {
+        "from_block": 58,
+        "from_port": 0,
+        "to_block": 59,
+        "to_port": 0
+      },
+      {
+        "from_block": 59,
+        "from_port": 0,
+        "to_block": 61,
+        "to_port": 0
+      },
+      {
+        "from_block": 60,
+        "from_port": 0,
+        "to_block": 62,
+        "to_port": 0
+      },
+      {
+        "from_block": 61,
+        "from_port": 0,
+        "to_block": 62,
+        "to_port": 1
+      },
+      {
+        "from_block": 52,
+        "from_port": 0,
+        "to_block": 63,
+        "to_port": 0
+      },
+      {
+        "from_block": 54,
+        "from_port": 0,
+        "to_block": 63,
+        "to_port": 1
+      },
+      {
+        "from_block": 59,
+        "from_port": 0,
+        "to_block": 63,
+        "to_port": 2
+      },
+      {
+        "from_block": 57,
+        "from_port": 0,
+        "to_block": 63,
+        "to_port": 3
+      },
+      {
+        "from_block": 62,
+        "from_port": 0,
+        "to_block": 63,
+        "to_port": 4
+      },
+      {
+        "from_block": 63,
+        "from_port": 0,
+        "to_block": 64,
+        "to_port": 0
+      }
+    ]
+  }
+}

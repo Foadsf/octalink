@@ -1,0 +1,269 @@
+{
+  "version": "4.0",
+  "stop_time": "8",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Kinematic ground vehicle: unicycle/bicycle pose integration.",
+  "root": {
+    "blocks": [
+      {
+        "id": 85,
+        "type": "Constant",
+        "name": "velocity",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "2.0"
+        }
+      },
+      {
+        "id": 86,
+        "type": "Constant",
+        "name": "steering_angle",
+        "x": 0.0,
+        "y": 60.0,
+        "params": {
+          "value": "0.2"
+        }
+      },
+      {
+        "id": 87,
+        "type": "Constant",
+        "name": "wheelbase",
+        "x": 0.0,
+        "y": 120.0,
+        "params": {
+          "value": "2.5"
+        }
+      },
+      {
+        "id": 88,
+        "type": "Trig",
+        "name": "tan(steer)",
+        "x": 140.0,
+        "y": 60.0,
+        "params": {
+          "operator": "tan"
+        }
+      },
+      {
+        "id": 89,
+        "type": "Product",
+        "name": "v*tan(delta)",
+        "x": 140.0,
+        "y": 120.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 90,
+        "type": "Gain",
+        "name": "1/wheelbase",
+        "x": 280.0,
+        "y": 120.0,
+        "params": {
+          "gain": "0.4"
+        }
+      },
+      {
+        "id": 91,
+        "type": "Integrator",
+        "name": "heading",
+        "x": 420.0,
+        "y": 60.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 92,
+        "type": "Trig",
+        "name": "cos(heading)",
+        "x": 420.0,
+        "y": 180.0,
+        "params": {
+          "operator": "cos"
+        }
+      },
+      {
+        "id": 93,
+        "type": "Trig",
+        "name": "sin(heading)",
+        "x": 420.0,
+        "y": 240.0,
+        "params": {
+          "operator": "sin"
+        }
+      },
+      {
+        "id": 94,
+        "type": "Product",
+        "name": "v*cos(psi)",
+        "x": 560.0,
+        "y": 180.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 95,
+        "type": "Product",
+        "name": "v*sin(psi)",
+        "x": 560.0,
+        "y": 240.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 96,
+        "type": "Integrator",
+        "name": "x position",
+        "x": 700.0,
+        "y": 180.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 97,
+        "type": "Integrator",
+        "name": "y position",
+        "x": 700.0,
+        "y": 240.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 98,
+        "type": "Mux",
+        "name": "pose",
+        "x": 840.0,
+        "y": 210.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 99,
+        "type": "Scope",
+        "name": "Ground vehicle kinematics",
+        "x": 980.0,
+        "y": 210.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 86,
+        "from_port": 0,
+        "to_block": 88,
+        "to_port": 0
+      },
+      {
+        "from_block": 85,
+        "from_port": 0,
+        "to_block": 89,
+        "to_port": 0
+      },
+      {
+        "from_block": 88,
+        "from_port": 0,
+        "to_block": 89,
+        "to_port": 1
+      },
+      {
+        "from_block": 89,
+        "from_port": 0,
+        "to_block": 90,
+        "to_port": 0
+      },
+      {
+        "from_block": 90,
+        "from_port": 0,
+        "to_block": 91,
+        "to_port": 0
+      },
+      {
+        "from_block": 91,
+        "from_port": 0,
+        "to_block": 92,
+        "to_port": 0
+      },
+      {
+        "from_block": 91,
+        "from_port": 0,
+        "to_block": 93,
+        "to_port": 0
+      },
+      {
+        "from_block": 85,
+        "from_port": 0,
+        "to_block": 94,
+        "to_port": 0
+      },
+      {
+        "from_block": 92,
+        "from_port": 0,
+        "to_block": 94,
+        "to_port": 1
+      },
+      {
+        "from_block": 85,
+        "from_port": 0,
+        "to_block": 95,
+        "to_port": 0
+      },
+      {
+        "from_block": 93,
+        "from_port": 0,
+        "to_block": 95,
+        "to_port": 1
+      },
+      {
+        "from_block": 94,
+        "from_port": 0,
+        "to_block": 96,
+        "to_port": 0
+      },
+      {
+        "from_block": 95,
+        "from_port": 0,
+        "to_block": 97,
+        "to_port": 0
+      },
+      {
+        "from_block": 96,
+        "from_port": 0,
+        "to_block": 98,
+        "to_port": 0
+      },
+      {
+        "from_block": 97,
+        "from_port": 0,
+        "to_block": 98,
+        "to_port": 1
+      },
+      {
+        "from_block": 91,
+        "from_port": 0,
+        "to_block": 98,
+        "to_port": 2
+      },
+      {
+        "from_block": 90,
+        "from_port": 0,
+        "to_block": 98,
+        "to_port": 3
+      },
+      {
+        "from_block": 98,
+        "from_port": 0,
+        "to_block": 99,
+        "to_port": 0
+      }
+    ]
+  }
+}

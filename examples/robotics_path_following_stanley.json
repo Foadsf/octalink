@@ -1,0 +1,154 @@
+{
+  "version": "4.0",
+  "stop_time": "8",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Stanley path-following steering law: delta = e_psi + atan(k_e*e_lat/v).",
+  "root": {
+    "blocks": [
+      {
+        "id": 1,
+        "type": "Constant",
+        "name": "heading_error",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "0.2"
+        }
+      },
+      {
+        "id": 2,
+        "type": "Constant",
+        "name": "cross_track_error",
+        "x": 0.0,
+        "y": 40.0,
+        "params": {
+          "value": "0.5"
+        }
+      },
+      {
+        "id": 3,
+        "type": "Constant",
+        "name": "speed",
+        "x": 0.0,
+        "y": 80.0,
+        "params": {
+          "value": "2.0"
+        }
+      },
+      {
+        "id": 4,
+        "type": "Constant",
+        "name": "stanley_gain",
+        "x": 0.0,
+        "y": 120.0,
+        "params": {
+          "value": "1.5"
+        }
+      },
+      {
+        "id": 5,
+        "type": "Gain",
+        "name": "k_e*cte",
+        "x": 140.0,
+        "y": 40.0,
+        "params": {
+          "gain": "1.5"
+        }
+      },
+      {
+        "id": 6,
+        "type": "Gain",
+        "name": "div_by_v",
+        "x": 140.0,
+        "y": 80.0,
+        "params": {
+          "gain": "0.5"
+        }
+      },
+      {
+        "id": 7,
+        "type": "Trig",
+        "name": "atan(cte/v)",
+        "x": 280.0,
+        "y": 60.0,
+        "params": {
+          "operator": "atan"
+        }
+      },
+      {
+        "id": 8,
+        "type": "Sum",
+        "name": "steering_raw",
+        "x": 420.0,
+        "y": 60.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 9,
+        "type": "Saturation",
+        "name": "steering_cmd",
+        "x": 560.0,
+        "y": 60.0,
+        "params": {
+          "lower_limit": "-0.6",
+          "upper_limit": "0.6"
+        }
+      },
+      {
+        "id": 10,
+        "type": "Scope",
+        "name": "Stanley steering command",
+        "x": 700.0,
+        "y": 60.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 2,
+        "from_port": 0,
+        "to_block": 5,
+        "to_port": 0
+      },
+      {
+        "from_block": 5,
+        "from_port": 0,
+        "to_block": 6,
+        "to_port": 0
+      },
+      {
+        "from_block": 6,
+        "from_port": 0,
+        "to_block": 7,
+        "to_port": 0
+      },
+      {
+        "from_block": 1,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 0
+      },
+      {
+        "from_block": 7,
+        "from_port": 0,
+        "to_block": 8,
+        "to_port": 1
+      },
+      {
+        "from_block": 8,
+        "from_port": 0,
+        "to_block": 9,
+        "to_port": 0
+      },
+      {
+        "from_block": 9,
+        "from_port": 0,
+        "to_block": 10,
+        "to_port": 0
+      }
+    ]
+  }
+}

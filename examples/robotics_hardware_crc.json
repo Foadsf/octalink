@@ -1,0 +1,311 @@
+{
+  "version": "4.0",
+  "stop_time": "6",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Hardware connectivity: baud-rate counter (Unit Delay/Switch) plus UART falling-edge start-bit detection.",
+  "root": {
+    "blocks": [
+      {
+        "id": 124,
+        "type": "Constant",
+        "name": "one",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "1.0"
+        }
+      },
+      {
+        "id": 125,
+        "type": "Constant",
+        "name": "modulus_minus_one",
+        "x": 0.0,
+        "y": 40.0,
+        "params": {
+          "value": "9.0"
+        }
+      },
+      {
+        "id": 126,
+        "type": "Constant",
+        "name": "zero",
+        "x": 0.0,
+        "y": 80.0,
+        "params": {
+          "value": "0.0"
+        }
+      },
+      {
+        "id": 127,
+        "type": "Unit Delay",
+        "name": "baud counter",
+        "x": 140.0,
+        "y": 40.0,
+        "params": {
+          "sample_time": "0.01",
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 128,
+        "type": "Sum",
+        "name": "count+1",
+        "x": 140.0,
+        "y": 0.0,
+        "params": {
+          "signs": "++"
+        }
+      },
+      {
+        "id": 129,
+        "type": "Constant",
+        "name": "divisor 10",
+        "x": 0.0,
+        "y": 80.0,
+        "params": {
+          "value": "10.0"
+        }
+      },
+      {
+        "id": 130,
+        "type": "Switch",
+        "name": "wrap at divisor",
+        "x": 280.0,
+        "y": 40.0,
+        "params": {
+          "threshold": "10.0"
+        }
+      },
+      {
+        "id": 131,
+        "type": "Sum",
+        "name": "count-9",
+        "x": 280.0,
+        "y": 0.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 132,
+        "type": "Switch",
+        "name": "tick at count==9",
+        "x": 420.0,
+        "y": 0.0,
+        "params": {
+          "threshold": "0.0"
+        }
+      },
+      {
+        "id": 133,
+        "type": "Constant",
+        "name": "tick=1",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "1.0"
+        }
+      },
+      {
+        "id": 134,
+        "type": "Constant",
+        "name": "tick=0",
+        "x": 0.0,
+        "y": 40.0,
+        "params": {
+          "value": "0.0"
+        }
+      },
+      {
+        "id": 135,
+        "type": "Step",
+        "name": "serial line (idle 1 -> start 0)",
+        "x": 140.0,
+        "y": 160.0,
+        "params": {
+          "step_time": "3.0",
+          "initial_val": "1.0",
+          "final_val": "0.0"
+        }
+      },
+      {
+        "id": 136,
+        "type": "Unit Delay",
+        "name": "serial previous",
+        "x": 280.0,
+        "y": 160.0,
+        "params": {
+          "sample_time": "0.01",
+          "initial_condition": "1.0"
+        }
+      },
+      {
+        "id": 137,
+        "type": "Sum",
+        "name": "1 - serial",
+        "x": 280.0,
+        "y": 200.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 138,
+        "type": "Product",
+        "name": "start pulse",
+        "x": 420.0,
+        "y": 160.0,
+        "params": {
+          "ops": "**"
+        }
+      },
+      {
+        "id": 139,
+        "type": "Mux",
+        "name": "debug",
+        "x": 560.0,
+        "y": 120.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 140,
+        "type": "Scope",
+        "name": "Hardware: baud tick + UART start-bit detect",
+        "x": 700.0,
+        "y": 120.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 127,
+        "from_port": 0,
+        "to_block": 128,
+        "to_port": 0
+      },
+      {
+        "from_block": 124,
+        "from_port": 0,
+        "to_block": 128,
+        "to_port": 1
+      },
+      {
+        "from_block": 128,
+        "from_port": 0,
+        "to_block": 130,
+        "to_port": 2
+      },
+      {
+        "from_block": 127,
+        "from_port": 0,
+        "to_block": 130,
+        "to_port": 0
+      },
+      {
+        "from_block": 129,
+        "from_port": 0,
+        "to_block": 130,
+        "to_port": 1
+      },
+      {
+        "from_block": 130,
+        "from_port": 0,
+        "to_block": 127,
+        "to_port": 0
+      },
+      {
+        "from_block": 127,
+        "from_port": 0,
+        "to_block": 131,
+        "to_port": 0
+      },
+      {
+        "from_block": 125,
+        "from_port": 0,
+        "to_block": 131,
+        "to_port": 1
+      },
+      {
+        "from_block": 131,
+        "from_port": 0,
+        "to_block": 132,
+        "to_port": 0
+      },
+      {
+        "from_block": 133,
+        "from_port": 0,
+        "to_block": 132,
+        "to_port": 1
+      },
+      {
+        "from_block": 134,
+        "from_port": 0,
+        "to_block": 132,
+        "to_port": 2
+      },
+      {
+        "from_block": 135,
+        "from_port": 0,
+        "to_block": 136,
+        "to_port": 0
+      },
+      {
+        "from_block": 124,
+        "from_port": 0,
+        "to_block": 137,
+        "to_port": 0
+      },
+      {
+        "from_block": 135,
+        "from_port": 0,
+        "to_block": 137,
+        "to_port": 1
+      },
+      {
+        "from_block": 136,
+        "from_port": 0,
+        "to_block": 138,
+        "to_port": 0
+      },
+      {
+        "from_block": 137,
+        "from_port": 0,
+        "to_block": 138,
+        "to_port": 1
+      },
+      {
+        "from_block": 135,
+        "from_port": 0,
+        "to_block": 139,
+        "to_port": 0
+      },
+      {
+        "from_block": 136,
+        "from_port": 0,
+        "to_block": 139,
+        "to_port": 1
+      },
+      {
+        "from_block": 132,
+        "from_port": 0,
+        "to_block": 139,
+        "to_port": 2
+      },
+      {
+        "from_block": 138,
+        "from_port": 0,
+        "to_block": 139,
+        "to_port": 3
+      },
+      {
+        "from_block": 139,
+        "from_port": 0,
+        "to_block": 140,
+        "to_port": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "version": "4.0",
+  "stop_time": "6",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "Perception sensor conditioning: sensitivity scaling, low-pass and washout (high-pass) filtering with output clipping.",
+  "root": {
+    "blocks": [
+      {
+        "id": 117,
+        "type": "Constant",
+        "name": "raw_sensor",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "1.0"
+        }
+      },
+      {
+        "id": 118,
+        "type": "Gain",
+        "name": "sensitivity 9.81",
+        "x": 140.0,
+        "y": 0.0,
+        "params": {
+          "gain": "9.81"
+        }
+      },
+      {
+        "id": 119,
+        "type": "Transfer Fcn",
+        "name": "low-pass 1/(0.5s+1)",
+        "x": 280.0,
+        "y": 0.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[0.5, 1]"
+        }
+      },
+      {
+        "id": 120,
+        "type": "Transfer Fcn",
+        "name": "high-pass s/(0.5s+1)",
+        "x": 280.0,
+        "y": 100.0,
+        "params": {
+          "numerator": "[1, 0]",
+          "denominator": "[0.5, 1]"
+        }
+      },
+      {
+        "id": 121,
+        "type": "Saturation",
+        "name": "high-pass clip",
+        "x": 420.0,
+        "y": 100.0,
+        "params": {
+          "lower_limit": "-2.0",
+          "upper_limit": "2.0"
+        }
+      },
+      {
+        "id": 122,
+        "type": "Mux",
+        "name": "channels",
+        "x": 560.0,
+        "y": 40.0,
+        "params": {
+          "inputs": "4"
+        }
+      },
+      {
+        "id": 123,
+        "type": "Scope",
+        "name": "Perception: raw / low-pass / high-pass / clipped",
+        "x": 700.0,
+        "y": 40.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 117,
+        "from_port": 0,
+        "to_block": 118,
+        "to_port": 0
+      },
+      {
+        "from_block": 118,
+        "from_port": 0,
+        "to_block": 119,
+        "to_port": 0
+      },
+      {
+        "from_block": 118,
+        "from_port": 0,
+        "to_block": 120,
+        "to_port": 0
+      },
+      {
+        "from_block": 120,
+        "from_port": 0,
+        "to_block": 121,
+        "to_port": 0
+      },
+      {
+        "from_block": 117,
+        "from_port": 0,
+        "to_block": 122,
+        "to_port": 0
+      },
+      {
+        "from_block": 119,
+        "from_port": 0,
+        "to_block": 122,
+        "to_port": 1
+      },
+      {
+        "from_block": 120,
+        "from_port": 0,
+        "to_block": 122,
+        "to_port": 2
+      },
+      {
+        "from_block": 121,
+        "from_port": 0,
+        "to_block": 122,
+        "to_port": 3
+      },
+      {
+        "from_block": 122,
+        "from_port": 0,
+        "to_block": 123,
+        "to_port": 0
+      }
+    ]
+  }
+}

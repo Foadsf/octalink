@@ -1,0 +1,394 @@
+{
+  "version": "4.0",
+  "stop_time": "8",
+  "dt": "0.01",
+  "solver": "rk4",
+  "description": "AUV reduced 3-DOF: three decoupled PI-controlled 1st-order plants with position integrators (surge, heave, yaw).",
+  "root": {
+    "blocks": [
+      {
+        "id": 65,
+        "type": "Constant",
+        "name": "surge_ref",
+        "x": 0.0,
+        "y": 0.0,
+        "params": {
+          "value": "1.5"
+        }
+      },
+      {
+        "id": 66,
+        "type": "Sum",
+        "name": "surge_error",
+        "x": 140.0,
+        "y": 0.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 67,
+        "type": "PID Controller",
+        "name": "surge_PI",
+        "x": 280.0,
+        "y": 0.0,
+        "params": {
+          "Kp": "0.8",
+          "Ki": "0.2",
+          "Kd": "0.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 68,
+        "type": "Saturation",
+        "name": "surge_cmd",
+        "x": 420.0,
+        "y": 0.0,
+        "params": {
+          "lower_limit": "-2.0",
+          "upper_limit": "2.0"
+        }
+      },
+      {
+        "id": 69,
+        "type": "Transfer Fcn",
+        "name": "surge_plant",
+        "x": 560.0,
+        "y": 0.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[3, 1]"
+        }
+      },
+      {
+        "id": 70,
+        "type": "Integrator",
+        "name": "surge_position",
+        "x": 700.0,
+        "y": 0.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 71,
+        "type": "Constant",
+        "name": "heave_ref",
+        "x": 170.0,
+        "y": 0.0,
+        "params": {
+          "value": "0.0"
+        }
+      },
+      {
+        "id": 72,
+        "type": "Sum",
+        "name": "heave_error",
+        "x": 310.0,
+        "y": 0.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 73,
+        "type": "PID Controller",
+        "name": "heave_PI",
+        "x": 450.0,
+        "y": 0.0,
+        "params": {
+          "Kp": "1.0",
+          "Ki": "0.3",
+          "Kd": "0.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 74,
+        "type": "Saturation",
+        "name": "heave_cmd",
+        "x": 590.0,
+        "y": 0.0,
+        "params": {
+          "lower_limit": "-2.0",
+          "upper_limit": "2.0"
+        }
+      },
+      {
+        "id": 75,
+        "type": "Transfer Fcn",
+        "name": "heave_plant",
+        "x": 730.0,
+        "y": 0.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[4, 1]"
+        }
+      },
+      {
+        "id": 76,
+        "type": "Integrator",
+        "name": "heave_position",
+        "x": 870.0,
+        "y": 0.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 77,
+        "type": "Constant",
+        "name": "yaw_ref",
+        "x": 340.0,
+        "y": 0.0,
+        "params": {
+          "value": "0.0"
+        }
+      },
+      {
+        "id": 78,
+        "type": "Sum",
+        "name": "yaw_error",
+        "x": 480.0,
+        "y": 0.0,
+        "params": {
+          "signs": "+-"
+        }
+      },
+      {
+        "id": 79,
+        "type": "PID Controller",
+        "name": "yaw_PI",
+        "x": 620.0,
+        "y": 0.0,
+        "params": {
+          "Kp": "1.2",
+          "Ki": "0.4",
+          "Kd": "0.0",
+          "N": "100.0"
+        }
+      },
+      {
+        "id": 80,
+        "type": "Saturation",
+        "name": "yaw_cmd",
+        "x": 760.0,
+        "y": 0.0,
+        "params": {
+          "lower_limit": "-2.0",
+          "upper_limit": "2.0"
+        }
+      },
+      {
+        "id": 81,
+        "type": "Transfer Fcn",
+        "name": "yaw_plant",
+        "x": 900.0,
+        "y": 0.0,
+        "params": {
+          "numerator": "[1]",
+          "denominator": "[2, 1]"
+        }
+      },
+      {
+        "id": 82,
+        "type": "Integrator",
+        "name": "yaw_position",
+        "x": 1040.0,
+        "y": 0.0,
+        "params": {
+          "initial_condition": "0.0"
+        }
+      },
+      {
+        "id": 83,
+        "type": "Mux",
+        "name": "all_channels",
+        "x": 1350.0,
+        "y": 0.0,
+        "params": {
+          "inputs": "9"
+        }
+      },
+      {
+        "id": 84,
+        "type": "Scope",
+        "name": "AUV 3-DOF surge/heave/yaw",
+        "x": 1490.0,
+        "y": 0.0,
+        "params": {}
+      }
+    ],
+    "wires": [
+      {
+        "from_block": 65,
+        "from_port": 0,
+        "to_block": 66,
+        "to_port": 0
+      },
+      {
+        "from_block": 70,
+        "from_port": 0,
+        "to_block": 66,
+        "to_port": 1
+      },
+      {
+        "from_block": 66,
+        "from_port": 0,
+        "to_block": 67,
+        "to_port": 0
+      },
+      {
+        "from_block": 67,
+        "from_port": 0,
+        "to_block": 68,
+        "to_port": 0
+      },
+      {
+        "from_block": 68,
+        "from_port": 0,
+        "to_block": 69,
+        "to_port": 0
+      },
+      {
+        "from_block": 69,
+        "from_port": 0,
+        "to_block": 70,
+        "to_port": 0
+      },
+      {
+        "from_block": 71,
+        "from_port": 0,
+        "to_block": 72,
+        "to_port": 0
+      },
+      {
+        "from_block": 76,
+        "from_port": 0,
+        "to_block": 72,
+        "to_port": 1
+      },
+      {
+        "from_block": 72,
+        "from_port": 0,
+        "to_block": 73,
+        "to_port": 0
+      },
+      {
+        "from_block": 73,
+        "from_port": 0,
+        "to_block": 74,
+        "to_port": 0
+      },
+      {
+        "from_block": 74,
+        "from_port": 0,
+        "to_block": 75,
+        "to_port": 0
+      },
+      {
+        "from_block": 75,
+        "from_port": 0,
+        "to_block": 76,
+        "to_port": 0
+      },
+      {
+        "from_block": 77,
+        "from_port": 0,
+        "to_block": 78,
+        "to_port": 0
+      },
+      {
+        "from_block": 82,
+        "from_port": 0,
+        "to_block": 78,
+        "to_port": 1
+      },
+      {
+        "from_block": 78,
+        "from_port": 0,
+        "to_block": 79,
+        "to_port": 0
+      },
+      {
+        "from_block": 79,
+        "from_port": 0,
+        "to_block": 80,
+        "to_port": 0
+      },
+      {
+        "from_block": 80,
+        "from_port": 0,
+        "to_block": 81,
+        "to_port": 0
+      },
+      {
+        "from_block": 81,
+        "from_port": 0,
+        "to_block": 82,
+        "to_port": 0
+      },
+      {
+        "from_block": 65,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 0
+      },
+      {
+        "from_block": 69,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 1
+      },
+      {
+        "from_block": 70,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 2
+      },
+      {
+        "from_block": 71,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 3
+      },
+      {
+        "from_block": 75,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 4
+      },
+      {
+        "from_block": 76,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 5
+      },
+      {
+        "from_block": 77,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 6
+      },
+      {
+        "from_block": 81,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 7
+      },
+      {
+        "from_block": 82,
+        "from_port": 0,
+        "to_block": 83,
+        "to_port": 8
+      },
+      {
+        "from_block": 83,
+        "from_port": 0,
+        "to_block": 84,
+        "to_port": 0
+      }
+    ]
+  }
+}
