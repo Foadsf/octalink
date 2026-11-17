@@ -423,7 +423,7 @@ double OctaLink_NextTime(const OctaLink_State *st, double stop);
               "    eps = OctaLink_Eps(stop);",
               "    grid = floor((st->t + OctaLink_Eps(st->t)) / OCTALINK_MAX_DT) + 1.0;",
               "    if (!isfinite(grid) || grid > 9007199254740991.0) return NAN;",
-              "    next = stop; candidate = st->t + OCTALINK_MAX_DT;",
+              "    next = stop; candidate = grid * OCTALINK_MAX_DT;",
               "    if (candidate > st->t + OctaLink_Eps(st->t) && candidate < next) next = candidate;"]
     for b in scheduled:
         i = discrete_index[b]
@@ -436,12 +436,8 @@ double OctaLink_NextTime(const OctaLink_State *st, double stop);
         lines += [f"    candidate = OctaLink_PulseNext(st->t + OctaLink_Eps(st->t), {period}, {width}, {phase});",
                   "    if (candidate < next) next = candidate;"]
     # Prefer exact Step event if floating point grid/sample points coincide.
-    # Tolerance is scaled to the step size (still tiny vs dt) so fp grid drift
-    # never lets the runtime step *over* a Step discontinuity.
-    if events:
-        lines.append("    double snap_tol = 64.0 * eps;")
-        for value in events:
-            lines.append(f"    if ({_number(value)} > st->t && {_number(value)} <= stop && fabs(next - {_number(value)}) <= snap_tol) next = {_number(value)};")
+    for value in events:
+        lines.append(f"    if ({_number(value)} > st->t && {_number(value)} <= stop && fabs(next - {_number(value)}) <= eps) next = {_number(value)};")
     for period, width, phase in pulses:
         lines += [f"    candidate = OctaLink_PulseNext(next - eps - OctaLink_Eps(next), {period}, {width}, {phase});",
                   "    if (candidate > st->t && candidate <= stop && fabs(next - candidate) <= eps) next = candidate;"]
@@ -483,9 +479,16 @@ double OctaLink_NextTime(const OctaLink_State *st, double stop);
     else:
         lines += ["        (void)h; (void)end; (void)tmp; (void)k2; (void)k3; (void)k4;",
                   "        (void)OctaLink_IsStepEvent;"]
-    lines += ["        double snapped = floor(next / OCTALINK_MAX_DT + 0.5) * OCTALINK_MAX_DT;",
-              "        st->t = (snapped > st->t) ? snapped : next; ++st->step_idx;", "        OctaLink_Major(st);",
-              "        if (st->status) return;", "    }", "}"]
+    lines += ["        st->t = next; ++st->step_idx;", "    }",
+              "        /* Snap time to the nearest step*dt grid point so exported times\n"
+              "           match the Python/Octave truth (t = step * dt) bit-for-bit. Pure\n"
+              "           accumulation drifts by ~1e-14 per step, which would shift a Step\n"
+              "           event at t=step_time by one sample (e.g. hardware_crc at t=3.0).\n"
+              "           Rounding to the nearest grid point advances exactly one step per\n"
+              "           call and never skips a sample. */",
+              "        st->t = floor(st->t / OCTALINK_MAX_DT + 0.5) * OCTALINK_MAX_DT;",
+              "        OctaLink_Major(st);",
+              "        if (st->status) return;", "}"]
     source = "\n".join(lines) + "\n"
     # Build both complete contents first; invalid expressions never truncate files.
     temporary = []
